@@ -11,7 +11,7 @@
     "href": "index.html#project",
     "title": "FEFACCION 2025",
     "section": "Project",
-    "text": "Project\nfefaccion_2025 includes:\n\nPresentation of the projects and analyses with associated documentation and figures:\n\nReproductive analyses in files.qmd\nResulting pages in docs/\nDocument structure definition in _quarto.yml\n\nDocuments (protocols, maps, field sheets) in documents/\nOutputs in outputs/\nR environment definition with renv in renv/ and renv/lock\nR files (.Rbuildignore , .Rdata , .Rprofile , .Rhistory)\nGit and GitHub files (.gitignore , .github/)\nProject documentation (README.qmd , README.md , NEWS.md , LICENSE)"
+    "text": "Project\nfefaccion_2025 includes:\n\nPresentation of the projects and analyses with associated documentation and figures:\n\nReproductive analyses in files.qmd\nResulting pages in docs/\nDocument structure definition in _quarto.yml\n\nDocuments (protocols, maps, field sheets) in documents/\nR environment definition with renv in renv/ and renv/lock\nR files (.Rbuildignore , .Rdata , .Rprofile , .Rhistory)\nGit and GitHub files (.gitignore , .github/)\nProject documentation (README.qmd , README.md , NEWS.md , LICENSE)"
   },
   {
     "objectID": "index.html#people",
@@ -25,7 +25,7 @@
     "href": "10_preparation.html#to-do-list",
     "title": "Preparation",
     "section": "To do list:",
-    "text": "To do list:"
+    "text": "To do list:\n\nClément & Sab. Discuss traits & protocols.\nLucas.\n\nDistilled water\nOven\nSPAD\nAvailablity on Sunday\nLeaf N/P measurement\nSIG and inventory data\nCore drill trees\n\nRomain. Discuss WD method & protocol."
   },
   {
     "objectID": "11_traits.html",
@@ -39,7 +39,7 @@
     "href": "12_protocols.html",
     "title": "Protocols",
     "section": "",
-    "text": "Links to all English 🏴󠁧󠁢󠁥󠁮󠁧󠁿 and Portuguese 🇧🇷 protocol to print and share:\n\nSampling\n\nSampling protocol\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : sampling_en.pdf\nPortuguese 🇧🇷 : sampling_br.pdf\n\nDawkins index: dawkins.pdf\nField sheet:\n\nField measurements:\n\nProtocol:\nSheet:\n\nLab measurements\n\nTLP:\nRWC:\nDry measurements:\nSheets:"
+    "text": "Links to all English 🏴󠁧󠁢󠁥󠁮󠁧󠁿 and Portuguese 🇧🇷 protocol to print and share:\n\nSampling\n\nSampling protocol\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : sampling_en.pdf\nPortuguese 🇧🇷 : sampling_br.pdf\n\nDawkins index: dawkins.pdf\nField sheet: ToDo, e.g. Feuille_terrain_releve.xlsx\n\nField measurements:\n\nProtocol:\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : fresh_measurements_en.pdf\nPortuguese 🇧🇷 : fresh_measurements_br.pdf\n\nSheets: ToDo\n\nLab measurements\n\nTLP:\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : tlp_en.pdf\nPortuguese 🇧🇷 : tlp_br.pdf\n\nRWC:\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : rwc_en.pdf\nPortuguese 🇧🇷 : rwc_br.pdf\n\nSheets: ToDo"
   },
   {
     "objectID": "13_material.html#big-material",

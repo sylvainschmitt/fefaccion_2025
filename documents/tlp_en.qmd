@@ -1,0 +1,88 @@
+---
+title: "Turgor Loss Point (TLP)"
+author: "Schmitt, S."
+date: last-modified
+format:
+  pdf:
+    classoption: twocolumn
+    number-sections: false
+    link-citations: true
+    colorlinks: true
+    fig-pos: H
+execute:
+  echo: false
+bibliography: ../references.bib
+---
+
+## Introduction
+
+We assessed the leaf turgor loss point, TLP in MPa, from a previously established relationship with the osmotic potential at full hydration, $\pi_{osm}$ in MPa. $\pi_{osm}$ is linked to the equilibrium solute concentration value C0 (in $mmol~kg^{-1}$) directly measured with a vapor pressure osmometer (Vapro 5600, Wescor, Logan, UT). This is referred as the osmometer method [@marechaux2020; @bartlett2012].
+
+## Protocol
+
+### Installing Vapro
+
+1.  Turn on Vapro the day before for the thermocouple’s stability
+2.  Test Water Quality
+3.  Clean
+4.  Calibration
+5.  Control tests
+6.  Verify temperature
+7.  Always have the black diamond at the center of the display
+8.  Use daily: \* clean beforehand \* select automatic mode (10 runs)
+
+### First day
+
+1.  Carefully remove the leaf from the zip lock bag
+2.  Cut off the petiole under water
+3.  Place the lift in a plastic upright glass with the petiole in the water
+4.  Put 12h in fridge to hydrate overnight
+
+### Second day
+
+-   Vapro:
+
+    1.  check distilled water in vapro reservoir
+    2.  clean
+    3.  select automatic mode (10 runs)
+    4.  make sure vapro software is on
+
+-   Sample measurement:
+
+    1.  Sample from a leaf a 5 mm disc with a cork borer: avoid 1st and 2nd order veins to avoid apoplastic dilution that would lead to less negative osmometer values
+
+    2.  Wrap disc in tin foil
+
+    3.  Immerse in liquid nitrogen for at least 2 min using metal tea ball
+
+    4.  Puncture 10-15 times with needle
+
+    5.  Place in vapro chamber In total, disc are exposed to air for less than 40 seconds for all the steps.
+
+    6.  Record value C0 when the difference between consecutive 2-min measurements fell below strictly 5 mmol.kg-1 after at least three runs.
+
+    7.   If error! or Nr_Run \> 10 : + try a 2nd cycle with same leaf + try a 3rd cycle with another leaf + otherwise record NA
+
+## Material
+
+-   Vapor pressure osmometer (Vapro 5520, Wescor, Logan, UT)
+-   Vapro software (Vapro Lab Report)
+-   Fridge
+-   Plastic glass
+-   Liquid Nitrogen
+-   Ziplock bag
+-   Paper towel
+-   Distilled water
+-   Metal tea ball
+-   Tin foil
+-   Needle
+-   Liquid nitrogen gloves
+-   Liquid nitrogen goggles
+-   Liquid nitrogen contenant
+-   2 Tweezers
+-   Cork borer
+
+## References
+
+::: {#refs}
+:::

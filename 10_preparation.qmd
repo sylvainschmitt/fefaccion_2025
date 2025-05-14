@@ -1,7 +1,17 @@
 # Preparation {.unnumbered}
 
-Dummy.
-
 ## To do list:
 
--   
+-   **Clément & Sab.** Discuss traits & protocols.
+
+-   **Lucas**.
+
+    -   Distilled water
+    -   Oven
+    -   SPAD
+    -   Availablity on Sunday
+    -   Leaf N/P measurement
+    -   SIG and inventory data
+    -   Core drill trees
+
+-   **Romain**. Discuss WD method & protocol.

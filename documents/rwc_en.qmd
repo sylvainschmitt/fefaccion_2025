@@ -1,0 +1,51 @@
+---
+title: "Relative Water Content (RWC)"
+author: "Schmitt, S."
+date: last-modified
+format:
+  pdf:
+    classoption: twocolumn
+    number-sections: false
+    link-citations: true
+    colorlinks: true
+    fig-pos: H
+execute:
+  echo: false
+bibliography: ../references.bib
+---
+
+## Protocol
+
+### Field
+
+1.  **Prior measurement**: Weigh the empty zip lock bag with the code name of the future individual.
+2.  Place an isolated, dry leaf sample in the zip lock bag provided.
+3.  Close the bag tightly and store in the cooler.
+
+### Lab
+
+1.  Weigh the zip lock bag with the leaf in it without opening it (Fresh Weight).
+2.  Carefully remove the leaf from the zip lock bag, cut off the petiole under water, and place it in a plastic upright glass with the petiole in the water.
+3.  Replace the leaf in the glass in the zip lock bag and place in the overnight refrigerator for 12 hours.
+4.  At 12 hours, measure the mass of the leaf alone after removing it from the bag (Saturated Weight).
+5.  Place the leaf in an envelope and leave to dry in the oven for at least 48 hours.
+6.  Then record the mass of the sheet (Dry Weight / Masse sèche).
+7.  Compute RWC with:
+
+$$
+RWC = \frac{Fresh~Weight-Dry~weight}{Saturated~Weight-Dry~weight}\times100
+$$
+
+## Material
+
+-   Small zip lock bag
+-   Paper towel
+-   Distilled water
+-   Refrigerator
+-   Analytical balance
+-   Indelible felt pen
+
+## References
+
+::: {#refs}
+:::

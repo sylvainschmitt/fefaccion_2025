@@ -1,0 +1,48 @@
+---
+title: "Fresh measurements"
+author: "Schmitt, S."
+date: last-modified
+format:
+  pdf:
+    classoption: twocolumn
+    number-sections: false
+    link-citations: true
+    colorlinks: true
+    fig-pos: H
+execute:
+  echo: false
+bibliography: ../references.bib
+---
+
+## Protocol
+
+-   Select and clean 5 leaves per individual removing the petiole
+-   Label the leaves 1 to 5 with a marker on the adaxial side (top)
+-   Take 3 SPAD measurements in the middle of the leaf blade
+-   Take 3 thickness measurements with a micrometer in the middle of the leaf blade
+-   Weigh the leaves
+-   Scan the leaves with the adaxial side (top) against the scan in numerical order
+-   Name the file with the tree ID Save the file in a dated folder (YYYY-MM-DD)
+-   Place the 5 leaves in a first envelope labelled with the tree ID and species
+-   Place the remaining leaves in a second envelope labelled with the tree ID, species, and the code extra
+-   Press the envelopes in the herbarium press
+
+## Material
+
+-   Scanner
+-   Precision balance
+-   Computers
+-   Micrometer
+-   AA batteries
+-   SPAD
+-   Flat batteries
+-   Scissors
+-   Labels
+-   Tissues
+-   Pencil Markers
+-   Protocols
+
+## References
+
+::: {#refs}
+:::

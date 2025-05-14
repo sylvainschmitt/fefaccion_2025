@@ -1,0 +1,51 @@
+---
+title: "Conteúdo relativo de água (RWC)"
+author: "Schmitt, S."
+date: last-modified
+format:
+  pdf:
+    classoption: twocolumn
+    number-sections: false
+    link-citations: true
+    colorlinks: true
+    fig-pos: H
+execute:
+  echo: false
+bibliography: ../references.bib
+---
+
+## Protocolo
+
+### Campo
+
+1.  **Medição prévia**: Pese o saco com fecho zip vazio com o nome de código do futuro indivíduo.
+2.  Coloque uma amostra de folha isolada e seca no saco com fecho zip fornecido.
+3.  Feche bem o saco e guarde-o no refrigerador.
+
+### Laboratório
+
+1.  Pese o saco com fecho zip com a folha dentro sem abri-lo (Fresh Weight / Peso fresco).
+2.  Remova cuidadosamente a folha do saco zip lock, corte o pecíolo sob a água e coloque-a em um copo plástico vertical com o pecíolo na água.
+3.  Recoloque a folha no copo dentro do saco zip lock e coloque-a na geladeira durante a noite por 12 horas.
+4.  Após 12 horas, meça a massa da folha sozinha depois de removê-la do saco (Saturated Weight / Peso saturado).
+5.  Coloque a folha em um envelope e deixe-a secar no forno por pelo menos 48 horas.
+6.  Em seguida, registre a massa da folha (Dry Weight / Peso seco).
+7.  Calcule o RWC com:
+
+$$
+RWC = \frac{Fresh~Weight-Dry~weight}{Saturated~Weight-Dry~weight}\times100
+$$
+
+## Material
+
+-   Saco pequeno com fecho zip
+-   Papel toalha
+-   Água destilada
+-   Geladeira
+-   Balança analítica
+-   Caneta de feltro indelével
+
+## Referências
+
+::: {#refs}
+:::

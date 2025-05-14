@@ -24,7 +24,7 @@ proximidades.*
   - Reproductive analyses in `files.qmd`
   - Resulting pages in `docs/`
   - Document structure definition in `_quarto.yml`
-- Documents (protocols, maps, field sheets in `documents/`
+- Documents (protocols, maps, field sheets) in `documents/`
 - R environment definition with
   [renv](https://rstudio.github.io/renv/articles/renv.html) in `renv/`
   and `renv/lock`
