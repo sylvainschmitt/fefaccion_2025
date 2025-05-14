@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "FEFACCION 2025",
+    "section": "",
+    "text": "Introduction\nfefaccion_2025 is a small project to help organise the FEFACCION 2025: (i) research school on ecophysiological approaches and (ii) workshop on forest data management and methods for modelling growth dynamics using the R programming language. Both hold in or near Santarém / Belterra, Para, Brazil.\nO fefaccion_2025 é um pequeno projeto para ajudar a organizar o FEFACCION 2025: (i) escola de pesquisa sobre abordagens ecofisiológicas e (ii) workshop sobre gerenciamento de dados florestais e métodos para modelar a dinâmica de crescimento usando a linguagem de programação R. Ambos serão realizados em Santarém / Belterra, Pará, Brasil, ou em suas proximidades."
+  },
+  {
+    "objectID": "index.html#project",
+    "href": "index.html#project",
+    "title": "FEFACCION 2025",
+    "section": "Project",
+    "text": "Project\nfefaccion_2025 includes:\n\nPresentation of the projects and analyses with associated documentation and figures:\n\nReproductive analyses in files.qmd\nResulting pages in docs/\nDocument structure definition in _quarto.yml\n\nDocuments (protocols, maps, field sheets) in documents/\nOutputs in outputs/\nR environment definition with renv in renv/ and renv/lock\nR files (.Rbuildignore , .Rdata , .Rprofile , .Rhistory)\nGit and GitHub files (.gitignore , .github/)\nProject documentation (README.qmd , README.md , NEWS.md , LICENSE)"
+  },
+  {
+    "objectID": "index.html#people",
+    "href": "index.html#people",
+    "title": "FEFACCION 2025",
+    "section": "People",
+    "text": "People\n\nSylvain Schmitt (sylvain.schmitt@cirad.fr)\nGéraldine Derroire (geraldine.derroire@cirad.fr)\nJoannès Guillemot (joannes.guillemot@cirad.fr)\nLucas Mazzei de Freitas (lucas.mazzei@embrapa.br)"
+  },
+  {
+    "objectID": "01_dummy.html",
+    "href": "01_dummy.html",
+    "title": "Dummy",
+    "section": "",
+    "text": "Dummy."
+  },
+  {
+    "objectID": "97_meeting.html",
+    "href": "97_meeting.html",
+    "title": "Meetings",
+    "section": "",
+    "text": "This appendix can be used to take notes from meetings."
+  }
+]

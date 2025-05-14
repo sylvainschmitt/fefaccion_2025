@@ -1,0 +1,17 @@
+---
+title: "Documents"
+date: today
+date-format: medium
+format: 
+  gfm:
+    toc: true
+    toc-depth: 2
+---
+
+All documents (protocols, maps, field sheets):
+
+-   ...
+
+```{r, comment=""}
+fs::dir_tree()
+```
