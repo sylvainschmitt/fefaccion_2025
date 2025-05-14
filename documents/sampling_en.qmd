@@ -1,0 +1,60 @@
+---
+title: "Sampling"
+author: "Schmitt, S."
+date: last-modified
+format:
+  pdf:
+    classoption: twocolumn
+    number-sections: false
+    link-citations: true
+    colorlinks: true
+    fig-pos: H
+execute:
+  echo: false
+bibliography: ../references.bib
+---
+
+## Protocol
+
+-   Note
+    -   date
+    -   time
+    -   plot
+    -   tree id
+-   tree Dawkins index
+-   Sample a branch with the Big Short from the canopy, trop crown area and in the light if possible
+-   Select 10-20 leaves
+-   Place the leaves in a ziplock filled with CO2 at the mouth with a tissue moistened with a mister
+-   Label with the tree code
+-   Store samples in a double black bin bag
+
+## Preparation
+
+-   Charge the camera
+-   Prepare ziplocks with label and tissues
+
+## Material
+
+-   Camera
+-   Binoculars
+-   Big Shot with weights and wire
+-   Helmets
+-   Micrometer
+-   AA batteries
+-   SPAD
+-   Flat batteries
+-   Scissors
+-   Ziplocks
+-   Labels
+-   Tissues
+-   Bin bags
+-   Plastic box
+-   Pencil Markers
+-   Protocols
+-   Maps
+-   Field notebook
+
+## References
+
+::: {#refs}
+:::

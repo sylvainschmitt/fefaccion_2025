@@ -1,0 +1,18 @@
+# Protocols {.unnumbered}
+
+Links to all English 🏴󠁧󠁢󠁥󠁮󠁧󠁿 and Portuguese 🇧🇷 protocol to print and share:
+
+-   Sampling
+    -   Sampling protocol
+        -   English 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : [sampling_en.pdf](https://github.com/sylvainschmitt/fefaccion_2025/tree/main/documents/sampling_en.pdf)
+        -   Portuguese 🇧🇷 : [sampling_br.pdf](https://github.com/sylvainschmitt/fefaccion_2025/tree/main/documents/sampling_br.pdf)
+    -   Dawkins index: [dawkins.pdf](https://github.com/sylvainschmitt/fefaccion_2025/tree/main/documents/dawkins.pdf)
+    -   Field sheet:
+-   Field measurements:
+    -   Protocol:
+    -   Sheet:
+-   Lab measurements
+    -   TLP:
+    -   RWC:
+    -   Dry measurements:
+    -   Sheets:

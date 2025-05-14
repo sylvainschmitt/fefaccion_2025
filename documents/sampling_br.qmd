@@ -1,0 +1,60 @@
+---
+title: "Amostragem"
+author: "Schmitt, S."
+date: last-modified
+format:
+  pdf:
+    classoption: twocolumn
+    number-sections: false
+    link-citations: true
+    colorlinks: true
+    fig-pos: H
+execute:
+  echo: false
+bibliography: ../references.bib
+---
+
+## Protocolo
+
+-   Observação
+    -   data
+    -   hora
+    -   plot
+    -   id da árvore
+-   índice de Dawkins da árvore
+-   Faça uma amostragem de um galho com o Big Short do dossel, da área da copa e na luz, se possível
+-   Selecione de 10 a 20 folhas
+-   Coloque as folhas em um ziplock cheio de CO2 na boca com um lenço de papel umedecido com um borrifador
+-   Rotular com o código da árvore
+-   Armazene as amostras em um saco de lixo preto duplo
+
+## Preparação
+
+-   Carregue a câmera
+-   Prepare ziplocks com etiqueta e lenços de papel
+
+## Material
+
+-   Câmera
+-   Binóculos
+-   Big Shot com pesos e arame
+-   Capacetes
+-   Micrômetro
+-   Pilhas AA
+-   SPAD
+-   Pilhas planas
+-   Tesouras
+-   Ziplocks
+-   Etiquetas
+-   Lenços de papel
+-   Sacos de lixo
+-   Caixa plástica
+-   Lápis Marcadores
+-   Protocolos
+-   Mapas
+-   Caderno de campo
+
+## Referências
+
+::: {#refs}
+:::

@@ -7,7 +7,11 @@ book:
   date: last-modified
   chapters:
     - index.qmd
-    - 01_dummy.qmd
+    - part: 10_preparation.qmd
+      chapters: 
+        - 11_traits.qmd
+        - 12_protocols.qmd
+        - 13_material.qmd
   appendices:
     - 97_meeting.qmd
     - 99_references.qmd

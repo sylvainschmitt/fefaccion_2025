@@ -21,11 +21,39 @@
     "text": "People\n\nSylvain Schmitt (sylvain.schmitt@cirad.fr)\nGéraldine Derroire (geraldine.derroire@cirad.fr)\nJoannès Guillemot (joannes.guillemot@cirad.fr)\nLucas Mazzei de Freitas (lucas.mazzei@embrapa.br)"
   },
   {
-    "objectID": "01_dummy.html",
-    "href": "01_dummy.html",
-    "title": "Dummy",
+    "objectID": "10_preparation.html#to-do-list",
+    "href": "10_preparation.html#to-do-list",
+    "title": "Preparation",
+    "section": "To do list:",
+    "text": "To do list:"
+  },
+  {
+    "objectID": "11_traits.html",
+    "href": "11_traits.html",
+    "title": "Traits",
     "section": "",
-    "text": "Dummy."
+    "text": "We will measure the following functional traits.\n\nLA: leaf area \\(cm^{2}\\)\nLDMC: leaf dry matter content \\(g.g^{-1}\\)\nLT: leaf thickness (\\(\\mu m\\))\nCC: chlorophyll content (\\(\\mu g.cm^{-2}\\))\nSLA: specific leaf area (\\(g.cm^{-2}\\))\nRWC: relative water content (\\(\\%\\)) is of special interest as it reflects the amount of water present the leaf relative to the maximum it can hold (Barrs and Weatherley 1962)\nTLP: leaf water potential at which leaf cells lose turgor (\\(MPa\\)), a key drought tolerance trait.\nMajVLA: Nervation density determining the capacity of water supply in leaves (Schneider et al. 2017).\nNmass: leaf nitrogen mass content (\\(mg.g^{-1}\\), maybe simply collected but measured later)\nPmass: leaf phosphorus mass content (\\(mg.g^{-1}\\), maybe simply collected but measured later)\nWD: wood density (\\(g.cm^{-3}\\), to be discussed with Romain Lehnebach)\n\nThey will necessitate the following raw measurements:\n\nLeaf fresh thickness (LT)\nLeaf SPAD measurement (CC)\nLeaf fresh weight (LDMC, SLA, RWC)\nLeaf scan (LA, MajVLA)\nLeaf saturated weight (RWC)\nLeaf saturated water potential (TLP)\n? (WD)\n\n\n\n\n\nBarrs, HD, and PE Weatherley. 1962. “A Re-Examination of the Relative Turgidity Technique for Estimating Water Deficits in Leaves.” Australian Journal of Biological Sciences 15 (3): 413–28.\n\n\nSchneider, Julio V, Jörg Habersetzer, Renate Rabenstein, Jens Wesenberg, Karsten Wesche, and Georg Zizka. 2017. “Water Supply and Demand Remain Coordinated During Breakdown of the Global Scaling Relationship Between Leaf Size and Major Vein Density.” New Phytologist 214 (1): 473–86."
+  },
+  {
+    "objectID": "12_protocols.html",
+    "href": "12_protocols.html",
+    "title": "Protocols",
+    "section": "",
+    "text": "Links to all English 🏴󠁧󠁢󠁥󠁮󠁧󠁿 and Portuguese 🇧🇷 protocol to print and share:\n\nSampling\n\nSampling protocol\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : sampling_en.pdf\nPortuguese 🇧🇷 : sampling_br.pdf\n\nDawkins index: dawkins.pdf\nField sheet:\n\nField measurements:\n\nProtocol:\nSheet:\n\nLab measurements\n\nTLP:\nRWC:\nDry measurements:\nSheets:"
+  },
+  {
+    "objectID": "13_material.html#big-material",
+    "href": "13_material.html#big-material",
+    "title": "Material",
+    "section": "Big material",
+    "text": "Big material\n\nCamera\nBinoculars\nBig Shot\nBig Shot weight\nBig Shot wire\nHelmets (~15)\nMicrometer\nSPAD\nOven\nVapor pressure osmometer (Vapro 5520, Wescor, Logan, UT)\nVapro software (Vapro Lab Report)\nLiquid nitrogen\nFridge\nDistilled water\nPrecision balance\nScanner\nComputer"
+  },
+  {
+    "objectID": "13_material.html#small-material",
+    "href": "13_material.html#small-material",
+    "title": "Material",
+    "section": "Small material",
+    "text": "Small material\n\nField support\nAA batteries\nFlat batteries\nCisors\nZiplocks\nLabels\nTissues\nBin bafs\nPlastic box\nMister\nPencil\nMarkers\nMaps\nField notebook\nPruning shears\nEnvelopes\nJournal\nPress\nPaper towel\nMetal tea ball\nTin foil\nNeedle\nLiquid nitrogen gloves\nLiquid nitrogen goggles\nLiquid nitrogen contenant\n2 Tweezers\nCork borer"
   },
   {
     "objectID": "97_meeting.html",
@@ -33,5 +61,12 @@
     "title": "Meetings",
     "section": "",
     "text": "This appendix can be used to take notes from meetings."
+  },
+  {
+    "objectID": "99_references.html",
+    "href": "99_references.html",
+    "title": "References",
+    "section": "",
+    "text": "Barrs, HD, and PE Weatherley. 1962. “A Re-Examination of the\nRelative Turgidity Technique for Estimating Water Deficits in\nLeaves.” Australian Journal of Biological Sciences 15\n(3): 413–28.\n\n\nSchneider, Julio V, Jörg Habersetzer, Renate Rabenstein, Jens Wesenberg,\nKarsten Wesche, and Georg Zizka. 2017. “Water Supply and Demand\nRemain Coordinated During Breakdown of the Global Scaling Relationship\nBetween Leaf Size and Major Vein Density.” New\nPhytologist 214 (1): 473–86."
   }
 ]
