@@ -1,3 +1,34 @@
 # Meetings {.unnumbered}
 
 This appendix can be used to take notes from meetings.
+
+## 25/05/16 - Discussion the program
+
+-   Participants: Sylvain + Géraldine
+
+-   Workshop on growth modelling:
+
+    -   can be done on Friday 11th afternoon (assuming we can keep the Saturday to finish the traits measurements JG, SS and GD)
+    -   integrated in the field school on traits + open to others people
+    -   send some resources to get familiar with R before the workshop
+    -   focus the workshop on
+        -   calculation of growth
+        -   log-log model with brms
+        -   Canham model with brsm
+        -   lm on relationship growth \~ traits with growth data from Ecology Letters paper
+        -   alternativelly: allometry H-D + link Hlim / traits
+    -   data: Tapajos open data / Beleterra plantation (probably difficult) / P6 Paracou
+
+-   Workshop traits
+
+    -   try to do everything in residencial in Belterra if we can work in Embrapa Belterra + have a "privatised" poussada
+    -   do some short apero bate-papo:
+        -   Joannès: ecophy/traits
+        -   Géraldine: use of traits in correlative growth models
+        -   Sylvain: use of traits in process-based models
+
+-   Additional questions for Lucas
+
+    -   install the lab in Empraba Belterra (\<10 people)?
+    -   access to lab on week-ends (first Sunday to prepare + last Saturday to finish up)?
+    -   possible to find a poussada with a shared space?

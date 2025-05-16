@@ -4,21 +4,30 @@
     "href": "index.html",
     "title": "FEFACCION 2025",
     "section": "",
-    "text": "Introduction\nfefaccion_2025 is a small project to help organise the FEFACCION 2025: (i) research school on ecophysiological approaches and (ii) workshop on forest data management and methods for modelling growth dynamics using the R programming language. Both hold in or near Santarém / Belterra, Para, Brazil.\nO fefaccion_2025 é um pequeno projeto para ajudar a organizar o FEFACCION 2025: (i) escola de pesquisa sobre abordagens ecofisiológicas e (ii) workshop sobre gerenciamento de dados florestais e métodos para modelar a dinâmica de crescimento usando a linguagem de programação R. Ambos serão realizados em Santarém / Belterra, Pará, Brasil, ou em suas proximidades."
+    "text": "Introduction\nfefaccion_2025 is a small project to help organise the FEFACCION 2025: (i) research school on ecophysiological approaches and (ii) workshop on forest data management and methods for modelling growth dynamics using the R programming language. Both hold in or near Santarém / Belterra, Para, Brazil.\nO fefaccion_2025 é um pequeno projeto para ajudar a organizar o FEFACCION 2025: (i) escola de pesquisa sobre abordagens ecofisiológicas e (ii) workshop sobre gerenciamento de dados florestais e métodos para modelar a dinâmica de crescimento usando a linguagem de programação R. Ambos serão realizados em Santarém / Belterra, Pará, Brasil, ou em suas proximidades.",
+    "crumbs": [
+      "Introduction"
+    ]
   },
   {
     "objectID": "index.html#project",
     "href": "index.html#project",
     "title": "FEFACCION 2025",
     "section": "Project",
-    "text": "Project\nfefaccion_2025 includes:\n\nPresentation of the projects and analyses with associated documentation and figures:\n\nReproductive analyses in files.qmd\nResulting pages in docs/\nDocument structure definition in _quarto.yml\n\nDocuments (protocols, maps, field sheets) in documents/\nR environment definition with renv in renv/ and renv/lock\nR files (.Rbuildignore , .Rdata , .Rprofile , .Rhistory)\nGit and GitHub files (.gitignore , .github/)\nProject documentation (README.qmd , README.md , NEWS.md , LICENSE)"
+    "text": "Project\nfefaccion_2025 includes:\n\nPresentation of the projects and analyses with associated documentation and figures:\n\nReproductive analyses in files.qmd\nResulting pages in docs/\nDocument structure definition in _quarto.yml\n\nDocuments (protocols, maps, field sheets) in documents/\nR environment definition with renv in renv/ and renv/lock\nR files (.Rbuildignore , .Rdata , .Rprofile , .Rhistory)\nGit and GitHub files (.gitignore , .github/)\nProject documentation (README.qmd , README.md , NEWS.md , LICENSE)",
+    "crumbs": [
+      "Introduction"
+    ]
   },
   {
     "objectID": "index.html#people",
     "href": "index.html#people",
     "title": "FEFACCION 2025",
     "section": "People",
-    "text": "People\n\nSylvain Schmitt (sylvain.schmitt@cirad.fr)\nGéraldine Derroire (geraldine.derroire@cirad.fr)\nJoannès Guillemot (joannes.guillemot@cirad.fr)\nLucas Mazzei de Freitas (lucas.mazzei@embrapa.br)"
+    "text": "People\n\nSylvain Schmitt (sylvain.schmitt@cirad.fr)\nGéraldine Derroire (geraldine.derroire@cirad.fr)\nJoannès Guillemot (joannes.guillemot@cirad.fr)\nLucas Mazzei de Freitas (lucas.mazzei@embrapa.br)",
+    "crumbs": [
+      "Introduction"
+    ]
   },
   {
     "objectID": "10_preparation.html#to-do-list",
@@ -60,7 +69,11 @@
     "href": "97_meeting.html",
     "title": "Meetings",
     "section": "",
-    "text": "This appendix can be used to take notes from meetings."
+    "text": "25/05/16 - Discussion the program",
+    "crumbs": [
+      "Appendices",
+      "Meetings"
+    ]
   },
   {
     "objectID": "99_references.html",
@@ -68,5 +81,16 @@
     "title": "References",
     "section": "",
     "text": "Barrs, HD, and PE Weatherley. 1962. “A Re-Examination of the\nRelative Turgidity Technique for Estimating Water Deficits in\nLeaves.” Australian Journal of Biological Sciences 15\n(3): 413–28.\n\n\nSchneider, Julio V, Jörg Habersetzer, Renate Rabenstein, Jens Wesenberg,\nKarsten Wesche, and Georg Zizka. 2017. “Water Supply and Demand\nRemain Coordinated During Breakdown of the Global Scaling Relationship\nBetween Leaf Size and Major Vein Density.” New\nPhytologist 214 (1): 473–86."
+  },
+  {
+    "objectID": "97_meeting.html#discussion-the-program",
+    "href": "97_meeting.html#discussion-the-program",
+    "title": "Meetings",
+    "section": "",
+    "text": "Participants: Sylvain + Géraldine\nWorkshop on growth modelling:\n\ncan be done on Friday 11th afternoon (assuming we can keep the Saturday to finish the traits measurements JG, SS and GD)\nintegrated in the field school on traits + open to others people\nsend some resources to get familiar with R before the workshop\nfocus the workshop on\n\ncalculation of growth\nlog-log model with brms\nCanham model with brsm\nlm on relationship growth ~ traits with growth data from Ecology Letters paper\nalternativelly: allometry H-D + link Hlim / traits\n\ndata: Tapajos open data / Beleterra plantation (probably difficult) / P6 Paracou\n\nWorkshop traits\n\ntry to do everything in residencial in Belterra if we can work in Embrapa Belterra + have a “privatised” poussada\ndo some short apero bate-papo:\n\nJoannès: ecophy/traits\nGéraldine: use of traits in correlative growth models\nSylvain: use of traits in process-based models",
+    "crumbs": [
+      "Appendices",
+      "Meetings"
+    ]
   }
 ]
