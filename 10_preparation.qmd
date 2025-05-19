@@ -2,14 +2,24 @@
 
 ## To do list:
 
+-   **Me**.
+
+    -   Program
+    -   Budget
+    -   Book transport & accommodation
+    -   Command material
+    -   Prepare lectures
+
 -   **Clément & Sab.** Discuss traits & protocols.
 
 -   **Lucas**.
 
+    -   **Validate program**
+    -   **Validate lab**
     -   Distilled water
     -   Oven
     -   SPAD
-    -   Availablity on Sunday
+    -   Availability on weekend
     -   Leaf N/P measurement
     -   SIG and inventory data
     -   Core drill trees

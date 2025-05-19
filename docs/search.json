@@ -4,37 +4,28 @@
     "href": "index.html",
     "title": "FEFACCION 2025",
     "section": "",
-    "text": "Introduction\nfefaccion_2025 is a small project to help organise the FEFACCION 2025: (i) research school on ecophysiological approaches and (ii) workshop on forest data management and methods for modelling growth dynamics using the R programming language. Both hold in or near Santarém / Belterra, Para, Brazil.\nO fefaccion_2025 é um pequeno projeto para ajudar a organizar o FEFACCION 2025: (i) escola de pesquisa sobre abordagens ecofisiológicas e (ii) workshop sobre gerenciamento de dados florestais e métodos para modelar a dinâmica de crescimento usando a linguagem de programação R. Ambos serão realizados em Santarém / Belterra, Pará, Brasil, ou em suas proximidades.",
-    "crumbs": [
-      "Introduction"
-    ]
+    "text": "Introduction\nfefaccion_2025 is a small project to help organise the FEFACCION 2025: (i) research school on ecophysiological approaches and (ii) workshop on forest data management and methods for modelling growth dynamics using the R programming language. Both hold in or near Santarém / Belterra, Para, Brazil.\nO fefaccion_2025 é um pequeno projeto para ajudar a organizar o FEFACCION 2025: (i) escola de pesquisa sobre abordagens ecofisiológicas e (ii) workshop sobre gerenciamento de dados florestais e métodos para modelar a dinâmica de crescimento usando a linguagem de programação R. Ambos serão realizados em Santarém / Belterra, Pará, Brasil, ou em suas proximidades."
   },
   {
     "objectID": "index.html#project",
     "href": "index.html#project",
     "title": "FEFACCION 2025",
     "section": "Project",
-    "text": "Project\nfefaccion_2025 includes:\n\nPresentation of the projects and analyses with associated documentation and figures:\n\nReproductive analyses in files.qmd\nResulting pages in docs/\nDocument structure definition in _quarto.yml\n\nDocuments (protocols, maps, field sheets) in documents/\nR environment definition with renv in renv/ and renv/lock\nR files (.Rbuildignore , .Rdata , .Rprofile , .Rhistory)\nGit and GitHub files (.gitignore , .github/)\nProject documentation (README.qmd , README.md , NEWS.md , LICENSE)",
-    "crumbs": [
-      "Introduction"
-    ]
+    "text": "Project\nfefaccion_2025 includes:\n\nPresentation of the projects and analyses with associated documentation and figures:\n\nReproductive analyses in files.qmd\nResulting pages in docs/\nDocument structure definition in _quarto.yml\n\nDocuments (protocols, maps, field sheets) in documents/\nR environment definition with renv in renv/ and renv/lock\nR files (.Rbuildignore , .Rdata , .Rprofile , .Rhistory)\nGit and GitHub files (.gitignore , .github/)\nProject documentation (README.qmd , README.md , NEWS.md , LICENSE)"
   },
   {
     "objectID": "index.html#people",
     "href": "index.html#people",
     "title": "FEFACCION 2025",
     "section": "People",
-    "text": "People\n\nSylvain Schmitt (sylvain.schmitt@cirad.fr)\nGéraldine Derroire (geraldine.derroire@cirad.fr)\nJoannès Guillemot (joannes.guillemot@cirad.fr)\nLucas Mazzei de Freitas (lucas.mazzei@embrapa.br)",
-    "crumbs": [
-      "Introduction"
-    ]
+    "text": "People\n\nSylvain Schmitt (sylvain.schmitt@cirad.fr)\nGéraldine Derroire (geraldine.derroire@cirad.fr)\nJoannès Guillemot (joannes.guillemot@cirad.fr)\nLucas Mazzei de Freitas (lucas.mazzei@embrapa.br)"
   },
   {
     "objectID": "10_preparation.html#to-do-list",
     "href": "10_preparation.html#to-do-list",
     "title": "Preparation",
     "section": "To do list:",
-    "text": "To do list:\n\nClément & Sab. Discuss traits & protocols.\nLucas.\n\nDistilled water\nOven\nSPAD\nAvailablity on Sunday\nLeaf N/P measurement\nSIG and inventory data\nCore drill trees\n\nRomain. Discuss WD method & protocol."
+    "text": "To do list:\n\nMe.\n\nProgram\nBudget\nBook transport & accommodation\nCommand material\nPrepare lectures\n\nClément & Sab. Discuss traits & protocols.\nLucas.\n\nValidate program\nValidate lab\nDistilled water\nOven\nSPAD\nAvailability on weekend\nLeaf N/P measurement\nSIG and inventory data\nCore drill trees\n\nRomain. Discuss WD method & protocol."
   },
   {
     "objectID": "11_traits.html",
@@ -65,15 +56,11 @@
     "text": "Small material\n\nField support\nAA batteries\nFlat batteries\nCisors\nZiplocks\nLabels\nTissues\nBin bafs\nPlastic box\nMister\nPencil\nMarkers\nMaps\nField notebook\nPruning shears\nEnvelopes\nJournal\nPress\nPaper towel\nMetal tea ball\nTin foil\nNeedle\nLiquid nitrogen gloves\nLiquid nitrogen goggles\nLiquid nitrogen contenant\n2 Tweezers\nCork borer"
   },
   {
-    "objectID": "97_meeting.html",
-    "href": "97_meeting.html",
+    "objectID": "97_meeting.html#discussion-the-program",
+    "href": "97_meeting.html#discussion-the-program",
     "title": "Meetings",
-    "section": "",
-    "text": "25/05/16 - Discussion the program",
-    "crumbs": [
-      "Appendices",
-      "Meetings"
-    ]
+    "section": "25/05/16 - Discussion the program",
+    "text": "25/05/16 - Discussion the program\n\nParticipants: Sylvain + Géraldine\nWorkshop on growth modelling:\n\ncan be done on Friday 11th afternoon (assuming we can keep the Saturday to finish the traits measurements JG, SS and GD)\nintegrated in the field school on traits + open to others people\nsend some resources to get familiar with R before the workshop\nfocus the workshop on\n\ncalculation of growth\nlog-log model with brms\nCanham model with brsm\nlm on relationship growth ~ traits with growth data from Ecology Letters paper\nalternativelly: allometry H-D + link Hlim / traits\n\ndata: Tapajos open data / Beleterra plantation (probably difficult) / P6 Paracou\n\nWorkshop traits\n\ntry to do everything in residencial in Belterra if we can work in Embrapa Belterra + have a “privatised” poussada\ndo some short apero bate-papo:\n\nJoannès: ecophy/traits\nGéraldine: use of traits in correlative growth models\nSylvain: use of traits in process-based models\n\n\nAdditional questions for Lucas\n\ninstall the lab in Empraba Belterra (&lt;10 people)?\naccess to lab on week-ends (first Sunday to prepare + last Saturday to finish up)?\npossible to find a poussada with a shared space?"
   },
   {
     "objectID": "99_references.html",
@@ -81,16 +68,5 @@
     "title": "References",
     "section": "",
     "text": "Barrs, HD, and PE Weatherley. 1962. “A Re-Examination of the\nRelative Turgidity Technique for Estimating Water Deficits in\nLeaves.” Australian Journal of Biological Sciences 15\n(3): 413–28.\n\n\nSchneider, Julio V, Jörg Habersetzer, Renate Rabenstein, Jens Wesenberg,\nKarsten Wesche, and Georg Zizka. 2017. “Water Supply and Demand\nRemain Coordinated During Breakdown of the Global Scaling Relationship\nBetween Leaf Size and Major Vein Density.” New\nPhytologist 214 (1): 473–86."
-  },
-  {
-    "objectID": "97_meeting.html#discussion-the-program",
-    "href": "97_meeting.html#discussion-the-program",
-    "title": "Meetings",
-    "section": "",
-    "text": "Participants: Sylvain + Géraldine\nWorkshop on growth modelling:\n\ncan be done on Friday 11th afternoon (assuming we can keep the Saturday to finish the traits measurements JG, SS and GD)\nintegrated in the field school on traits + open to others people\nsend some resources to get familiar with R before the workshop\nfocus the workshop on\n\ncalculation of growth\nlog-log model with brms\nCanham model with brsm\nlm on relationship growth ~ traits with growth data from Ecology Letters paper\nalternativelly: allometry H-D + link Hlim / traits\n\ndata: Tapajos open data / Beleterra plantation (probably difficult) / P6 Paracou\n\nWorkshop traits\n\ntry to do everything in residencial in Belterra if we can work in Embrapa Belterra + have a “privatised” poussada\ndo some short apero bate-papo:\n\nJoannès: ecophy/traits\nGéraldine: use of traits in correlative growth models\nSylvain: use of traits in process-based models",
-    "crumbs": [
-      "Appendices",
-      "Meetings"
-    ]
   }
 ]
