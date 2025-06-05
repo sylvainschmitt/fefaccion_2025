@@ -4,17 +4,13 @@
 
 -   **Me**.
 
-    -   Program
-    -   Budget
-    -   Book transport & accommodation
-    -   Command material
-    -   Prepare lectures
-
--   **Clément & Sab.** Discuss traits & protocols.
+    -   Budget *wip*
+    -   Book transport & accommodation (+**Lucas**)
+    -   Command material *wip, tarrière & petit matériel*
+    -   Prepare lectures (+**Géradline**)
 
 -   **Lucas**.
 
-    -   **Validate program**
     -   **Validate lab**
     -   Distilled water
     -   Oven
@@ -24,4 +20,4 @@
     -   SIG and inventory data
     -   Core drill trees
 
--   **Romain**. Discuss WD method & protocol.
+-   **Romain**. Validate WD protocol.
