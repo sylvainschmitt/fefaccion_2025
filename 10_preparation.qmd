@@ -2,16 +2,22 @@
 
 ## To do list:
 
--   **Clément & Sab.** Discuss traits & protocols.
+-   **Me**.
+
+    -   Budget *wip*
+    -   Book transport & accommodation (+**Lucas**)
+    -   Command material *wip, tarrière & petit matériel*
+    -   Prepare lectures (+**Géradline**)
 
 -   **Lucas**.
 
+    -   **Validate lab**
     -   Distilled water
     -   Oven
     -   SPAD
-    -   Availablity on Sunday
+    -   Availability on weekend
     -   Leaf N/P measurement
     -   SIG and inventory data
     -   Core drill trees
 
--   **Romain**. Discuss WD method & protocol.
+-   **Romain**. Validate WD protocol.
