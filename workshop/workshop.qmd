@@ -1,0 +1,61 @@
+---
+title: "Dinâmica florestal com R"
+author: Géraldine Derroire & Sylvain Schmitt
+institute: Cirad
+date: "11 de julho de 2025"
+format: 
+  revealjs:
+    theme: night
+    output-location: fragment 
+    slide-number: true
+    preview-links: true
+    chalkboard: true
+    link-external-icon: true
+    link-external-newwindow: true
+    incremental: true
+execute:
+  echo: true   
+  warning: true
+  message: true 
+  cache: true
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+<!-- TO DO, put the logos on the title page-->
+
+<!-- @Sylvain: pour l'instant, je mets la structure en français, on changera en avançant -->
+
+# Les données
+
+présenter paracou +  présenter les traits
+
+# explorer les traits
+
+* density plots
+
+* pairwise correlation
+
+* ACP
+
+# Préparer les données inventaires
+
+* check + filtre (mort, petits...) => on ne rentre pas dans la correction de circonf, voir pour faire un filtre sur les corrigés 
+
+* calcul de DBH et de croissance
+
+* viualiser les trajectoires de DBH ? visualiser les trajectoires de croissance pour quelques indiv des espèces choisies
+
+# Modeliser la croissance
+
+modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet indiv aléatoire additif? 
+
+avec brms
+
+sur environ 3 espcèes contrastées et si possible présente à Tapajos
+
+
+# les trais pour expliquer gmax
+
+repartir des gmax de Ecology Letters et faire un lm en frequentiste => cf exam Géraldine
