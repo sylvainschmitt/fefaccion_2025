@@ -411,6 +411,7 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <section class="slide level2">
 
 <!-- TO DO, put the logos on the title page-->
+<!-- Translate the code comments -->
 <!-- @Sylvain: pour l'instant, je mets la structure en français, on changera en avançant -->
 <!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
 <div class="cell">
@@ -423,18 +424,84 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </div>
 </section>
 <section>
-<section id="les-données" class="title-slide slide level1 center">
-<h1>Les données</h1>
-<p>présenter paracou + présenter les traits</p>
+<section id="dados" class="title-slide slide level1 center">
+<h1>Dados</h1>
+
 </section>
+<section id="dados-de-parcelas-florestais-permanentes" class="slide level2">
+<h2>Dados de parcelas florestais permanentes</h2>
+<div class="column" style="width:60%;">
+<ul>
+<li><p>Dados de uma parcela permanente (parcela 6) na estação de pesquisa florestal de <a href="https://paracou.cirad.fr/website">Paracou</a> na Guiana Francesa</p></li>
+<li><p>Todas as árvores com um diâmetro à altura do peito (DAP) ≥ 10 cm são mapeadas, identificadas botanicamente e medidas em cada censo</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="foto_inventorio.png" class="quarto-figure quarto-figure-center" style="height:60.0%"></p>
+</figure>
+</div>
+</div><div class="column" style="width:5%;">
+
+</div><div class="column" style="width:35%;">
+<p><img data-src="paracou.png"></p>
+</div></section>
+<section id="dados-de-parcelas-florestais-permanentes-1" class="slide level2">
+<h2>Dados de parcelas florestais permanentes</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/data_paracou_p6.RData"</span>)</span>
+<span id="cb2-2"><a href=""></a>dt_P6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 127,732 × 13
+   Forest   Plot PlotArea SubPlot idTree    Xutm    Yutm Family    Genus Species
+   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  
+ 1 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+ 2 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+ 3 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+ 4 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+ 5 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+ 6 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+ 7 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+ 8 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+ 9 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+10 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
+# ℹ 127,722 more rows
+# ℹ 3 more variables: CensusYear &lt;dbl&gt;, CodeAlive &lt;dbl&gt;, CircCorr &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p><span class="fragment">⚠️ Esses dados NÃO são de acesso livre, por favor, não os distribua nem utilize para qualquer outro fim.</span></p>
+</section>
+<section id="dados-de-parcelas-florestais-permanentes-2" class="slide level2">
+<h2>Dados de parcelas florestais permanentes</h2>
+<p>Esses dados contêm:</p>
+<div class="column" style="width:50%;">
+<ul>
+<li><p><strong>Forest</strong>: Nome da floresta</p></li>
+<li><p><strong>Plot</strong>: Número da parcela</p></li>
+<li><p><strong>PlotArea</strong>: Área da parcela (hectares)</p></li>
+<li><p><strong>SubPlot</strong>: Número da subparcela</p></li>
+<li><p><strong>idTree</strong>: Identificador único da árvore no banco de dados</p></li>
+<li><p><strong>Xutm</strong> e <strong>Yutm</strong>: Coordenadas da árvore (UTM 22N (EPSG: 32 622))</p></li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li><p><strong>Family</strong></p></li>
+<li><p><strong>Genus</strong></p></li>
+<li><p><strong>Species</strong></p></li>
+<li><p><strong>CensusYear</strong>: Ano da medição</p></li>
+<li><p><strong>CodeAlive</strong>: A árvore está viva (1) ou morta (0)?</p></li>
+<li><p><strong>CircCorr</strong>: Circunferência (cm) da árvore no ponto de medição</p></li>
+</ul>
+</div></section>
 <section id="dados-de-características-funcionais" class="slide level2">
 <h2>Dados de características funcionais</h2>
 <!-- @Sylvain: confirme que les données de traits viennet de TRY-->
 <p>Vamos usar os dados das características funcionais das árvores da Guiana Francesa obtidos na base de dados <a href="https://www.try-db.org/TryWeb/Home.php">TRY</a> e compilados no pacote <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14215">rcontroll</a>.</p>
 <p>Esses dados estão disponíveis <a href="https://github.com/sylvainschmitt/fefaccion_2025/workshop/data/data/dt_traits.RData">aqui</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/dt_traits.RData"</span>)</span>
-<span id="cb2-2"><a href=""></a>dt_traits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/dt_traits.RData"</span>)</span>
+<span id="cb4-2"><a href=""></a>dt_traits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -474,10 +541,10 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <!--* massa seca foliar (*s_drymass*, em $g$)-->
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>dt_traits <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href=""></a>  <span class="fu">select</span>(species, LMA, Nmass, Pmass, wsg, tlp)</span>
-<span id="cb4-3"><a href=""></a></span>
-<span id="cb4-4"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>dt_traits <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href=""></a>  <span class="fu">select</span>(species, LMA, Nmass, Pmass, wsg, tlp)</span>
+<span id="cb6-3"><a href=""></a></span>
+<span id="cb6-4"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -500,17 +567,17 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <section id="distribuição-das-valores-das-características" class="slide level2">
 <h2>Distribuição das valores das características</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href=""></a>  <span class="fu">pivot_longer</span>(LMA <span class="sc">:</span> tlp, </span>
-<span id="cb6-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"traits"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">colour =</span> traits)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb6-5"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> traits, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> </span>
+<span id="cb8-2"><a href=""></a>  <span class="fu">pivot_longer</span>(LMA <span class="sc">:</span> tlp, </span>
+<span id="cb8-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"traits"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb8-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">colour =</span> traits)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb8-5"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> traits, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
 </figure>
 </div>
 </div>
@@ -533,9 +600,9 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <section id="coeficientes-de-variação-das-características" class="slide level2">
 <h2>Coeficientes de variação das características</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
-<span id="cb7-2"><a href=""></a>  <span class="fu">across</span>(LMA <span class="sc">:</span> tlp,</span>
-<span id="cb7-3"><a href=""></a>         <span class="cf">function</span>(v) {<span class="fu">round</span>(<span class="fu">sd</span>(v)<span class="sc">/</span><span class="fu">abs</span>(<span class="fu">mean</span>(v)), <span class="dv">3</span>)}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
+<span id="cb9-2"><a href=""></a>  <span class="fu">across</span>(LMA <span class="sc">:</span> tlp,</span>
+<span id="cb9-3"><a href=""></a>         <span class="cf">function</span>(v) {<span class="fu">round</span>(<span class="fu">sd</span>(v)<span class="sc">/</span><span class="fu">abs</span>(<span class="fu">mean</span>(v)), <span class="dv">3</span>)}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -549,13 +616,13 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <section id="correlações-entre-pares-de-características" class="slide level2">
 <h2>Correlações entre pares de características</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">ggpairs</span>(dt_traits, <span class="at">columns =</span> <span class="fu">names</span>(dt_traits)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">ggpairs</span>(dt_traits, <span class="at">columns =</span> <span class="fu">names</span>(dt_traits)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -579,9 +646,9 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <h2>Axes de covariância de características funcionais</h2>
 <p>Análise de componentes principais</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>trait_pca <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>species) <span class="sc">%&gt;%</span> </span>
-<span id="cb10-2"><a href=""></a>  <span class="fu">pca</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-3"><a href=""></a><span class="fu">summary</span>(trait_pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>trait_pca <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>species) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href=""></a>  <span class="fu">pca</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-3"><a href=""></a><span class="fu">summary</span>(trait_pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -625,18 +692,18 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 -->
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># display as características</span></span>
-<span id="cb12-2"><a href=""></a><span class="fu">biplot</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
-<span id="cb12-3"><a href=""></a>       <span class="at">display =</span> <span class="st">"species"</span>) </span>
-<span id="cb12-4"><a href=""></a><span class="co"># display as espécies</span></span>
-<span id="cb12-5"><a href=""></a><span class="fu">points</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
-<span id="cb12-6"><a href=""></a>       <span class="at">display =</span> <span class="st">"sites"</span>, <span class="at">type =</span><span class="st">"points"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># display as características</span></span>
+<span id="cb14-2"><a href=""></a><span class="fu">biplot</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
+<span id="cb14-3"><a href=""></a>       <span class="at">display =</span> <span class="st">"species"</span>) </span>
+<span id="cb14-4"><a href=""></a><span class="co"># display as espécies</span></span>
+<span id="cb14-5"><a href=""></a><span class="fu">points</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
+<span id="cb14-6"><a href=""></a>       <span class="at">display =</span> <span class="st">"sites"</span>, <span class="at">type =</span><span class="st">"points"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
@@ -664,17 +731,228 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
           display:block!important;
       }</style></aside>
 </section></section>
-<section id="préparer-les-données-inventaires" class="title-slide slide level1 center">
-<h1>Préparer les données inventaires</h1>
-<ul>
-<li><p>check + filtre (mort, petits…) =&gt; on ne rentre pas dans la correction de circonf, voir pour faire un filtre sur les corrigés</p></li>
-<li><p>calcul de DBH et de croissance</p></li>
-<li><p>viualiser les trajectoires de DBH ? visualiser les trajectoires de croissance pour quelques indiv des espèces choisies</p></li>
-</ul>
-</section>
+<section>
+<section id="exploração-dos-dados-de-crescimento" class="title-slide slide level1 center">
+<h1>Exploração dos dados de crescimento</h1>
 
+</section>
+<section id="preparação-dos-dados" class="slide level2">
+<h2>Preparação dos dados</h2>
+<ul>
+<li>Manter apenas as árvores totalmente determinadas</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href=""></a>  <span class="fu">filter</span>(Species <span class="sc">!=</span> <span class="st">"Indet."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+<ul>
+<li>Calcular o DAP</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">DBH =</span> CircCorr <span class="sc">/</span> pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+<ul>
+<li>Manter apenas a observação de árvores vivas com <span class="math inline">\(DAP ≥ 10 cm\)</span></li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href=""></a>  <span class="fu">filter</span>(DBH <span class="sc">&gt;=</span> <span class="dv">10</span> <span class="sc">&amp;</span> CodeAlive <span class="sc">==</span><span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+<ul>
+<li>Adicionar os nomes completos das espécies</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb18-2"><a href=""></a>  <span class="fu">unite</span>(GenSp,</span>
+<span id="cb18-3"><a href=""></a>        Genus, Species,</span>
+<span id="cb18-4"><a href=""></a>        <span class="at">sep =</span> <span class="st">"_"</span>, </span>
+<span id="cb18-5"><a href=""></a>        <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+</section>
+<section id="número-de-indivíduos" class="slide level2">
+<h2>Número de indivíduos</h2>
+<ul>
+<li>Número total de indivíduos</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">n_distinct</span>(dt_P6<span class="sc">$</span>idTree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4262</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>Número de indivíduos por censo e duração do monitoramento</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">count</span>(CensusYear)  <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> CensusYear, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
+<span id="cb21-3"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb21-4"><a href=""></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">4000</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>, <span class="at">y =</span> <span class="st">"Número de indivíduos"</span>) <span class="sc">+</span></span>
+<span id="cb21-6"><a href=""></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>35 censos entre 1984 e 2024</p>
+<p>cerca de 3600-3800 indivíduos por censo</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="cálculo-do-crescimento-anual" class="slide level2">
+<h2>Cálculo do crescimento anual</h2>
+<ul>
+<li>Obter os anos do censo e os anos dos censos anteriores</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>dt_years <span class="ot">&lt;-</span> dt_P6  <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href=""></a>  <span class="fu">distinct</span>(CensusYear) <span class="sc">%&gt;%</span></span>
+<span id="cb22-3"><a href=""></a>  <span class="fu">arrange</span>(CensusYear) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">PrevYear =</span> <span class="fu">c</span>(<span class="cn">NA</span>, CensusYear[<span class="sc">-</span><span class="fu">length</span>(CensusYear)]))</span>
+<span id="cb22-5"><a href=""></a></span>
+<span id="cb22-6"><a href=""></a><span class="fu">head</span>(dt_years, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  CensusYear PrevYear
+       &lt;dbl&gt;    &lt;dbl&gt;
+1       1984       NA
+2       1985     1984
+3       1986     1985
+4       1987     1986
+5       1988     1987</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>2 etapas</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="cálculo-do-crescimento-anual-1" class="slide level2">
+<h2>Cálculo do crescimento anual</h2>
+<ul>
+<li>Cálcular o crescimento anual</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href=""></a>  <span class="fu">merge</span>(dt_years, <span class="at">by =</span> <span class="st">"CensusYear"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="co"># add the previous year</span></span>
+<span id="cb24-3"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> <span class="co"># group by individual tree</span></span>
+<span id="cb24-4"><a href=""></a>  <span class="fu">arrange</span>(CensusYear, <span class="at">.by_group =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="co"># order the years chronologically</span></span>
+<span id="cb24-5"><a href=""></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-6"><a href=""></a>    <span class="at">Growth =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fu">diff</span>(DBH)) <span class="sc">/</span> (CensusYear <span class="sc">-</span> PrevYear), <span class="co"># calculate annual growth</span></span>
+<span id="cb24-7"><a href=""></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-8"><a href=""></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb24-9"><a href=""></a></span>
+<span id="cb24-10"><a href=""></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">select</span>(idTree, CensusYear, PrevYear, DBH, Growth) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-11"><a href=""></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 15 × 5
+   idTree CensusYear PrevYear   DBH  Growth
+    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+ 1 100621       1984       NA  12.7 NA     
+ 2 100621       1985     1984  12.7  0     
+ 3 100621       1986     1985  12.7  0     
+ 4 100621       1987     1986  12.9  0.159 
+ 5 100621       1988     1987  12.9  0     
+ 6 100621       1989     1988  13.2  0.318 
+ 7 100621       1990     1989  12.9 -0.318 
+ 8 100621       1991     1990  12.9  0     
+ 9 100621       1992     1991  12.9  0     
+10 100621       1993     1992  13.1  0.159 
+11 100621       1994     1993  13.2  0.159 
+12 100621       1995     1994  13.1 -0.159 
+13 100621       1997     1995  13.1  0     
+14 100621       1999     1997  13.2  0.0796
+15 100621       2001     1999  13.2  0     </code></pre>
+</div>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>plot_traj_DBH <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
+<span id="cb26-2"><a href=""></a>  <span class="co"># Get species  for title</span></span>
+<span id="cb26-3"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp)</span>
+<span id="cb26-4"><a href=""></a>  <span class="co"># nb of measurment  </span></span>
+<span id="cb26-5"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() </span>
+<span id="cb26-6"><a href=""></a>  <span class="co"># Plot</span></span>
+<span id="cb26-7"><a href=""></a>    p <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> </span>
+<span id="cb26-8"><a href=""></a>      <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-9"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>CensusYear, <span class="at">y =</span> DBH)) <span class="sc">+</span> </span>
+<span id="cb26-10"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb26-11"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb26-12"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb26-13"><a href=""></a>           <span class="at">y =</span> <span class="st">"Diâmetro à altura do peito (em cm)"</span>,</span>
+<span id="cb26-14"><a href=""></a>           <span class="at">title =</span> <span class="st">"Trajetória do diâmetro"</span>,</span>
+<span id="cb26-15"><a href=""></a>           <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Indivíduo "</span>, id, <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>, </span>
+<span id="cb26-16"><a href=""></a>                            <span class="at">sep =</span> <span class="st">""</span>)) <span class="sc">+</span> </span>
+<span id="cb26-17"><a href=""></a>        <span class="fu">theme_bw</span>() </span>
+<span id="cb26-18"><a href=""></a>  <span class="fu">return</span>(p)</span>
+<span id="cb26-19"><a href=""></a>}</span>
+<span id="cb26-20"><a href=""></a></span>
+<span id="cb26-21"><a href=""></a><span class="fu">plot_traj_DBH</span>(<span class="at">id =</span> <span class="st">"102557"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>viualiser les trajectoires de DBH ? visualiser les trajectoires de croissance pour quelques indiv des espèces choisies</li>
+</ul>
+</section></section>
 <section id="modeliser-la-croissance" class="title-slide slide level1 center">
 <h1>Modeliser la croissance</h1>
+<p>!! en fonction de ce qu’on fait pour le paramètre individuel, il faudra peut-être faire un subset des individus avec assez de census (a rajouter dans prep de données)</p>
 <p>modèle de Canham avec brms avec (à tester) paramètres à l’espèce + 1 effet indiv aléatoire additif?</p>
 <p>avec brms</p>
 <p>sur environ 3 espcèes contrastées et si possible présente à Tapajos</p>

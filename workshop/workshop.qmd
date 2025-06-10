@@ -26,6 +26,8 @@ editor:
 
 <!-- TO DO, put the logos on the title page-->
 
+<!-- Translate the code comments -->
+
 <!-- @Sylvain: pour l'instant, je mets la structure en français, on changera en avançant -->
 
 <!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
@@ -36,9 +38,85 @@ library(GGally)
 library(vegan)
 ```
 
-# Les données
+# Dados
 
-présenter paracou + présenter les traits
+## Dados de parcelas florestais permanentes
+
+::: {.column width="60%"}
+* Dados de uma parcela permanente (parcela 6) na estação de pesquisa florestal de [Paracou](https://paracou.cirad.fr/website) na Guiana Francesa
+
+* Todas as árvores com um diâmetro à altura do peito (DAP) ≥ 10 cm são mapeadas, identificadas botanicamente e medidas em cada censo
+
+![](foto_inventorio.png){fig-align="center" height="60%"}
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="35%"}
+![](paracou.png)
+
+
+:::
+
+## Dados de parcelas florestais permanentes
+
+```{r}
+#| eval: false
+#| echo: false
+dt_P6 <- read_csv(file = "data/2024-08-29_ParacouP6AllYears.csv")
+dt_P6 <- dt_P6 %>% 
+  select(Forest, Plot, PlotArea, SubPlot, 
+         idTree, Xutm, Yutm, 
+         Family, Genus, Species,
+         CensusYear, CodeAlive, CircCorr)
+
+save(dt_P6, file = "data/data_paracou_p6.RData")
+```
+
+```{r}
+load(file = "data/data_paracou_p6.RData")
+dt_P6
+```
+
+[⚠️ Esses dados NÃO são de acesso livre, por favor, não os distribua nem utilize para qualquer outro fim.]{.fragment}
+
+
+## Dados de parcelas florestais permanentes
+
+Esses dados contêm:
+
+::: {.column width="50%"}
+
+- **Forest**: Nome da floresta
+
+- **Plot**: Número da parcela
+
+- **PlotArea**: Área da parcela (hectares)
+
+- **SubPlot**: Número da subparcela
+
+- **idTree**: Identificador único da árvore no banco de dados
+
+- **Xutm** e **Yutm**: Coordenadas da árvore (UTM 22N (EPSG: 32 622))
+
+:::
+
+::: {.column width="50%"}
+
+- **Family**
+
+- **Genus**
+
+- **Species**
+
+- **CensusYear**: Ano da medição
+
+- **CodeAlive**: A árvore está viva (1) ou morta (0)?
+
+- **CircCorr**: Circunferência (cm) da árvore no ponto de medição
+
+:::
 
 ## Dados de características funcionais
 
@@ -198,16 +276,176 @@ display não é intuitiva no vegan, se não estiver trabalhando com uma tabela f
 "sites" são as observações (aqui, as espécies)
 :::
 
-# Préparer les données inventaires
+# Exploração dos dados de crescimento
 
--   check + filtre (mort, petits...) =\> on ne rentre pas dans la correction de circonf, voir pour faire un filtre sur les corrigés
+## Preparação dos dados
 
--   calcul de DBH et de croissance
+* Manter apenas as árvores totalmente determinadas
 
--   viualiser les trajectoires de DBH ?
-    visualiser les trajectoires de croissance pour quelques indiv des espèces choisies
+```{r}
+dt_P6 <- dt_P6 %>% 
+  filter(Species != "Indet.")
+```
+
+* Calcular o DAP
+
+```{r}
+dt_P6 <- dt_P6 %>% 
+  mutate(DBH = CircCorr / pi)
+```
+
+* Manter apenas a observação de árvores vivas com $DAP ≥ 10 cm$
+
+```{r}
+dt_P6 <- dt_P6 %>% 
+  filter(DBH >= 10 & CodeAlive ==1) 
+```
+
+* Adicionar os nomes completos das espécies
+
+```{r}
+dt_P6 <- dt_P6 %>% 
+  unite(GenSp,
+        Genus, Species,
+        sep = "_", 
+        remove = FALSE)
+```
+
+
+## Número de indivíduos
+
+* Número total de indivíduos
+
+```{r}
+n_distinct(dt_P6$idTree)
+```
+
+::: fragment
+
+* Número de indivíduos por censo e duração do monitoramento 
+
+```{r}
+#| fig-height: 3
+#| fig-width: 5
+#| fig-align: center
+dt_P6 %>% count(CensusYear)  %>% 
+  ggplot(aes(x = CensusYear, y = n)) + 
+  geom_point() + geom_line() + 
+  ylim(0, 4000) +
+  labs(x = "Ano da medição", y = "Número de indivíduos") +
+  theme_bw()
+```
+
+:::
+
+::: notes
+35 censos entre 1984 e 2024
+
+cerca de 3600-3800 indivíduos por censo 
+:::
+
+
+## Cálculo do crescimento anual
+
+* Obter os anos do censo e os anos dos censos anteriores
+
+```{r}
+dt_years <- dt_P6  %>% 
+  distinct(CensusYear) %>%
+  arrange(CensusYear) %>%
+  mutate(PrevYear = c(NA, CensusYear[-length(CensusYear)]))
+
+head(dt_years, n = 5)
+```
+
+::: notes
+2 etapas
+:::
+
+## Cálculo do crescimento anual
+
+* Cálcular o crescimento anual
+
+```{r}
+dt_P6 <- dt_P6 %>%
+  merge(dt_years, by = "CensusYear", all.x = TRUE) %>% # add the previous year
+  group_by(idTree) %>% # group by individual tree
+  arrange(CensusYear, .by_group = TRUE) %>% # order the years chronologically
+  mutate(
+    Growth = c(NA, diff(DBH)) / (CensusYear - PrevYear), # calculate annual growth
+  ) %>%
+  ungroup()
+
+dt_P6 %>% select(idTree, CensusYear, PrevYear, DBH, Growth) %>% 
+  head(n = 15)
+```
+
+## Trajetórias de crescimento
+
+<!-- TO DO
+choisir des individus contrastés pour les espèces qu'on va modéliser
+
+mais ca va être tendu pour trouver des individus avec une belle courbe de croissance donc ne montrer que les trajectoires de diamètres?
+-->
+
+```{r}
+plot_traj_DBH <- function(id, dt) {
+  # Get species  for title
+    sp <- dt %>% filter(idTree == id) %>% distinct(GenSp)
+  # nb of measurment  
+    n <- dt %>% filter(idTree == id) %>% count() 
+  # Plot
+    p <- dt %>% 
+      filter(idTree == id) %>% 
+      ggplot(aes(x=CensusYear, y = DBH)) + 
+      geom_point() + 
+      geom_smooth(method = "loess", se = FALSE) + 
+      labs(x = "Ano da medição",
+           y = "Diâmetro à altura do peito (em cm)",
+           title = "Trajetória do diâmetro",
+           subtitle = paste("Indivíduo ", id, " - ", sp, " (", n, " medições)", 
+                            sep = "")) + 
+        theme_bw() 
+  return(p)
+}
+```
+
+```{r}
+
+plot_traj_DBH(id = "102557", dt = dt_P6)
+```
+
+```{r}
+plot_traj_Growth <- function(id, dt) {
+  # Get species  for title
+    sp <- dt %>% filter(idTree == id) %>% distinct(GenSp)
+  # nb of measurment  
+    n <- dt %>% filter(idTree == id) %>% count() 
+  # Plot
+    p <- dt %>% 
+      filter(idTree == id) %>% 
+      ggplot(aes(x=DBH, y = Growth)) + 
+      geom_point() + 
+      geom_smooth(method = "loess", se = FALSE) + 
+      labs(x = "DBH",
+           y = "Crescimento anual (em cm/ano)",
+           title = "Trajetória do crescimento",
+           subtitle = paste("Indivíduo ", id, " - ", sp, " (", n, " medições)", 
+                            sep = "")) + 
+        theme_bw() 
+  return(p)
+}
+```
+
+```{r}
+
+plot_traj_Growth(id = "102557", dt = dt_P6)
+```
+
 
 # Modeliser la croissance
+
+!! en fonction de ce qu'on fait pour le paramètre individuel, il faudra peut-être faire un subset des individus avec assez de census (a rajouter dans prep de données)
 
 modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet indiv aléatoire additif?
 
