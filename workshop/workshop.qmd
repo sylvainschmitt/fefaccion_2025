@@ -12,11 +12,12 @@ format:
     chalkboard: true
     link-external-icon: true
     link-external-newwindow: true
-    incremental: true
+    incremental: false
+    smaller: true
 execute:
   echo: true   
-  warning: true
-  message: true 
+  warning: false
+  message: false
   cache: true
 editor: 
   markdown: 
@@ -27,35 +28,193 @@ editor:
 
 <!-- @Sylvain: pour l'instant, je mets la structure en français, on changera en avançant -->
 
+<!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
+
+```{r}
+library(tidyverse)
+library(GGally)
+library(vegan)
+```
+
 # Les données
 
-présenter paracou +  présenter les traits
+présenter paracou + présenter les traits
 
-# explorer les traits
+## Dados de características funcionais
 
-* density plots
+<!-- @Sylvain: confirme que les données de traits viennet de TRY-->
 
-* pairwise correlation
+Vamos usar os dados das características funcionais das árvores da Guiana Francesa obtidos na base de dados [TRY](https://www.try-db.org/TryWeb/Home.php) e compilados no pacote [rcontroll](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14215).
 
-* ACP
+Esses dados estão disponíveis [aqui](https://github.com/sylvainschmitt/fefaccion_2025/workshop/data/data/dt_traits.RData).
+
+```{r}
+#| eval: false
+#| echo: false
+library(rcontroll)
+dt_traits <- TROLLv3_species
+dt_traits <- dt_traits %>% rename(species = s_name, 
+                                  LMA = s_LMA,
+                                  Nmass = s_Nmass, 
+                                  Pmass = s_Pmass, 
+                                  wsg = s_wsg, 
+                                  dbhmax = s_dbhmax, 
+                                  hmax = s_hmax, 
+                                  ah = s_ah,
+                                  regionalfreq = s_regionalfreq, 
+                                  tlp = s_tlp, 
+                                  drymass = s_drymass, 
+                                  seedmass = s_seedmass)
+save(dt_traits, file = "data/dt_traits.RData")
+```
+
+```{r}
+load(file = "data/dt_traits.RData")
+dt_traits
+```
+
+## Dados de características funcionais
+
+<!-- @Sylvain: unités OK?-->
+
+::: {.column width="50%"}
+[Esses dados contêm os valores de 11 características funcionais para 45 espécies. Vamos focar nos seguintes características:]{style="font-size: 25px"}
+
+-   [massa foliar por área (**LMA**, em $kg/m^2$)]{style="font-size: 25px"}
+
+-   [massa de nitrogênio foliar (**Nmass**, em $mg/g$)]{style="font-size: 25px"}
+
+-   [massa de fósforo foliar (**Pmass**, em $mg/g$)]{style="font-size: 25px"}
+
+-   [gravidade específica da madeira (**wsg**, em $g/cm^3$)]{style="font-size: 25px"}
+
+<!-- * [altura máxima da espécie] (**hmax**, em $m$)]{style="font-size: 25px"}-->
+
+-   [potencial hídrico foliar no ponto de perda de turgor (**tlp**, em $MPa$)]{style="font-size: 25px"}
+
+<!--* massa seca foliar (*s_drymass*, em $g$)-->
+:::
+
+::: {.column width="50%"}
+```{r}
+dt_traits <- dt_traits %>% 
+  select(species, LMA, Nmass, Pmass, wsg, tlp)
+
+dt_traits %>% slice_head(n = 5)
+```
+:::
+
+# Exploração de dados de características funcionais
+
+## Distribuição das valores das características
+
+```{r}
+#| fig-height: 4
+#| fig-width: 8
+#| fig-align: center
+dt_traits %>% 
+  pivot_longer(LMA : tlp, 
+               names_to = "traits", values_to = "values") %>% 
+  ggplot(aes(x = values, colour = traits)) + geom_density() +
+  facet_wrap(~ traits, scales = "free") + theme_bw()
+```
+
+::: notes
+LMA, Nmass, e Pmass tendem a valores pequenos
+
+hmax a valores grandes
+:::
+
+## Coeficientes de variação das características
+
+```{r}
+dt_traits %>% summarise(
+  across(LMA : tlp,
+         function(v) {round(sd(v)/abs(mean(v)), 3)}))
+```
+
+## Correlações entre pares de características
+
+```{r}
+ggpairs(dt_traits, columns = names(dt_traits)[-1])
+```
+
+::: notes
+LMA, Nmass e Pmass correlacionados
+
+wsg tlp correlacionados
+:::
+
+## Axes de covariância de características funcionais
+
+Análise de componentes principais
+
+```{r}
+trait_pca <- dt_traits %>% select(-species) %>% 
+  pca(scale = TRUE)
+summary(trait_pca)
+```
+
+::: notes
+os dois primeiros eixos capturam XXX % da variabilidade total do conjunto de dados
+:::
+
+## Axes de covariância de características funcionais
+
+```{=html}
+<!-- @Sylvain, je suis embeter pour l'interpretation de l'axe 2, je trouve ca surprenant qu'il oppose wsg et tlp...
+dans la literature tlp est loin aligné sur le LES (cf papier Joannès), soit sur un autre axe que le LES et wsg (thèse de Daniela par ex...)
+Est-ce que tu vois mieux à proposer que mon interpretation?
+-->
+```
+
+::: {.column width="50%"}
+```{r}
+#| fig-height: 5
+#| fig-width: 6
+#| fig-align: center
+# display as características
+biplot(trait_pca, scaling = 2, 
+       display = "species") 
+# display as espécies
+points(trait_pca, scaling = 2, 
+       display = "sites", type ="points") 
+```
+:::
+
+:::: {.column width="50%"}
+::: incremental
+-   Axe 1: **espectro econômico das folhas**: estratégias de aquisição de recursos conservadoras (lentas) *versus* aquisitivas (rápidas) [Wright *et al* 2004](https://www.nature.com/articles/nature02403)
+
+- As características da madeira [Baraloto *et al* 2010](https://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2010.01517.x) e as características relacionadas com a água [Maréchaux *et al* 2019](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2745.13321) são independentes do espectro econômico das folhas.
+:::
+::::
+
+::: notes
+display não é intuitiva no vegan, se não estiver trabalhando com uma tabela florística
+
+"species" são as variáveis (aqui, as características)
+
+"sites" são as observações (aqui, as espécies)
+:::
 
 # Préparer les données inventaires
 
-* check + filtre (mort, petits...) => on ne rentre pas dans la correction de circonf, voir pour faire un filtre sur les corrigés 
+-   check + filtre (mort, petits...) =\> on ne rentre pas dans la correction de circonf, voir pour faire un filtre sur les corrigés
 
-* calcul de DBH et de croissance
+-   calcul de DBH et de croissance
 
-* viualiser les trajectoires de DBH ? visualiser les trajectoires de croissance pour quelques indiv des espèces choisies
+-   viualiser les trajectoires de DBH ?
+    visualiser les trajectoires de croissance pour quelques indiv des espèces choisies
 
 # Modeliser la croissance
 
-modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet indiv aléatoire additif? 
+modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet indiv aléatoire additif?
 
 avec brms
 
 sur environ 3 espcèes contrastées et si possible présente à Tapajos
 
-
 # les trais pour expliquer gmax
 
-repartir des gmax de Ecology Letters et faire un lm en frequentiste => cf exam Géraldine
+repartir des gmax de Ecology Letters et faire un lm en frequentiste =\> cf exam Géraldine

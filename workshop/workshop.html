@@ -29,6 +29,71 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #f8f8f2;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #f8f8f2; } /* Normal */
+    code span.al { color: #f07178; background-color: #2a0f15; font-weight: bold; } /* Alert */
+    code span.an { color: #d4d0ab; } /* Annotation */
+    code span.at { color: #00e0e0; } /* Attribute */
+    code span.bn { color: #d4d0ab; } /* BaseN */
+    code span.bu { color: #abe338; } /* BuiltIn */
+    code span.cf { color: #ffa07a; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #abe338; } /* Char */
+    code span.cn { color: #ffd700; } /* Constant */
+    code span.co { color: #f8f8f2; font-style: italic; } /* Comment */
+    code span.cv { color: #ffd700; } /* CommentVar */
+    code span.do { color: #f8f8f2; } /* Documentation */
+    code span.dt { color: #ffa07a; } /* DataType */
+    code span.dv { color: #d4d0ab; } /* DecVal */
+    code span.er { color: #f07178; text-decoration: underline; } /* Error */
+    code span.ex { color: #00e0e0; font-weight: bold; } /* Extension */
+    code span.fl { color: #d4d0ab; } /* Float */
+    code span.fu { color: #ffa07a; } /* Function */
+    code span.im { color: #abe338; } /* Import */
+    code span.in { color: #d4d0ab; } /* Information */
+    code span.kw { color: #ffa07a; font-weight: bold; } /* Keyword */
+    code span.op { color: #ffa07a; } /* Operator */
+    code span.ot { color: #00e0e0; } /* Other */
+    code span.pp { color: #dcc6e0; } /* Preprocessor */
+    code span.re { color: #00e0e0; background-color: #f8f8f2; } /* RegionMarker */
+    code span.sc { color: #abe338; } /* SpecialChar */
+    code span.ss { color: #abe338; } /* SpecialString */
+    code span.st { color: #abe338; } /* String */
+    code span.va { color: #00e0e0; } /* Variable */
+    code span.vs { color: #abe338; } /* VerbatimString */
+    code span.wa { color: #dcc6e0; } /* Warning */
   </style>
   <link rel="stylesheet" href="workshop_files/libs/revealjs/dist/theme/quarto.css">
   <link href="workshop_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -346,6 +411,278 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <section class="slide level2">
 
 <!-- TO DO, put the logos on the title page-->
+<!-- @Sylvain: pour l'instant, je mets la structure en français, on changera en avançant -->
+<!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">library</span>(GGally)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(vegan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+</section>
+<section>
+<section id="les-données" class="title-slide slide level1 center">
+<h1>Les données</h1>
+<p>présenter paracou + présenter les traits</p>
+</section>
+<section id="dados-de-características-funcionais" class="slide level2">
+<h2>Dados de características funcionais</h2>
+<!-- @Sylvain: confirme que les données de traits viennet de TRY-->
+<p>Vamos usar os dados das características funcionais das árvores da Guiana Francesa obtidos na base de dados <a href="https://www.try-db.org/TryWeb/Home.php">TRY</a> e compilados no pacote <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14215">rcontroll</a>.</p>
+<p>Esses dados estão disponíveis <a href="https://github.com/sylvainschmitt/fefaccion_2025/workshop/data/data/dt_traits.RData">aqui</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/dt_traits.RData"</span>)</span>
+<span id="cb2-2"><a href=""></a>dt_traits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 45 × 12
+   species     LMA  Nmass   Pmass   wsg dbhmax  hmax    ah seedmass regionalfreq
+   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;
+ 1 Abarema_… 110.  0.0232 5.7 e-4 0.576   0.66  50.9 0.308        1      0.00526
+ 2 Bocoa_pr…  95.6 0.0255 5.05e-4 0.798   0.4   47.9 0.251        1      0.00526
+ 3 Brosimum…  85.8 0.0188 6.88e-4 0.619   0.52  50.9 0.308        1      0.00526
+ 4 Carapa_p… 130.  0.0177 6.36e-4 0.55    0.49  41.4 0.187        1      0.00526
+ 5 Caryocar…  84.2 0.0217 8.13e-4 0.612   1.15  48.6 0.275        1      0.00526
+ 6 Cecropia…  69.5 0.0276 1.38e-3 0.388   0.35  50.9 0.308        1      0.00526
+ 7 Chrysoph… 151.  0.0154 4.69e-4 0.566   0.67  50.9 0.308        1      0.00526
+ 8 Concevei…  86.7 0.0235 7.29e-4 0.537   0.23  33.3 0.16         1      0.00526
+ 9 Cordia_s… 134.  0.0253 5.92e-4 0.443   0.47  36.4 0.139        1      0.00526
+10 Couepia_… 123.  0.015  4.82e-4 0.784   0.45  50.9 0.308        1      0.00526
+# ℹ 35 more rows
+# ℹ 2 more variables: tlp &lt;dbl&gt;, drymass &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="dados-de-características-funcionais-1" class="slide level2">
+<h2>Dados de características funcionais</h2>
+<!-- @Sylvain: unités OK?-->
+<div class="column" style="width:50%;">
+<p><span style="font-size: 25px">Esses dados contêm os valores de 11 características funcionais para 45 espécies. Vamos focar nos seguintes características:</span></p>
+<ul>
+<li><p><span style="font-size: 25px">massa foliar por área (<strong>LMA</strong>, em <span class="math inline">\(kg/m^2\)</span>)</span></p></li>
+<li><p><span style="font-size: 25px">massa de nitrogênio foliar (<strong>Nmass</strong>, em <span class="math inline">\(mg/g\)</span>)</span></p></li>
+<li><p><span style="font-size: 25px">massa de fósforo foliar (<strong>Pmass</strong>, em <span class="math inline">\(mg/g\)</span>)</span></p></li>
+<li><p><span style="font-size: 25px">gravidade específica da madeira (<strong>wsg</strong>, em <span class="math inline">\(g/cm^3\)</span>)</span></p></li>
+</ul>
+<!-- * [altura máxima da espécie] (**hmax**, em $m$)]{style="font-size: 25px"}-->
+<ul>
+<li><span style="font-size: 25px">potencial hídrico foliar no ponto de perda de turgor (<strong>tlp</strong>, em <span class="math inline">\(MPa\)</span>)</span></li>
+</ul>
+<!--* massa seca foliar (*s_drymass*, em $g$)-->
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>dt_traits <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href=""></a>  <span class="fu">select</span>(species, LMA, Nmass, Pmass, wsg, tlp)</span>
+<span id="cb4-3"><a href=""></a></span>
+<span id="cb4-4"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 6
+  species              LMA  Nmass    Pmass   wsg   tlp
+  &lt;chr&gt;              &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 Abarema_jupunba    110.  0.0232 0.00057  0.576 -1.60
+2 Bocoa_prouacensis   95.6 0.0255 0.000505 0.798 -2.08
+3 Brosimum_rubescens  85.8 0.0188 0.000688 0.619 -2.28
+4 Carapa_procera     130.  0.0177 0.000636 0.55  -1.93
+5 Caryocar_glabrum    84.2 0.0217 0.000813 0.612 -1.88</code></pre>
+</div>
+</div>
+</div></section></section>
+<section>
+<section id="exploração-de-dados-de-características-funcionais" class="title-slide slide level1 center">
+<h1>Exploração de dados de características funcionais</h1>
+
+</section>
+<section id="distribuição-das-valores-das-características" class="slide level2">
+<h2>Distribuição das valores das características</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href=""></a>  <span class="fu">pivot_longer</span>(LMA <span class="sc">:</span> tlp, </span>
+<span id="cb6-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"traits"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">colour =</span> traits)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb6-5"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> traits, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>LMA, Nmass, e Pmass tendem a valores pequenos</p>
+<p>hmax a valores grandes</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="coeficientes-de-variação-das-características" class="slide level2">
+<h2>Coeficientes de variação das características</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
+<span id="cb7-2"><a href=""></a>  <span class="fu">across</span>(LMA <span class="sc">:</span> tlp,</span>
+<span id="cb7-3"><a href=""></a>         <span class="cf">function</span>(v) {<span class="fu">round</span>(<span class="fu">sd</span>(v)<span class="sc">/</span><span class="fu">abs</span>(<span class="fu">mean</span>(v)), <span class="dv">3</span>)}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 5
+    LMA Nmass Pmass   wsg   tlp
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 0.295 0.253 0.455 0.161 0.127</code></pre>
+</div>
+</div>
+</section>
+<section id="correlações-entre-pares-de-características" class="slide level2">
+<h2>Correlações entre pares de características</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">ggpairs</span>(dt_traits, <span class="at">columns =</span> <span class="fu">names</span>(dt_traits)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-7-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>LMA, Nmass e Pmass correlacionados</p>
+<p>wsg tlp correlacionados</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="axes-de-covariância-de-características-funcionais" class="slide level2">
+<h2>Axes de covariância de características funcionais</h2>
+<p>Análise de componentes principais</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>trait_pca <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>species) <span class="sc">%&gt;%</span> </span>
+<span id="cb10-2"><a href=""></a>  <span class="fu">pca</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-3"><a href=""></a><span class="fu">summary</span>(trait_pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+pca(X = ., scale = TRUE) 
+
+Partitioning of correlations:
+              Inertia Proportion
+Total               5          1
+Unconstrained       5          1
+
+Eigenvalues, and their contribution to the correlations 
+
+Importance of components:
+                         PC1    PC2    PC3     PC4     PC5
+Eigenvalue            2.2584 1.3822 0.5916 0.43239 0.33541
+Proportion Explained  0.4517 0.2764 0.1183 0.08648 0.06708
+Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>os dois primeiros eixos capturam XXX % da variabilidade total do conjunto de dados</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="axes-de-covariância-de-características-funcionais-1" class="slide level2">
+<h2>Axes de covariância de características funcionais</h2>
+<!-- @Sylvain, je suis embeter pour l'interpretation de l'axe 2, je trouve ca surprenant qu'il oppose wsg et tlp...
+dans la literature tlp est loin aligné sur le LES (cf papier Joannès), soit sur un autre axe que le LES et wsg (thèse de Daniela par ex...)
+Est-ce que tu vois mieux à proposer que mon interpretation?
+-->
+<div class="column" style="width:50%;">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># display as características</span></span>
+<span id="cb12-2"><a href=""></a><span class="fu">biplot</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
+<span id="cb12-3"><a href=""></a>       <span class="at">display =</span> <span class="st">"species"</span>) </span>
+<span id="cb12-4"><a href=""></a><span class="co"># display as espécies</span></span>
+<span id="cb12-5"><a href=""></a><span class="fu">points</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
+<span id="cb12-6"><a href=""></a>       <span class="at">display =</span> <span class="st">"sites"</span>, <span class="at">type =</span><span class="st">"points"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div>
+<ul>
+<li class="fragment"><p>Axe 1: <strong>espectro econômico das folhas</strong>: estratégias de aquisição de recursos conservadoras (lentas) <em>versus</em> aquisitivas (rápidas) <a href="https://www.nature.com/articles/nature02403">Wright <em>et al</em> 2004</a></p></li>
+<li class="fragment"><p>As características da madeira <a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2010.01517.x">Baraloto <em>et al</em> 2010</a> e as características relacionadas com a água <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2745.13321">Maréchaux <em>et al</em> 2019</a> são independentes do espectro econômico das folhas.</p></li>
+</ul>
+</div>
+</div><aside class="notes">
+<p>display não é intuitiva no vegan, se não estiver trabalhando com uma tabela florística</p>
+<p>“species” são as variáveis (aqui, as características)</p>
+<p>“sites” são as observações (aqui, as espécies)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section id="préparer-les-données-inventaires" class="title-slide slide level1 center">
+<h1>Préparer les données inventaires</h1>
+<ul>
+<li><p>check + filtre (mort, petits…) =&gt; on ne rentre pas dans la correction de circonf, voir pour faire un filtre sur les corrigés</p></li>
+<li><p>calcul de DBH et de croissance</p></li>
+<li><p>viualiser les trajectoires de DBH ? visualiser les trajectoires de croissance pour quelques indiv des espèces choisies</p></li>
+</ul>
+</section>
+
+<section id="modeliser-la-croissance" class="title-slide slide level1 center">
+<h1>Modeliser la croissance</h1>
+<p>modèle de Canham avec brms avec (à tester) paramètres à l’espèce + 1 effet indiv aléatoire additif?</p>
+<p>avec brms</p>
+<p>sur environ 3 espcèes contrastées et si possible présente à Tapajos</p>
+</section>
+
+<section id="les-trais-pour-expliquer-gmax" class="title-slide slide level1 center">
+<h1>les trais pour expliquer gmax</h1>
+<p>repartir des gmax de Ecology Letters et faire un lm en frequentiste =&gt; cf exam Géraldine</p>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
@@ -385,7 +722,7 @@ Géraldine Derroire &amp; Sylvain Schmitt
 'autoAnimateUnmatched': true,
 'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'chalkboard': {"buttons":true},
-'smaller': false,
+'smaller': true,
  
         // Display controls in the bottom right corner
         controls: false,
@@ -564,6 +901,82 @@ Géraldine Derroire &amp; Sylvain Schmitt
         ]
       });
     </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
