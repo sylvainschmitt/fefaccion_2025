@@ -1308,9 +1308,92 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
 </section></section>
-<section id="les-trais-pour-expliquer-gmax" class="title-slide slide level1 center">
-<h1>les trais pour expliquer gmax</h1>
-<p>repartir des gmax de Ecology Letters et faire un lm en frequentiste =&gt; cf exam Géraldine</p>
+<section>
+<section id="usar-características-funcionais-para-explicar-o-crescimento" class="title-slide slide level1 center">
+<h1>Usar características funcionais para explicar o crescimento</h1>
+<!-- repartir des gmax de Ecology Letters et faire un lm en frequentiste =\> cf exam Géraldine -->
+</section>
+<section id="distribuição-das-crescimentos" class="slide level2">
+<h2>Distribuição das crescimentos</h2>
+<div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-37_8e3a7fc564443dad658a43a1149eb13d">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/growth_raw.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">","</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="fu">select</span>(Species, <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-3"><a href="#cb47-3"></a>  <span class="fu">rename</span>(<span class="at">species =</span> Species, <span class="at">Gmax =</span>  <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-4"><a href="#cb47-4"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-5"><a href="#cb47-5"></a>  <span class="fu">right_join</span>(dt_traits) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-6"><a href="#cb47-6"></a>  <span class="fu">filter</span>(Gmax <span class="sc">&lt;</span> <span class="dv">3</span>)</span>
+<span id="cb47-7"><a href="#cb47-7"></a>dt <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(Gmax)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-hash="workshop_cache/revealjs/unnamed-chunk-37_8e3a7fc564443dad658a43a1149eb13d">
+<div class="cell-output-display">
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-37-1.png" width="960"></p>
+</div>
+</div>
+</section>
+<section id="correlações-entre-pares-de-características-1" class="slide level2">
+<h2>Correlações entre pares de características</h2>
+<div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-38_a96f1ef37f5a65e4e1b0f3ad19bdfdbe">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">ggpairs</span>(dt, <span class="at">columns =</span> <span class="fu">names</span>(dt)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-hash="workshop_cache/revealjs/unnamed-chunk-38_a96f1ef37f5a65e4e1b0f3ad19bdfdbe">
+<div class="cell-output-display">
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-38-1.png" width="960"></p>
+</div>
+</div>
+</section>
+<section id="regressão-linear" class="slide level2">
+<h2>Regressão linear</h2>
+<div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-39_43fb2ce4b423482a4556bf625fb60572">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">lm</span>(Gmax <span class="sc">~</span> LMA <span class="sc">+</span> Nmass <span class="sc">+</span> Pmass <span class="sc">+</span> wsg <span class="sc">+</span> tlp, dt) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-hash="workshop_cache/revealjs/unnamed-chunk-39_43fb2ce4b423482a4556bf625fb60572">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Gmax ~ LMA + Nmass + Pmass + wsg + tlp, data = dt)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.247817 -0.075070 -0.009177  0.088464  0.206502 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)  1.074e+00  4.932e-01   2.177   0.0458 *
+LMA          5.657e-04  1.972e-03   0.287   0.7781  
+Nmass        4.585e+00  1.247e+01   0.368   0.7182  
+Pmass        5.385e-01  1.033e+02   0.005   0.9959  
+wsg         -8.536e-01  4.699e-01  -1.817   0.0893 .
+tlp          1.597e-02  1.989e-01   0.080   0.9371  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1427 on 15 degrees of freedom
+Multiple R-squared:  0.3538,    Adjusted R-squared:  0.1383 
+F-statistic: 1.642 on 5 and 15 DF,  p-value: 0.2092</code></pre>
+</div>
+</div>
+</section></section>
+<section id="conclusão" class="title-slide slide level1 center">
+<h1>Conclusão</h1>
+<p>Parabéns 👏 , agora vocês são profissionais do modelagem do crescimento!</p>
+<p>Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas que você possa ter.</p>
+<div class="footer">
+<p><em>Sylvain Schmitt (sylvain.schmitt@cirad.fr) &amp; Géraldine Derroire (geraldine.derroire@cirad.fr)</em></p>
+</div>
+<aside class="notes">
+<p>Muito obrigado por sua antenção!​ Agora responderemos suas perguntas.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 
 <img src="figs/logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
 

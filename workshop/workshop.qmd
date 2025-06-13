@@ -594,6 +594,46 @@ fit %>%
   ggplot(aes(G_tree)) + geom_histogram() + theme_bw()
 ```
 
-# les trais pour expliquer gmax
+# Usar características funcionais para explicar o crescimento
 
-repartir des gmax de Ecology Letters et faire un lm en frequentiste =\> cf exam Géraldine
+<!-- repartir des gmax de Ecology Letters et faire un lm en frequentiste =\> cf exam Géraldine -->
+
+## Distribuição das crescimentos
+
+```{r}
+dt <- read_csv("data/growth_raw.csv", locale = locale(decimal_mark = ",")) %>% 
+  select(Species, `Median Gmax`) %>% 
+  rename(species = Species, Gmax =  `Median Gmax`) %>% 
+  mutate(species = gsub(" ", "_", species)) %>% 
+  right_join(dt_traits) %>% 
+  filter(Gmax < 3)
+dt %>% ggplot(aes(Gmax)) + geom_histogram() + theme_bw() + scale_x_log10()
+```
+
+## Correlações entre pares de características
+
+```{r}
+ggpairs(dt, columns = names(dt)[-1])
+```
+
+## Regressão linear
+
+```{r}
+lm(Gmax ~ LMA + Nmass + Pmass + wsg + tlp, dt) %>% 
+  summary()
+```
+
+# Conclusão
+
+Parabéns 👏 , agora vocês são profissionais do modelagem do crescimento!
+
+Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas que você possa ter.
+
+::: footer
+*Sylvain Schmitt (sylvain.schmitt\@cirad.fr) & Géraldine Derroire (geraldine.derroire\@cirad.fr)*
+:::
+
+::: notes
+Muito obrigado por sua antenção!​ Agora responderemos suas perguntas.
+:::
+
