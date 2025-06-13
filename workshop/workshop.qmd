@@ -43,9 +43,9 @@ library(vegan)
 ## Dados de parcelas florestais permanentes
 
 ::: {.column width="60%"}
-* Dados de uma parcela permanente (parcela 6) na estação de pesquisa florestal de [Paracou](https://paracou.cirad.fr/website) na Guiana Francesa
+-   Dados de uma parcela permanente (parcela 6) na estação de pesquisa florestal de [Paracou](https://paracou.cirad.fr/website) na Guiana Francesa
 
-* Todas as árvores com um diâmetro à altura do peito (DAP) ≥ 10 cm são mapeadas, identificadas botanicamente e medidas em cada censo
+-   Todas as árvores com um diâmetro à altura do peito (DAP) ≥ 10 cm são mapeadas, identificadas botanicamente e medidas em cada censo
 
 ![](foto_inventorio.png){fig-align="center" height="60%"}
 :::
@@ -55,8 +55,6 @@ library(vegan)
 
 ::: {.column width="35%"}
 ![](paracou.png)
-
-
 :::
 
 ## Dados de parcelas florestais permanentes
@@ -81,41 +79,36 @@ dt_P6
 
 [⚠️ Esses dados NÃO são de acesso livre, por favor, não os distribua nem utilize para qualquer outro fim.]{.fragment}
 
-
 ## Dados de parcelas florestais permanentes
 
 Esses dados contêm:
 
 ::: {.column width="50%"}
+-   **Forest**: Nome da floresta
 
-- **Forest**: Nome da floresta
+-   **Plot**: Número da parcela
 
-- **Plot**: Número da parcela
+-   **PlotArea**: Área da parcela (hectares)
 
-- **PlotArea**: Área da parcela (hectares)
+-   **SubPlot**: Número da subparcela
 
-- **SubPlot**: Número da subparcela
+-   **idTree**: Identificador único da árvore no banco de dados
 
-- **idTree**: Identificador único da árvore no banco de dados
-
-- **Xutm** e **Yutm**: Coordenadas da árvore (UTM 22N (EPSG: 32 622))
-
+-   **Xutm** e **Yutm**: Coordenadas da árvore (UTM 22N (EPSG: 32 622))
 :::
 
 ::: {.column width="50%"}
+-   **Family**
 
-- **Family**
+-   **Genus**
 
-- **Genus**
+-   **Species**
 
-- **Species**
+-   **CensusYear**: Ano da medição
 
-- **CensusYear**: Ano da medição
+-   **CodeAlive**: A árvore está viva (1) ou morta (0)?
 
-- **CodeAlive**: A árvore está viva (1) ou morta (0)?
-
-- **CircCorr**: Circunferência (cm) da árvore no ponto de medição
-
+-   **CircCorr**: Circunferência (cm) da árvore no ponto de medição
 :::
 
 ## Dados de características funcionais
@@ -264,7 +257,7 @@ points(trait_pca, scaling = 2,
 ::: incremental
 -   Axe 1: **espectro econômico das folhas**: estratégias de aquisição de recursos conservadoras (lentas) *versus* aquisitivas (rápidas) [Wright *et al* 2004](https://www.nature.com/articles/nature02403)
 
-- As características da madeira [Baraloto *et al* 2010](https://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2010.01517.x) e as características relacionadas com a água [Maréchaux *et al* 2019](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2745.13321) são independentes do espectro econômico das folhas.
+-   As características da madeira [Baraloto *et al* 2010](https://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2010.01517.x) e as características relacionadas com a água [Maréchaux *et al* 2019](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2745.13321) são independentes do espectro econômico das folhas.
 :::
 ::::
 
@@ -280,28 +273,28 @@ display não é intuitiva no vegan, se não estiver trabalhando com uma tabela f
 
 ## Preparação dos dados
 
-* Manter apenas as árvores totalmente determinadas
+-   Manter apenas as árvores totalmente determinadas
 
 ```{r}
 dt_P6 <- dt_P6 %>% 
   filter(Species != "Indet.")
 ```
 
-* Calcular o DAP
+-   Calcular o DAP
 
 ```{r}
 dt_P6 <- dt_P6 %>% 
   mutate(DBH = CircCorr / pi)
 ```
 
-* Manter apenas a observação de árvores vivas com $DAP ≥ 10 cm$
+-   Manter apenas a observação de árvores vivas com $DAP ≥ 10 cm$
 
 ```{r}
 dt_P6 <- dt_P6 %>% 
   filter(DBH >= 10 & CodeAlive ==1) 
 ```
 
-* Adicionar os nomes completos das espécies
+-   Adicionar os nomes completos das espécies
 
 ```{r}
 dt_P6 <- dt_P6 %>% 
@@ -311,18 +304,16 @@ dt_P6 <- dt_P6 %>%
         remove = FALSE)
 ```
 
-
 ## Número de indivíduos
 
-* Número total de indivíduos
+-   Número total de indivíduos
 
 ```{r}
 n_distinct(dt_P6$idTree)
 ```
 
 ::: fragment
-
-* Número de indivíduos por censo e duração do monitoramento 
+-   Número de indivíduos por censo e duração do monitoramento
 
 ```{r}
 #| fig-height: 3
@@ -335,19 +326,17 @@ dt_P6 %>% count(CensusYear)  %>%
   labs(x = "Ano da medição", y = "Número de indivíduos") +
   theme_bw()
 ```
-
 :::
 
 ::: notes
 35 censos entre 1984 e 2024
 
-cerca de 3600-3800 indivíduos por censo 
+cerca de 3600-3800 indivíduos por censo
 :::
-
 
 ## Cálculo do crescimento anual
 
-* Obter os anos do censo e os anos dos censos anteriores
+-   Obter os anos do censo e os anos dos censos anteriores
 
 ```{r}
 dt_years <- dt_P6  %>% 
@@ -364,7 +353,7 @@ head(dt_years, n = 5)
 
 ## Cálculo do crescimento anual
 
-* Cálcular o crescimento anual
+-   Cálcular o crescimento anual
 
 ```{r}
 dt_P6 <- dt_P6 %>%
@@ -382,11 +371,13 @@ dt_P6 %>% select(idTree, CensusYear, PrevYear, DBH, Growth) %>%
 
 ## Trajetórias de crescimento
 
+```{=html}
 <!-- TO DO
 choisir des individus contrastés pour les espèces qu'on va modéliser
 
 mais ca va être tendu pour trouver des individus avec une belle courbe de croissance donc ne montrer que les trajectoires de diamètres?
 -->
+```
 
 ```{r}
 plot_traj_DBH <- function(id, dt) {
@@ -441,7 +432,6 @@ plot_traj_Growth <- function(id, dt) {
 
 plot_traj_Growth(id = "102557", dt = dt_P6)
 ```
-
 
 # Modeliser la croissance
 
