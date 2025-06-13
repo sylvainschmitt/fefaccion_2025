@@ -34,7 +34,6 @@ include-in-header:
 ---
 
 <!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
-<!-- @Géraldine, à quoi sert GGally ici? -->
 
 ```{r }
 library(tidyverse)
@@ -118,10 +117,6 @@ Esses dados contêm:
 
 ## Dados de características funcionais
 
-<!-- @Sylvain: confirme que les données de traits viennet de TRY-->
-
-<!-- @Géraldine: non pas vraiment en fait, il y a aussi des données BRIDGE et des mesures d'Isa-->
-
 Vamos usar os dados das características funcionais das árvores da Guiana Francesa obtidos na base de dados [TRY](https://www.try-db.org/TryWeb/Home.php) e compilados no pacote [rcontroll](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14215).
 
 Esses dados estão disponíveis [aqui](https://github.com/sylvainschmitt/fefaccion_2025/workshop/data/data/dt_traits.RData).
@@ -191,8 +186,7 @@ dt_traits %>%
 ```
 
 ::: notes
-LMA, Nmass, e Pmass tendem a valores pequenos
-TLP e wsg a valores grandes
+LMA, Nmass, e Pmass tendem a valores pequenos TLP e wsg a valores grandes
 :::
 
 ## Coeficientes de variação das características
@@ -233,15 +227,19 @@ os dois primeiros eixos capturam 73% da variabilidade total do conjunto de dados
 
 ## Axes de covariância de características funcionais
 
-
+```{=html}
 <!-- @Sylvain, je suis embeter pour l'interpretation de l'axe 2, je trouve ca surprenant qu'il oppose wsg et tlp...
 dans la literature tlp est loin aligné sur le LES (cf papier Joannès), soit sur un autre axe que le LES et wsg (thèse de Daniela par ex...)
 Est-ce que tu vois mieux à proposer que mon interpretation?
 -->
+```
+
+```{=html}
 <!-- @Géraldine, on a juste trop peu de traits. Du coup ici je pense qu'un lien hydraulique TLP WSG ressort qui n'est pas forcément habituellement si marqué avec des bois denses aux feuilles résistantes à la sécheresse (TLP négatif)
 -->
+```
 
-::::: columns
+:::::: columns
 ::: {.column width="50%"}
 ```{r}
 #| fig-height: 5
@@ -263,7 +261,7 @@ points(trait_pca, scaling = 2,
 -   As características da madeira [Baraloto *et al* 2010](https://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2010.01517.x) e as características relacionadas com a água [Maréchaux *et al* 2019](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2745.13321) são independentes do espectro econômico das folhas.
 :::
 ::::
-:::::
+::::::
 
 ::: notes
 display não é intuitiva no vegan, se não estiver trabalhando com uma tabela florística
@@ -364,6 +362,7 @@ dt_P6 <- dt_P6 %>%
   group_by(idTree) %>% 
   arrange(CensusYear) %>% 
   mutate(Growth = (DBH - lag(DBH)) / (CensusYear - lag(CensusYear))) %>% 
+  filter(Growth >= 0) %>% 
   ungroup()
 
 dt_P6 %>% select(idTree, CensusYear, DBH, Growth) %>% 
@@ -410,28 +409,9 @@ plot_traj_Growth(id = "103768", dt = dt_P6)
 ## Trajetórias de crescimento
 
 ```{r}
-plot_traj_Growth <- function(id, dt) {
-    sp <- dt %>% filter(idTree == id) %>% distinct(GenSp) # especie
-    n <- dt %>% filter(idTree == id) %>% count() # medições
-    filter(dt, idTree == id) %>% 
-      ggplot(aes(x=DBH, y = Growth)) + 
-      geom_point() + 
-      geom_smooth(method = "loess", se = FALSE) + 
-      labs(x = "Ano da medição",
-           y = "Crescimento anual (em cm/ano)",
-           title = paste0("Trajetória do diâmetro - Indivíduo ", id, 
-                          " - ", sp, " (", n, " medições)")) + theme_bw() 
-}
-plot_traj_Growth(id = "103768", dt = dt_P6)
-```
-
-
-## Trajetórias de crescimento
-
-```{r}
-plot_traj_sp <- function(id, dt) {
-    n <- dt %>% filter(sp == GenSpd) %>% count() # medições
-    filter(dt, sp == GenSpd) %>% 
+plot_traj_sp <- function(sp, dt) {
+    n <- dt %>% filter(GenSp == sp) %>% count() # medições
+    filter(dt, GenSp == sp) %>% 
       ggplot(aes(x=DBH, y = Growth)) + 
       geom_point() + 
       geom_smooth(method = "loess", se = FALSE) + 
@@ -445,19 +425,66 @@ plot_traj_sp(sp = "Cecropia_obtusa", dt = dt_P6)
 
 # Modelagem do crescimento
 
-!! en fonction de ce qu'on fait pour le paramètre individuel, il faudra peut-être faire un subset des individus avec assez de census (a rajouter dans prep de données)
+<!-- !! en fonction de ce qu'on fait pour le paramètre individuel, il faudra peut-être faire un subset des individus avec assez de census (a rajouter dans prep de données) -->
 
-modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet indiv aléatoire additif?
+<!-- modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet indiv aléatoire additif? -->
 
-avec brms
+<!-- avec brms -->
 
-sur environ 3 espcèes contrastées et si possible présente à Tapajos
+<!-- sur environ 3 espcèes contrastées et si possible présente à Tapajos -->
+
+## Modelo de Canham
 
 $$log(AGR+1)=G \times exp[-0.5 \times( \frac{log(DBH/D)}{K}^2)]$$
 
 ```{r}
+data_frame(DBH = 1:100) %>% mutate(log_agr = 0.5*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
+  ggplot(aes(DBH, log_agr)) + geom_line() + theme_bw() +
+  labs(x = "Ano da medição",
+       y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 50, colour = "red") + geom_hline(yintercept = 0.5, colour = "red")
+```
+
+## Uma inferência com *Cecropia obtusa*
+
+```{r}
 #| eval: false
-fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)/K)^2),
+fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
+              G ~ 1, D ~ 1, K ~ 1,
+              nl = TRUE),
+           prior = c(
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "G"),
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
+                 prior("uniform(1,30)", lb = 1, ub = 30, nlpar = "D")
+          ),
+           data = filter(dt_P6, GenSp  == "Cecropia_obtusa"),
+           cores = 4)
+save(fit, file = "data/fit_cecro.Rdata")
+```
+```{r}
+load(file = "data/fit_cecro.Rdata") ; fit
+```
+
+## Uma inferência com *Cecropia obtusa*
+
+```{r}
+filter(dt_P6, GenSp  == "Cecropia_obtusa") %>% 
+  ggplot(aes(x=DBH, y = log(Growth+1))) + 
+  geom_point() + 
+  stat_function(fun = function(x) 0.44*exp(-0.5*(log(x/18.79)^2/0.98)),
+                colour = "red", size = 2) +
+      labs(x = "Ano da medição",
+           y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 18.79, colour = "red") + 
+  geom_hline(yintercept = 0.44, colour = "red") +
+  ylim(0, NA) + xlim(10, NA)
+```
+
+## Uma inferência com *Dicorynia guianensis*
+
+```{r}
+#| eval: false
+fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
               G ~ 1, D ~ 1, K ~ 1,
               nl = TRUE),
            prior = c(
@@ -465,37 +492,106 @@ fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)/K)^2),
                  prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
                  prior("uniform(1,300)", lb = 1, ub = 300, nlpar = "D")
           ),
-           data = filter(dt_P6, GenSp  == "Cecropia_obtusa"),
+           data = filter(dt_P6, GenSp  == "Dicorynia_guianensis"),
            cores = 4)
-save(fit, file = "data/fit.Rdata")
+save(fit, file = "data/fit_dico.Rdata")
 ```
+```{r}
+load(file = "data/fit_dico.Rdata") ; fit
+```
+
+## Uma inferência com *Dicorynia guianensis*
 
 ```{r}
-load(file = "data/fit.Rdata")
-fit
+filter(dt_P6, GenSp  == "Dicorynia_guianensis") %>% 
+  ggplot(aes(x=DBH, y = log(Growth+1))) + 
+  geom_point() + 
+  stat_function(fun = function(x) 0.29*exp(-0.5*(log(x/33.79)^2/0.63)),
+                colour = "red", size = 2) +
+      labs(x = "Ano da medição",
+           y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 33.79, colour = "red") + 
+  geom_hline(yintercept = 0.29, colour = "red") +
+  ylim(0, NA)
 ```
 
+## Uma inferência com *Eschweilera sagotiana*
 
 ```{r}
 #| eval: false
-fit_sp <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)/K)^2),
-              G ~ 1|GenSp, D ~ 1|GenSp, K ~ 1|GenSp, nl = TRUE),
-                      prior = c(
+fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
+              G ~ 1, D ~ 1, K ~ 1,
+              nl = TRUE),
+           prior = c(
                  prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "G"),
                  prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
                  prior("uniform(1,300)", lb = 1, ub = 300, nlpar = "D")
           ),
-           data = filter(dt_P6, 
-                         GenSp %in% c("Cecropia_obtusa", "Dicorynia_guianensis", 
-                                      "Eschweilera_sagotiana")),
-          cores = 4
-           )
-save(fit, file = "data/fit_sp.Rdata")
+           data = filter(dt_P6, GenSp  == "Eschweilera_sagotiana"),
+           cores = 4)
+save(fit, file = "data/fit_esch.Rdata")
+```
+```{r}
+load(file = "data/fit_esch.Rdata") ; fit
 ```
 
+## Uma inferência com *Eschweilera sagotiana*
+
 ```{r}
-load(file = "data/fit_sp.Rdata")
-fit_sp
+filter(dt_P6, GenSp  == "Eschweilera_sagotiana") %>% 
+  ggplot(aes(x=DBH, y = log(Growth+1))) + 
+  geom_point() + 
+  stat_function(fun = function(x) 0.10*exp(-0.5*(log(x/27.59)^2/2.77)),
+                colour = "red", size = 2) +
+      labs(x = "Ano da medição",
+           y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 27.59, colour = "red") + 
+  geom_hline(yintercept = 0.10, colour = "red") +
+  ylim(0, NA)
+```
+
+## Modelo de crescimento individual
+
+$$log(AGR+1)= G_{tree} \times exp[-0.5 \times( \frac{log(DBH/D)^2}{K})] ~~|~~G_{tree} = G_{species}+\epsilon_{tree}$$
+
+```{r}
+expand_grid(DBH = 1:100, G_tree = rnorm(10, 0.5, 0.1)) %>% 
+  mutate(log_agr = G_tree*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
+  ggplot(aes(DBH, log_agr, group = as.character(G_tree))) + geom_line() + theme_bw() +
+  labs(x = "Ano da medição",
+       y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 50, colour = "red") + geom_hline(yintercept = 0.5, colour = "red")
+```
+
+## Modelo de crescimento individual
+
+```{r}
+#| eval: false
+fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
+              G ~ 1|idTree, D ~ 1, K ~ 1,
+              nl = TRUE),
+           prior = c(
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "G"),
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
+                 prior("uniform(1,300)", lb = 1, ub = 300, nlpar = "D")
+          ),
+           data = filter(dt_P6, GenSp  == "Dicorynia_guianensis"),
+           cores = 4)
+save(fit, file = "data/fit_dico_ind.Rdata")
+```
+```{r}
+load(file = "data/fit_dico_ind.Rdata") ; fit
+```
+
+## Modelo de crescimento individual
+
+```{r}
+fit %>% 
+  tidybayes::spread_draws(b_G_Intercept, r_idTree__G[idTree,]) %>% 
+  mutate(G_tree = b_G_Intercept + r_idTree__G) %>% 
+  group_by(idTree) %>% 
+  summarise(G_tree = median(G_tree)) %>% 
+  ggplot(aes(G_tree)) + geom_histogram() + theme_bw()
 ```
 
 # les trais pour expliquer gmax
