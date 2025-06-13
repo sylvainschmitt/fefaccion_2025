@@ -34,11 +34,13 @@ include-in-header:
 ---
 
 <!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
+<!-- @Géraldine, à quoi sert GGally ici? -->
 
 ```{r }
 library(tidyverse)
 library(GGally)
 library(vegan)
+library(brms)
 ```
 
 # Dados
@@ -394,7 +396,7 @@ plot_traj_Growth <- function(id, dt) {
     sp <- dt %>% filter(idTree == id) %>% distinct(GenSp) # especie
     n <- dt %>% filter(idTree == id) %>% count() # medições
     filter(dt, idTree == id) %>% 
-      ggplot(aes(x=CensusYear, y = Growth)) + 
+      ggplot(aes(x=DBH, y = Growth)) + 
       geom_point() + 
       geom_smooth(method = "loess", se = FALSE) + 
       labs(x = "Ano da medição",
@@ -403,6 +405,42 @@ plot_traj_Growth <- function(id, dt) {
                           " - ", sp, " (", n, " medições)")) + theme_bw() 
 }
 plot_traj_Growth(id = "103768", dt = dt_P6)
+```
+
+## Trajetórias de crescimento
+
+```{r}
+plot_traj_Growth <- function(id, dt) {
+    sp <- dt %>% filter(idTree == id) %>% distinct(GenSp) # especie
+    n <- dt %>% filter(idTree == id) %>% count() # medições
+    filter(dt, idTree == id) %>% 
+      ggplot(aes(x=DBH, y = Growth)) + 
+      geom_point() + 
+      geom_smooth(method = "loess", se = FALSE) + 
+      labs(x = "Ano da medição",
+           y = "Crescimento anual (em cm/ano)",
+           title = paste0("Trajetória do diâmetro - Indivíduo ", id, 
+                          " - ", sp, " (", n, " medições)")) + theme_bw() 
+}
+plot_traj_Growth(id = "103768", dt = dt_P6)
+```
+
+
+## Trajetórias de crescimento
+
+```{r}
+plot_traj_sp <- function(id, dt) {
+    n <- dt %>% filter(sp == GenSpd) %>% count() # medições
+    filter(dt, sp == GenSpd) %>% 
+      ggplot(aes(x=DBH, y = Growth)) + 
+      geom_point() + 
+      geom_smooth(method = "loess", se = FALSE) + 
+      labs(x = "Ano da medição",
+           y = "Crescimento anual (em cm/ano)",
+           title = paste0("Trajetória do diâmetro - ",
+                          sp, " (", n, " medições)")) + theme_bw() 
+}
+plot_traj_sp(sp = "Cecropia_obtusa", dt = dt_P6)
 ```
 
 # Modelagem do crescimento
@@ -414,6 +452,51 @@ modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet 
 avec brms
 
 sur environ 3 espcèes contrastées et si possible présente à Tapajos
+
+$$log(AGR+1)=G \times exp[-0.5 \times( \frac{log(DBH/D)}{K}^2)]$$
+
+```{r}
+#| eval: false
+fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)/K)^2),
+              G ~ 1, D ~ 1, K ~ 1,
+              nl = TRUE),
+           prior = c(
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "G"),
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
+                 prior("uniform(1,300)", lb = 1, ub = 300, nlpar = "D")
+          ),
+           data = filter(dt_P6, GenSp  == "Cecropia_obtusa"),
+           cores = 4)
+save(fit, file = "data/fit.Rdata")
+```
+
+```{r}
+load(file = "data/fit.Rdata")
+fit
+```
+
+
+```{r}
+#| eval: false
+fit_sp <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)/K)^2),
+              G ~ 1|GenSp, D ~ 1|GenSp, K ~ 1|GenSp, nl = TRUE),
+                      prior = c(
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "G"),
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
+                 prior("uniform(1,300)", lb = 1, ub = 300, nlpar = "D")
+          ),
+           data = filter(dt_P6, 
+                         GenSp %in% c("Cecropia_obtusa", "Dicorynia_guianensis", 
+                                      "Eschweilera_sagotiana")),
+          cores = 4
+           )
+save(fit, file = "data/fit_sp.Rdata")
+```
+
+```{r}
+load(file = "data/fit_sp.Rdata")
+fit_sp
+```
 
 # les trais pour expliquer gmax
 
