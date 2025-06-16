@@ -912,8 +912,13 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 </div>
 </div>
 </section>
-<section id="section" class="slide level2">
-<h2></h2>
+<section id="trajetórias-de-crescimento" class="slide level2">
+<h2>Trajetórias de crescimento</h2>
+<!-- TO DO
+choisir des individus contrastés pour les espèces qu'on va modéliser
+
+mais ca va être tendu pour trouver des individus avec une belle courbe de croissance donc ne montrer que les trajectoires de diamètres?
+-->
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>plot_traj_DBH <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
 <span id="cb26-2"><a href=""></a>  <span class="co"># Get species  for title</span></span>
@@ -933,22 +938,59 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 <span id="cb26-16"><a href=""></a>                            <span class="at">sep =</span> <span class="st">""</span>)) <span class="sc">+</span> </span>
 <span id="cb26-17"><a href=""></a>        <span class="fu">theme_bw</span>() </span>
 <span id="cb26-18"><a href=""></a>  <span class="fu">return</span>(p)</span>
-<span id="cb26-19"><a href=""></a>}</span>
-<span id="cb26-20"><a href=""></a></span>
-<span id="cb26-21"><a href=""></a><span class="fu">plot_traj_DBH</span>(<span class="at">id =</span> <span class="st">"102557"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-19"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">plot_traj_DBH</span>(<span class="at">id =</span> <span class="st">"102557"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
-<ul>
-<li>viualiser les trajectoires de DBH ? visualiser les trajectoires de croissance pour quelques indiv des espèces choisies</li>
-</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>plot_traj_Growth <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
+<span id="cb28-2"><a href=""></a>  <span class="co"># Get species  for title</span></span>
+<span id="cb28-3"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp)</span>
+<span id="cb28-4"><a href=""></a>  <span class="co"># nb of measurment  </span></span>
+<span id="cb28-5"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() </span>
+<span id="cb28-6"><a href=""></a>  <span class="co"># Plot</span></span>
+<span id="cb28-7"><a href=""></a>    p <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> </span>
+<span id="cb28-8"><a href=""></a>      <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
+<span id="cb28-9"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
+<span id="cb28-10"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb28-11"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb28-12"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"DBH"</span>,</span>
+<span id="cb28-13"><a href=""></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
+<span id="cb28-14"><a href=""></a>           <span class="at">title =</span> <span class="st">"Trajetória do crescimento"</span>,</span>
+<span id="cb28-15"><a href=""></a>           <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Indivíduo "</span>, id, <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>, </span>
+<span id="cb28-16"><a href=""></a>                            <span class="at">sep =</span> <span class="st">""</span>)) <span class="sc">+</span> </span>
+<span id="cb28-17"><a href=""></a>        <span class="fu">theme_bw</span>() </span>
+<span id="cb28-18"><a href=""></a>  <span class="fu">return</span>(p)</span>
+<span id="cb28-19"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">plot_traj_Growth</span>(<span class="at">id =</span> <span class="st">"102557"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
 </section></section>
 <section id="modeliser-la-croissance" class="title-slide slide level1 center">
 <h1>Modeliser la croissance</h1>
