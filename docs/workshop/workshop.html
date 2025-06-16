@@ -414,9 +414,9 @@ Géraldine Derroire &amp; Sylvain Schmitt
 
   <p class="date">2025-11-07</p>
 </section>
-<section class="slide level2">
-
-<!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
+<section id="pacotes-r" class="slide level2">
+<h2>Pacotes R</h2>
+<p>Usaremos o <code>tidyverse</code> e o <code>GGally</code> para manipular tabelas e criar gráficos, o <code>vegan</code> para fazer análises da vegetação e o <code>brms</code> para fazer modelização bayesiana.</p>
 <div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-1_6cebf7471531fde0abdf5557b92b1e2a">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(GGally)</span>
@@ -451,6 +451,7 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </section>
 <section id="dados-de-parcelas-florestais-permanentes-1" class="slide level2">
 <h2>Dados de parcelas florestais permanentes</h2>
+<p>Começamos carregando os dados do gráfico na forma de objetos no formato Rdata.</p>
 <div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-2_d9aaa75c456179ee217272ef8d7901ee">
 
 </div>
@@ -478,7 +479,6 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </div>
 </div>
 <p><span class="fragment">⚠️ Esses dados NÃO são de acesso livre, por favor, não os distribua nem utilize para qualquer outro fim.</span></p>
-<!-- @Géraldine: tu dis de ne pas partager mais les Rdata sont en ligne ouvert!-->
 </section>
 <section id="dados-de-parcelas-florestais-permanentes-2" class="slide level2">
 <h2>Dados de parcelas florestais permanentes</h2>
@@ -576,6 +576,7 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </section>
 <section id="distribuição-das-valores-das-características" class="slide level2">
 <h2>Distribuição das valores das características</h2>
+<p>Podemos começar examinando a distribuição de valores para cada um dos recursos com um histograma usando a biblioteca `ggplot’.</p>
 <div class="cell" data-layout-align="center" data-hash="workshop_cache/revealjs/unnamed-chunk-7_3b505ec5def87147c2748f3dc125d796">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>dt_traits <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">pivot_longer</span>(LMA <span class="sc">:</span> tlp, </span>
@@ -608,6 +609,7 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </section>
 <section id="coeficientes-de-variação-das-características" class="slide level2">
 <h2>Coeficientes de variação das características</h2>
+<p>Podemos ver que as características são mais ou menos variáveis, mas para quantificar isso adequadamente, podemos usar o coeficiente de variação definido como:</p>
 <p><span class="math display">\[CV = \frac{\sigma}{\mu}\]</span></p>
 <div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-8_a17c226937f29e00fd73d2995a05606d">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
@@ -622,9 +624,23 @@ Géraldine Derroire &amp; Sylvain Schmitt
 1 0.295 0.253 0.455 0.161 0.127</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>CV igual à variância sigma dividida pela média mu</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="correlações-entre-pares-de-características" class="slide level2">
 <h2>Correlações entre pares de características</h2>
+<p>As características não variam de forma independente, portanto, podemos explorar esses vínculos um a um usando os coeficientes de correlação.</p>
 <div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-9_153df8b24e3ec0f6a4538bf658889dea">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">ggpairs</span>(dt_traits, <span class="at">columns =</span> <span class="fu">names</span>(dt_traits)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -650,7 +666,7 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </section>
 <section id="axes-de-covariância-de-características-funcionais" class="slide level2">
 <h2>Axes de covariância de características funcionais</h2>
-<p>Análise de componentes principais</p>
+<p>Mas para entender melhor a organização geral de todos os recursos em “estratégias funcionais”, podemos construir uma análise de componente principal (ACP) com o pacote <code>vegan</code>.</p>
 <div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-10_f0f784c8a7fc9f298ab2de75cfdeafa8">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>trait_pca <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>species) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">pca</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
@@ -692,12 +708,7 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 </section>
 <section id="axes-de-covariância-de-características-funcionais-1" class="slide level2">
 <h2>Axes de covariância de características funcionais</h2>
-<!-- @Sylvain, je suis embeter pour l'interpretation de l'axe 2, je trouve ca surprenant qu'il oppose wsg et tlp...
-dans la literature tlp est loin aligné sur le LES (cf papier Joannès), soit sur un autre axe que le LES et wsg (thèse de Daniela par ex...)
-Est-ce que tu vois mieux à proposer que mon interpretation?
--->
-<!-- @Géraldine, on a juste trop peu de traits. Du coup ici je pense qu'un lien hydraulique TLP WSG ressort qui n'est pas forcément habituellement si marqué avec des bois denses aux feuilles résistantes à la sécheresse (TLP négatif)
--->
+<p>Podemos representar a PCA em um biplot de eixos1-2 com as características como variáveis representadas por setas e as espécies por pontos posicionados de acordo com o velru de suas características.</p>
 <div class="columns">
 <div class="column" style="width:50%;">
 <div class="cell" data-layout-align="center" data-hash="workshop_cache/revealjs/unnamed-chunk-11_ee04184c3c14dbcd6bc3474239a4d82f">
@@ -749,6 +760,7 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 </section>
 <section id="preparação-dos-dados" class="slide level2">
 <h2>Preparação dos dados</h2>
+<p>Para usar os dados de crescimento, começamos filtrando os dados do lote 6.</p>
 <ul>
 <li>Manter apenas as árvores totalmente determinadas</li>
 </ul>
@@ -868,19 +880,6 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 5       1988     1987</code></pre>
 </div>
 </div>
-<aside class="notes">
-<p>2 etapas</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
 </section>
 <section id="cálculo-do-crescimento-anual-1" class="slide level2">
 <h2>Cálculo do crescimento anual</h2>
@@ -921,6 +920,19 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 15 100621       2007  13.2 0     </code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>O crescimento anual é calculado como a diferença de diâmetro entre dois anos dividida pela diferença de tempo entre esses dois anos, calculada usando a função de defasagem.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="trajetórias-de-crescimento" class="slide level2">
 <h2>Trajetórias de crescimento</h2>
@@ -944,6 +956,19 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 <p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-20-1.png" width="960"></p>
 </div>
 </div>
+<aside class="notes">
+<p>Podemos representar o crescimento como diâmetro ao longo do tempo</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="trajetórias-de-crescimento-1" class="slide level2">
 <h2>Trajetórias de crescimento</h2>
@@ -967,6 +992,19 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 <p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
 </div>
 </div>
+<aside class="notes">
+<p>Podemos representar o crescimento como crescimento annual ao longo do tempo</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="trajetórias-de-crescimento-2" class="slide level2">
 <h2>Trajetórias de crescimento</h2>
@@ -989,14 +1027,24 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 <p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-22-1.png" width="960"></p>
 </div>
 </div>
+<aside class="notes">
+<p>Podemos representar o crescimento como um incremento anual em função do diâmetro para representar melhor o efeito da ontogenia</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section></section>
 <section>
 <section id="modelagem-do-crescimento" class="title-slide slide level1 center">
 <h1>Modelagem do crescimento</h1>
-<!-- !! en fonction de ce qu'on fait pour le paramètre individuel, il faudra peut-être faire un subset des individus avec assez de census (a rajouter dans prep de données) -->
-<!-- modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet indiv aléatoire additif? -->
-<!-- avec brms -->
-<!-- sur environ 3 espcèes contrastées et si possible présente à Tapajos -->
+
 </section>
 <section id="modelo-de-canham" class="slide level2">
 <h2>Modelo de Canham</h2>
@@ -1013,6 +1061,19 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 <p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
 </div>
 </div>
+<aside class="notes">
+<p>G representa o potencial máximo de crescimento da espécie atingido em um diâmetro D, K representa a largura dessa resposta de crescimento em forma de sino.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="uma-inferência-com-cecropia-obtusa" class="slide level2">
 <h2>Uma inferência com <em>Cecropia obtusa</em></h2>
@@ -1062,6 +1123,19 @@ and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>Estamos começando com uma espécie pioneira</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="uma-inferência-com-cecropia-obtusa-1" class="slide level2">
 <h2>Uma inferência com <em>Cecropia obtusa</em></h2>
@@ -1131,6 +1205,19 @@ and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>A Dicorynia é a espécie mais explorada na Guiana Francesa, semelhante ao ipê</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="uma-inferência-com-dicorynia-guianensis-1" class="slide level2">
 <h2>Uma inferência com <em>Dicorynia guianensis</em></h2>
@@ -1200,6 +1287,19 @@ and Tail_ESS are effective sample size measures, and Rhat is the potential
 scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>A Eschweilera é a espécie mais abundante na Amazônia e cresce muito lentamente.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="uma-inferência-com-eschweilera-sagotiana-1" class="slide level2">
 <h2>Uma inferência com <em>Eschweilera sagotiana</em></h2>
@@ -1237,6 +1337,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-33-1.png" width="960"></p>
 </div>
 </div>
+<aside class="notes">
+<p>Para levar em conta a variação de um indivíduo para outro, redefinimos o potencial G do indivíduo como seguindo uma distribuição normal centrada no potencial da espécie</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="modelo-de-crescimento-individual-1" class="slide level2">
 <h2>Modelo de crescimento individual</h2>
@@ -1311,10 +1424,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section>
 <section id="usar-características-funcionais-para-explicar-o-crescimento" class="title-slide slide level1 center">
 <h1>Usar características funcionais para explicar o crescimento</h1>
-<!-- repartir des gmax de Ecology Letters et faire un lm en frequentiste =\> cf exam Géraldine -->
+
 </section>
 <section id="distribuição-das-crescimentos" class="slide level2">
 <h2>Distribuição das crescimentos</h2>
+<p>Começamos recuperando todos os crescimentos das espécies de Paracou disponíveis em <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14318">Schmitt, Hérault, Derroire (2023)</a>, e selecionamos as espécies para as quais temos valores de características</p>
 <div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-37_8e3a7fc564443dad658a43a1149eb13d">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/growth_raw.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">","</span>)) <span class="sc">%&gt;%</span> </span>
 <span id="cb47-2"><a href="#cb47-2"></a>  <span class="fu">select</span>(Species, <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
@@ -1332,10 +1446,11 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="correlações-entre-pares-de-características-1" class="slide level2">
 <h2>Correlações entre pares de características</h2>
-<div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-38_a96f1ef37f5a65e4e1b0f3ad19bdfdbe">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">ggpairs</span>(dt, <span class="at">columns =</span> <span class="fu">names</span>(dt)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Primeiro, podemos analisar a correlação com o crescimento. Como as características estão correlacionadas, usamos apenas wsg e sla para representar as diferentes estratégias.</p>
+<div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-38_3aec5b870630a7697de4c577644ff36c">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">ggpairs</span>(dt, <span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Gmax"</span>, <span class="st">"LMA"</span>, <span class="st">"wsg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-hash="workshop_cache/revealjs/unnamed-chunk-38_a96f1ef37f5a65e4e1b0f3ad19bdfdbe">
+<div class="cell fragment" data-hash="workshop_cache/revealjs/unnamed-chunk-38_3aec5b870630a7697de4c577644ff36c">
 <div class="cell-output-display">
 <p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-38-1.png" width="960"></p>
 </div>
@@ -1343,34 +1458,32 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="regressão-linear" class="slide level2">
 <h2>Regressão linear</h2>
-<div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-39_43fb2ce4b423482a4556bf625fb60572">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">lm</span>(Gmax <span class="sc">~</span> LMA <span class="sc">+</span> Nmass <span class="sc">+</span> Pmass <span class="sc">+</span> wsg <span class="sc">+</span> tlp, dt) <span class="sc">%&gt;%</span> </span>
+<p>Também podemos usar a regressão linear para identificar estratégias relacionadas ao crescimento das espécies.</p>
+<div class="cell" data-hash="workshop_cache/revealjs/unnamed-chunk-39_6bc37aa64610cb89688f190cd107e5cf">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">lm</span>(Gmax <span class="sc">~</span> LMA <span class="sc">+</span> wsg, dt) <span class="sc">%&gt;%</span> </span>
 <span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment" data-hash="workshop_cache/revealjs/unnamed-chunk-39_43fb2ce4b423482a4556bf625fb60572">
+<div class="cell fragment" data-hash="workshop_cache/revealjs/unnamed-chunk-39_6bc37aa64610cb89688f190cd107e5cf">
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = Gmax ~ LMA + Nmass + Pmass + wsg + tlp, data = dt)
+lm(formula = Gmax ~ LMA + wsg, data = dt)
 
 Residuals:
       Min        1Q    Median        3Q       Max 
--0.247817 -0.075070 -0.009177  0.088464  0.206502 
+-0.239838 -0.082860 -0.002604  0.090345  0.208692 
 
 Coefficients:
-              Estimate Std. Error t value Pr(&gt;|t|)  
-(Intercept)  1.074e+00  4.932e-01   2.177   0.0458 *
-LMA          5.657e-04  1.972e-03   0.287   0.7781  
-Nmass        4.585e+00  1.247e+01   0.368   0.7182  
-Pmass        5.385e-01  1.033e+02   0.005   0.9959  
-wsg         -8.536e-01  4.699e-01  -1.817   0.0893 .
-tlp          1.597e-02  1.989e-01   0.080   0.9371  
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1.2191956  0.2169689   5.619 2.48e-05 ***
+LMA          0.0001114  0.0011878   0.094  0.92633    
+wsg         -0.9041136  0.2920908  -3.095  0.00624 ** 
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.1427 on 15 degrees of freedom
-Multiple R-squared:  0.3538,    Adjusted R-squared:  0.1383 
-F-statistic: 1.642 on 5 and 15 DF,  p-value: 0.2092</code></pre>
+Residual standard error: 0.1309 on 18 degrees of freedom
+Multiple R-squared:  0.3476,    Adjusted R-squared:  0.2752 
+F-statistic: 4.796 on 2 and 18 DF,  p-value: 0.0214</code></pre>
 </div>
 </div>
 </section></section>

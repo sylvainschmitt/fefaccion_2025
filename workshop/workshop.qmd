@@ -15,6 +15,7 @@ format:
     incremental: false
     smaller: true
     logo: figs/logo.png
+    code-linkk: true
 execute:
   echo: true   
   warning: false
@@ -33,7 +34,9 @@ include-in-header:
       </style>
 ---
 
-<!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
+## Pacotes R
+
+Usaremos o `tidyverse` e o `GGally` para manipular tabelas e criar gráficos, o `vegan` para fazer análises da vegetação e o `brms` para fazer modelização bayesiana.
 
 ```{r }
 library(tidyverse)
@@ -60,6 +63,8 @@ library(brms)
 
 ## Dados de parcelas florestais permanentes
 
+Começamos carregando os dados do gráfico na forma de objetos no formato Rdata.
+
 ```{r}
 #| eval: false
 #| echo: false
@@ -78,8 +83,6 @@ dt_P6
 ```
 
 [⚠️ Esses dados NÃO são de acesso livre, por favor, não os distribua nem utilize para qualquer outro fim.]{.fragment}
-
-<!-- @Géraldine: tu dis de ne pas partager mais les Rdata sont en ligne ouvert!-->
 
 ## Dados de parcelas florestais permanentes
 
@@ -174,6 +177,8 @@ dt_traits %>% slice_head(n = 5)
 
 ## Distribuição das valores das características
 
+Podemos começar examinando a distribuição de valores para cada um dos recursos com um histograma usando a biblioteca `ggplot'.
+
 ```{r}
 #| fig-height: 4
 #| fig-width: 8
@@ -191,6 +196,8 @@ LMA, Nmass, e Pmass tendem a valores pequenos TLP e wsg a valores grandes
 
 ## Coeficientes de variação das características
 
+Podemos ver que as características são mais ou menos variáveis, mas para quantificar isso adequadamente, podemos usar o coeficiente de variação definido como:
+
 $$CV = \frac{\sigma}{\mu}$$
 
 ```{r}
@@ -199,7 +206,13 @@ dt_traits %>% summarise(
          function(v) {round(sd(v)/abs(mean(v)), 3)}))
 ```
 
+::: notes
+CV igual à variância sigma dividida pela média mu
+:::
+
 ## Correlações entre pares de características
+
+As características não variam de forma independente, portanto, podemos explorar esses vínculos um a um usando os coeficientes de correlação.
 
 ```{r}
 ggpairs(dt_traits, columns = names(dt_traits)[-1])
@@ -213,7 +226,7 @@ wsg tlp correlacionados
 
 ## Axes de covariância de características funcionais
 
-Análise de componentes principais
+Mas para entender melhor a organização geral de todos os recursos em “estratégias funcionais”, podemos construir uma análise de componente principal (ACP) com o pacote `vegan`.
 
 ```{r}
 trait_pca <- dt_traits %>% select(-species) %>% 
@@ -227,17 +240,7 @@ os dois primeiros eixos capturam 73% da variabilidade total do conjunto de dados
 
 ## Axes de covariância de características funcionais
 
-```{=html}
-<!-- @Sylvain, je suis embeter pour l'interpretation de l'axe 2, je trouve ca surprenant qu'il oppose wsg et tlp...
-dans la literature tlp est loin aligné sur le LES (cf papier Joannès), soit sur un autre axe que le LES et wsg (thèse de Daniela par ex...)
-Est-ce que tu vois mieux à proposer que mon interpretation?
--->
-```
-
-```{=html}
-<!-- @Géraldine, on a juste trop peu de traits. Du coup ici je pense qu'un lien hydraulique TLP WSG ressort qui n'est pas forcément habituellement si marqué avec des bois denses aux feuilles résistantes à la sécheresse (TLP négatif)
--->
-```
+Podemos representar a PCA em um biplot de eixos1-2 com as características como variáveis representadas por setas e as espécies por pontos posicionados de acordo com o velru de suas características.
 
 :::::: columns
 ::: {.column width="50%"}
@@ -274,6 +277,8 @@ display não é intuitiva no vegan, se não estiver trabalhando com uma tabela f
 # Exploração dos dados de crescimento
 
 ## Preparação dos dados
+
+Para usar os dados de crescimento, começamos filtrando os dados do lote 6.
 
 -   Manter apenas as árvores totalmente determinadas
 
@@ -349,10 +354,6 @@ dt_years <- dt_P6  %>%
 head(dt_years, n = 5)
 ```
 
-::: notes
-2 etapas
-:::
-
 ## Cálculo do crescimento anual
 
 -   Cálcular o crescimento anual
@@ -369,6 +370,10 @@ dt_P6 %>% select(idTree, CensusYear, DBH, Growth) %>%
   filter(idTree == 100621) %>% 
   head(n = 15)
 ```
+
+::: notes
+O crescimento anual é calculado como a diferença de diâmetro entre dois anos dividida pela diferença de tempo entre esses dois anos, calculada usando a função de defasagem.
+:::
 
 ## Trajetórias de crescimento
 
@@ -388,6 +393,11 @@ plot_traj_DBH <- function(id, dt) {
 plot_traj_DBH(id = "103768", dt = dt_P6)
 ```
 
+
+::: notes
+Podemos representar o crescimento como diâmetro ao longo do tempo
+:::
+
 ## Trajetórias de crescimento
 
 ```{r}
@@ -406,6 +416,10 @@ plot_traj_Growth <- function(id, dt) {
 plot_traj_Growth(id = "103768", dt = dt_P6)
 ```
 
+::: notes
+Podemos representar o crescimento como crescimento annual ao longo do tempo
+:::
+
 ## Trajetórias de crescimento
 
 ```{r}
@@ -423,15 +437,11 @@ plot_traj_sp <- function(sp, dt) {
 plot_traj_sp(sp = "Cecropia_obtusa", dt = dt_P6)
 ```
 
+::: notes
+Podemos representar o crescimento como um incremento anual em função do diâmetro para representar melhor o efeito da ontogenia
+:::
+
 # Modelagem do crescimento
-
-<!-- !! en fonction de ce qu'on fait pour le paramètre individuel, il faudra peut-être faire un subset des individus avec assez de census (a rajouter dans prep de données) -->
-
-<!-- modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet indiv aléatoire additif? -->
-
-<!-- avec brms -->
-
-<!-- sur environ 3 espcèes contrastées et si possible présente à Tapajos -->
 
 ## Modelo de Canham
 
@@ -444,6 +454,10 @@ data_frame(DBH = 1:100) %>% mutate(log_agr = 0.5*exp(-0.5*(log(DBH/50)^2/0.2))) 
        y = "log(Crescimento anual + 1)") + theme_bw() +
   geom_vline(xintercept = 50, colour = "red") + geom_hline(yintercept = 0.5, colour = "red")
 ```
+
+::: notes
+G representa o potencial máximo de crescimento da espécie atingido em um diâmetro D, K representa a largura dessa resposta de crescimento em forma de sino.
+:::
 
 ## Uma inferência com *Cecropia obtusa*
 
@@ -464,6 +478,10 @@ save(fit, file = "data/fit_cecro.Rdata")
 ```{r}
 load(file = "data/fit_cecro.Rdata") ; fit
 ```
+
+::: notes
+Estamos começando com uma espécie pioneira
+:::
 
 ## Uma inferência com *Cecropia obtusa*
 
@@ -500,6 +518,10 @@ save(fit, file = "data/fit_dico.Rdata")
 load(file = "data/fit_dico.Rdata") ; fit
 ```
 
+::: notes
+A Dicorynia é a espécie mais explorada na Guiana Francesa, semelhante ao ipê
+:::
+
 ## Uma inferência com *Dicorynia guianensis*
 
 ```{r}
@@ -535,6 +557,10 @@ save(fit, file = "data/fit_esch.Rdata")
 load(file = "data/fit_esch.Rdata") ; fit
 ```
 
+::: notes
+A Eschweilera é a espécie mais abundante na Amazônia e cresce muito lentamente.
+:::
+
 ## Uma inferência com *Eschweilera sagotiana*
 
 ```{r}
@@ -562,6 +588,10 @@ expand_grid(DBH = 1:100, G_tree = rnorm(10, 0.5, 0.1)) %>%
        y = "log(Crescimento anual + 1)") + theme_bw() +
   geom_vline(xintercept = 50, colour = "red") + geom_hline(yintercept = 0.5, colour = "red")
 ```
+
+::: notes
+Para levar em conta a variação de um indivíduo para outro, redefinimos o potencial G do indivíduo como seguindo uma distribuição normal centrada no potencial da espécie
+:::
 
 ## Modelo de crescimento individual
 
@@ -596,9 +626,9 @@ fit %>%
 
 # Usar características funcionais para explicar o crescimento
 
-<!-- repartir des gmax de Ecology Letters et faire un lm en frequentiste =\> cf exam Géraldine -->
-
 ## Distribuição das crescimentos
+
+Começamos recuperando todos os crescimentos das espécies de Paracou disponíveis em [Schmitt, Hérault, Derroire (2023)](https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14318), e selecionamos as espécies para as quais temos valores de características
 
 ```{r}
 dt <- read_csv("data/growth_raw.csv", locale = locale(decimal_mark = ",")) %>% 
@@ -612,14 +642,18 @@ dt %>% ggplot(aes(Gmax)) + geom_histogram() + theme_bw() + scale_x_log10()
 
 ## Correlações entre pares de características
 
+Primeiro, podemos analisar a correlação com o crescimento. Como as características estão correlacionadas, usamos apenas wsg e sla para representar as diferentes estratégias.
+
 ```{r}
-ggpairs(dt, columns = names(dt)[-1])
+ggpairs(dt, columns = c("Gmax", "LMA", "wsg"))
 ```
 
 ## Regressão linear
 
+Também podemos usar a regressão linear para identificar estratégias relacionadas ao crescimento das espécies.
+
 ```{r}
-lm(Gmax ~ LMA + Nmass + Pmass + wsg + tlp, dt) %>% 
+lm(Gmax ~ LMA + wsg, dt) %>% 
   summary()
 ```
 
