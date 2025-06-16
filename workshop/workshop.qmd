@@ -2,7 +2,7 @@
 title: "Dinâmica florestal com R"
 author: Géraldine Derroire & Sylvain Schmitt
 institute: Cirad
-date: "11 de julho de 2025"
+date: "11/07/2025"
 format: 
   revealjs:
     theme: night
@@ -14,6 +14,8 @@ format:
     link-external-newwindow: true
     incremental: false
     smaller: true
+    logo: figs/logo.png
+    code-linkk: true
 execute:
   echo: true   
   warning: false
@@ -22,20 +24,25 @@ execute:
 editor: 
   markdown: 
     wrap: sentence
+include-in-header:
+  - text: |
+      <style>
+      .reveal .slide-logo {
+        max-height: unset;
+        height: 75px;
+      }
+      </style>
 ---
 
-<!-- TO DO, put the logos on the title page-->
+## Pacotes R
 
-<!-- Translate the code comments -->
+Usaremos o `tidyverse` e o `GGally` para manipular tabelas e criar gráficos, o `vegan` para fazer análises da vegetação e o `brms` para fazer modelização bayesiana.
 
-<!-- @Sylvain: pour l'instant, je mets la structure en français, on changera en avançant -->
-
-<!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
-
-```{r}
+```{r }
 library(tidyverse)
 library(GGally)
 library(vegan)
+library(brms)
 ```
 
 # Dados
@@ -43,23 +50,20 @@ library(vegan)
 ## Dados de parcelas florestais permanentes
 
 ::: {.column width="60%"}
-* Dados de uma parcela permanente (parcela 6) na estação de pesquisa florestal de [Paracou](https://paracou.cirad.fr/website) na Guiana Francesa
+-   Dados de uma parcela permanente (parcela 6) na estação de pesquisa florestal de [Paracou](https://paracou.cirad.fr/website) na Guiana Francesa
 
-* Todas as árvores com um diâmetro à altura do peito (DAP) ≥ 10 cm são mapeadas, identificadas botanicamente e medidas em cada censo
+-   Todas as árvores com um diâmetro à altura do peito (DAP) ≥ 10 cm são mapeadas, identificadas botanicamente e medidas em cada censo
 
-![](foto_inventorio.png){fig-align="center" height="60%"}
-:::
-
-::: {.column width="5%"}
+![](figs/foto_inventorio.png){fig-align="center" height="60%"}
 :::
 
 ::: {.column width="35%"}
-![](paracou.png)
-
-
+![](figs/paracou.png)
 :::
 
 ## Dados de parcelas florestais permanentes
+
+Começamos carregando os dados do gráfico na forma de objetos no formato Rdata.
 
 ```{r}
 #| eval: false
@@ -70,7 +74,6 @@ dt_P6 <- dt_P6 %>%
          idTree, Xutm, Yutm, 
          Family, Genus, Species,
          CensusYear, CodeAlive, CircCorr)
-
 save(dt_P6, file = "data/data_paracou_p6.RData")
 ```
 
@@ -81,46 +84,41 @@ dt_P6
 
 [⚠️ Esses dados NÃO são de acesso livre, por favor, não os distribua nem utilize para qualquer outro fim.]{.fragment}
 
-
 ## Dados de parcelas florestais permanentes
 
 Esses dados contêm:
 
+::::: columns
 ::: {.column width="50%"}
+-   **Forest**: Nome da floresta
 
-- **Forest**: Nome da floresta
+-   **Plot**: Número da parcela
 
-- **Plot**: Número da parcela
+-   **PlotArea**: Área da parcela (hectares)
 
-- **PlotArea**: Área da parcela (hectares)
+-   **SubPlot**: Número da subparcela
 
-- **SubPlot**: Número da subparcela
+-   **idTree**: Identificador único da árvore no banco de dados
 
-- **idTree**: Identificador único da árvore no banco de dados
-
-- **Xutm** e **Yutm**: Coordenadas da árvore (UTM 22N (EPSG: 32 622))
-
+-   **Xutm** e **Yutm**: Coordenadas da árvore (UTM 22N (EPSG: 32 622))
 :::
 
 ::: {.column width="50%"}
+-   **Family**
 
-- **Family**
+-   **Genus**
 
-- **Genus**
+-   **Species**
 
-- **Species**
+-   **CensusYear**: Ano da medição
 
-- **CensusYear**: Ano da medição
+-   **CodeAlive**: A árvore está viva (1) ou morta (0)?
 
-- **CodeAlive**: A árvore está viva (1) ou morta (0)?
-
-- **CircCorr**: Circunferência (cm) da árvore no ponto de medição
-
+-   **CircCorr**: Circunferência (cm) da árvore no ponto de medição
 :::
+:::::
 
 ## Dados de características funcionais
-
-<!-- @Sylvain: confirme que les données de traits viennet de TRY-->
 
 Vamos usar os dados das características funcionais das árvores da Guiana Francesa obtidos na base de dados [TRY](https://www.try-db.org/TryWeb/Home.php) e compilados no pacote [rcontroll](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14215).
 
@@ -129,8 +127,8 @@ Esses dados estão disponíveis [aqui](https://github.com/sylvainschmitt/fefacci
 ```{r}
 #| eval: false
 #| echo: false
-library(rcontroll)
-dt_traits <- TROLLv3_species
+dt_traits <- rcontroll::TROLLv3_species %>% 
+  select(-s_seedmass, -s_regionalfreq, -s_drymass)
 dt_traits <- dt_traits %>% rename(species = s_name, 
                                   LMA = s_LMA,
                                   Nmass = s_Nmass, 
@@ -139,10 +137,7 @@ dt_traits <- dt_traits %>% rename(species = s_name,
                                   dbhmax = s_dbhmax, 
                                   hmax = s_hmax, 
                                   ah = s_ah,
-                                  regionalfreq = s_regionalfreq, 
-                                  tlp = s_tlp, 
-                                  drymass = s_drymass, 
-                                  seedmass = s_seedmass)
+                                  tlp = s_tlp)
 save(dt_traits, file = "data/dt_traits.RData")
 ```
 
@@ -153,24 +148,19 @@ dt_traits
 
 ## Dados de características funcionais
 
-<!-- @Sylvain: unités OK?-->
-
+::::: columns
 ::: {.column width="50%"}
 [Esses dados contêm os valores de 11 características funcionais para 45 espécies. Vamos focar nos seguintes características:]{style="font-size: 25px"}
 
--   [massa foliar por área (**LMA**, em $kg/m^2$)]{style="font-size: 25px"}
+-   [massa foliar por área (**LMA**, em $g~m^{-2}$)]{style="font-size: 25px"}
 
--   [massa de nitrogênio foliar (**Nmass**, em $mg/g$)]{style="font-size: 25px"}
+-   [massa de nitrogênio foliar (**Nmass**, em $g~g^{-1}$)]{style="font-size: 25px"}
 
--   [massa de fósforo foliar (**Pmass**, em $mg/g$)]{style="font-size: 25px"}
+-   [massa de fósforo foliar (**Pmass**, em $g~g^{-1}$)]{style="font-size: 25px"}
 
--   [gravidade específica da madeira (**wsg**, em $g/cm^3$)]{style="font-size: 25px"}
-
-<!-- * [altura máxima da espécie] (**hmax**, em $m$)]{style="font-size: 25px"}-->
+-   [gravidade específica da madeira (**wsg**, em $g~cm^{-3}$)]{style="font-size: 25px"}
 
 -   [potencial hídrico foliar no ponto de perda de turgor (**tlp**, em $MPa$)]{style="font-size: 25px"}
-
-<!--* massa seca foliar (*s_drymass*, em $g$)-->
 :::
 
 ::: {.column width="50%"}
@@ -181,10 +171,13 @@ dt_traits <- dt_traits %>%
 dt_traits %>% slice_head(n = 5)
 ```
 :::
+:::::
 
 # Exploração de dados de características funcionais
 
 ## Distribuição das valores das características
+
+Podemos começar examinando a distribuição de valores para cada um dos recursos com um histograma usando a biblioteca `ggplot'.
 
 ```{r}
 #| fig-height: 4
@@ -193,17 +186,19 @@ dt_traits %>% slice_head(n = 5)
 dt_traits %>% 
   pivot_longer(LMA : tlp, 
                names_to = "traits", values_to = "values") %>% 
-  ggplot(aes(x = values, colour = traits)) + geom_density() +
+  ggplot(aes(x = values)) + geom_histogram() +
   facet_wrap(~ traits, scales = "free") + theme_bw()
 ```
 
 ::: notes
-LMA, Nmass, e Pmass tendem a valores pequenos
-
-hmax a valores grandes
+LMA, Nmass, e Pmass tendem a valores pequenos TLP e wsg a valores grandes
 :::
 
 ## Coeficientes de variação das características
+
+Podemos ver que as características são mais ou menos variáveis, mas para quantificar isso adequadamente, podemos usar o coeficiente de variação definido como:
+
+$$CV = \frac{\sigma}{\mu}$$
 
 ```{r}
 dt_traits %>% summarise(
@@ -211,7 +206,13 @@ dt_traits %>% summarise(
          function(v) {round(sd(v)/abs(mean(v)), 3)}))
 ```
 
+::: notes
+CV igual à variância sigma dividida pela média mu
+:::
+
 ## Correlações entre pares de características
+
+As características não variam de forma independente, portanto, podemos explorar esses vínculos um a um usando os coeficientes de correlação.
 
 ```{r}
 ggpairs(dt_traits, columns = names(dt_traits)[-1])
@@ -225,7 +226,7 @@ wsg tlp correlacionados
 
 ## Axes de covariância de características funcionais
 
-Análise de componentes principais
+Mas para entender melhor a organização geral de todos os recursos em “estratégias funcionais”, podemos construir uma análise de componente principal (ACP) com o pacote `vegan`.
 
 ```{r}
 trait_pca <- dt_traits %>% select(-species) %>% 
@@ -234,18 +235,14 @@ summary(trait_pca)
 ```
 
 ::: notes
-os dois primeiros eixos capturam XXX % da variabilidade total do conjunto de dados
+os dois primeiros eixos capturam 73% da variabilidade total do conjunto de dados
 :::
 
 ## Axes de covariância de características funcionais
 
-```{=html}
-<!-- @Sylvain, je suis embeter pour l'interpretation de l'axe 2, je trouve ca surprenant qu'il oppose wsg et tlp...
-dans la literature tlp est loin aligné sur le LES (cf papier Joannès), soit sur un autre axe que le LES et wsg (thèse de Daniela par ex...)
-Est-ce que tu vois mieux à proposer que mon interpretation?
--->
-```
+Podemos representar a PCA em um biplot de eixos1-2 com as características como variáveis representadas por setas e as espécies por pontos posicionados de acordo com o velru de suas características.
 
+:::::: columns
 ::: {.column width="50%"}
 ```{r}
 #| fig-height: 5
@@ -264,9 +261,10 @@ points(trait_pca, scaling = 2,
 ::: incremental
 -   Axe 1: **espectro econômico das folhas**: estratégias de aquisição de recursos conservadoras (lentas) *versus* aquisitivas (rápidas) [Wright *et al* 2004](https://www.nature.com/articles/nature02403)
 
-- As características da madeira [Baraloto *et al* 2010](https://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2010.01517.x) e as características relacionadas com a água [Maréchaux *et al* 2019](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2745.13321) são independentes do espectro econômico das folhas.
+-   As características da madeira [Baraloto *et al* 2010](https://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2010.01517.x) e as características relacionadas com a água [Maréchaux *et al* 2019](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2745.13321) são independentes do espectro econômico das folhas.
 :::
 ::::
+::::::
 
 ::: notes
 display não é intuitiva no vegan, se não estiver trabalhando com uma tabela florística
@@ -280,28 +278,30 @@ display não é intuitiva no vegan, se não estiver trabalhando com uma tabela f
 
 ## Preparação dos dados
 
-* Manter apenas as árvores totalmente determinadas
+Para usar os dados de crescimento, começamos filtrando os dados do lote 6.
+
+-   Manter apenas as árvores totalmente determinadas
 
 ```{r}
 dt_P6 <- dt_P6 %>% 
   filter(Species != "Indet.")
 ```
 
-* Calcular o DAP
+-   Calcular o DAP
 
 ```{r}
 dt_P6 <- dt_P6 %>% 
   mutate(DBH = CircCorr / pi)
 ```
 
-* Manter apenas a observação de árvores vivas com $DAP ≥ 10 cm$
+-   Manter apenas a observação de árvores vivas com $DAP ≥ 10 cm$
 
 ```{r}
 dt_P6 <- dt_P6 %>% 
   filter(DBH >= 10 & CodeAlive ==1) 
 ```
 
-* Adicionar os nomes completos das espécies
+-   Adicionar os nomes completos das espécies
 
 ```{r}
 dt_P6 <- dt_P6 %>% 
@@ -311,18 +311,16 @@ dt_P6 <- dt_P6 %>%
         remove = FALSE)
 ```
 
-
 ## Número de indivíduos
 
-* Número total de indivíduos
+-   Número total de indivíduos
 
 ```{r}
 n_distinct(dt_P6$idTree)
 ```
 
 ::: fragment
-
-* Número de indivíduos por censo e duração do monitoramento 
+-   Número de indivíduos por censo e duração do monitoramento
 
 ```{r}
 #| fig-height: 3
@@ -335,124 +333,341 @@ dt_P6 %>% count(CensusYear)  %>%
   labs(x = "Ano da medição", y = "Número de indivíduos") +
   theme_bw()
 ```
-
 :::
 
 ::: notes
 35 censos entre 1984 e 2024
 
-cerca de 3600-3800 indivíduos por censo 
+cerca de 3600-3800 indivíduos por censo
 :::
-
 
 ## Cálculo do crescimento anual
 
-* Obter os anos do censo e os anos dos censos anteriores
+-   Obter os anos do censo e os anos dos censos anteriores
 
 ```{r}
 dt_years <- dt_P6  %>% 
   distinct(CensusYear) %>%
-  arrange(CensusYear) %>%
-  mutate(PrevYear = c(NA, CensusYear[-length(CensusYear)]))
+  arrange(CensusYear) %>% 
+  mutate(PrevYear = lag(CensusYear))
 
 head(dt_years, n = 5)
 ```
 
-::: notes
-2 etapas
-:::
-
 ## Cálculo do crescimento anual
 
-* Cálcular o crescimento anual
+-   Cálcular o crescimento anual
 
 ```{r}
-dt_P6 <- dt_P6 %>%
-  merge(dt_years, by = "CensusYear", all.x = TRUE) %>% # add the previous year
-  group_by(idTree) %>% # group by individual tree
-  arrange(CensusYear, .by_group = TRUE) %>% # order the years chronologically
-  mutate(
-    Growth = c(NA, diff(DBH)) / (CensusYear - PrevYear), # calculate annual growth
-  ) %>%
+dt_P6 <- dt_P6 %>% 
+  group_by(idTree) %>% 
+  arrange(CensusYear) %>% 
+  mutate(Growth = (DBH - lag(DBH)) / (CensusYear - lag(CensusYear))) %>% 
+  filter(Growth >= 0) %>% 
   ungroup()
 
-dt_P6 %>% select(idTree, CensusYear, PrevYear, DBH, Growth) %>% 
+dt_P6 %>% select(idTree, CensusYear, DBH, Growth) %>% 
+  filter(idTree == 100621) %>% 
   head(n = 15)
 ```
 
+::: notes
+O crescimento anual é calculado como a diferença de diâmetro entre dois anos dividida pela diferença de tempo entre esses dois anos, calculada usando a função de defasagem.
+:::
+
 ## Trajetórias de crescimento
-
-<!-- TO DO
-choisir des individus contrastés pour les espèces qu'on va modéliser
-
-mais ca va être tendu pour trouver des individus avec une belle courbe de croissance donc ne montrer que les trajectoires de diamètres?
--->
 
 ```{r}
 plot_traj_DBH <- function(id, dt) {
-  # Get species  for title
-    sp <- dt %>% filter(idTree == id) %>% distinct(GenSp)
-  # nb of measurment  
-    n <- dt %>% filter(idTree == id) %>% count() 
-  # Plot
-    p <- dt %>% 
-      filter(idTree == id) %>% 
+    sp <- dt %>% filter(idTree == id) %>% distinct(GenSp) # especie
+    n <- dt %>% filter(idTree == id) %>% count() # medições
+    filter(dt, idTree == id) %>% 
       ggplot(aes(x=CensusYear, y = DBH)) + 
       geom_point() + 
       geom_smooth(method = "loess", se = FALSE) + 
       labs(x = "Ano da medição",
            y = "Diâmetro à altura do peito (em cm)",
-           title = "Trajetória do diâmetro",
-           subtitle = paste("Indivíduo ", id, " - ", sp, " (", n, " medições)", 
-                            sep = "")) + 
-        theme_bw() 
-  return(p)
+           title = paste0("Trajetória do diâmetro - Indivíduo ", id, 
+                          " - ", sp, " (", n, " medições)")) + theme_bw() 
 }
+plot_traj_DBH(id = "103768", dt = dt_P6)
 ```
 
-```{r}
 
-plot_traj_DBH(id = "102557", dt = dt_P6)
-```
+::: notes
+Podemos representar o crescimento como diâmetro ao longo do tempo
+:::
+
+## Trajetórias de crescimento
 
 ```{r}
 plot_traj_Growth <- function(id, dt) {
-  # Get species  for title
-    sp <- dt %>% filter(idTree == id) %>% distinct(GenSp)
-  # nb of measurment  
-    n <- dt %>% filter(idTree == id) %>% count() 
-  # Plot
-    p <- dt %>% 
-      filter(idTree == id) %>% 
+    sp <- dt %>% filter(idTree == id) %>% distinct(GenSp) # especie
+    n <- dt %>% filter(idTree == id) %>% count() # medições
+    filter(dt, idTree == id) %>% 
       ggplot(aes(x=DBH, y = Growth)) + 
       geom_point() + 
       geom_smooth(method = "loess", se = FALSE) + 
-      labs(x = "DBH",
+      labs(x = "Ano da medição",
            y = "Crescimento anual (em cm/ano)",
-           title = "Trajetória do crescimento",
-           subtitle = paste("Indivíduo ", id, " - ", sp, " (", n, " medições)", 
-                            sep = "")) + 
-        theme_bw() 
-  return(p)
+           title = paste0("Trajetória do diâmetro - Indivíduo ", id, 
+                          " - ", sp, " (", n, " medições)")) + theme_bw() 
 }
+plot_traj_Growth(id = "103768", dt = dt_P6)
 ```
+
+::: notes
+Podemos representar o crescimento como crescimento annual ao longo do tempo
+:::
+
+## Trajetórias de crescimento
 
 ```{r}
-
-plot_traj_Growth(id = "102557", dt = dt_P6)
+plot_traj_sp <- function(sp, dt) {
+    n <- dt %>% filter(GenSp == sp) %>% count() # medições
+    filter(dt, GenSp == sp) %>% 
+      ggplot(aes(x=DBH, y = Growth)) + 
+      geom_point() + 
+      geom_smooth(method = "loess", se = FALSE) + 
+      labs(x = "Ano da medição",
+           y = "Crescimento anual (em cm/ano)",
+           title = paste0("Trajetória do diâmetro - ",
+                          sp, " (", n, " medições)")) + theme_bw() 
+}
+plot_traj_sp(sp = "Cecropia_obtusa", dt = dt_P6)
 ```
 
+::: notes
+Podemos representar o crescimento como um incremento anual em função do diâmetro para representar melhor o efeito da ontogenia
+:::
 
-# Modeliser la croissance
+# Modelagem do crescimento
 
-!! en fonction de ce qu'on fait pour le paramètre individuel, il faudra peut-être faire un subset des individus avec assez de census (a rajouter dans prep de données)
+## Modelo de Canham
 
-modèle de Canham avec brms avec (à tester) paramètres à l'espèce + 1 effet indiv aléatoire additif?
+$$log(AGR+1)=G \times exp[-0.5 \times( \frac{log(DBH/D)}{K}^2)]$$
 
-avec brms
+```{r}
+data_frame(DBH = 1:100) %>% mutate(log_agr = 0.5*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
+  ggplot(aes(DBH, log_agr)) + geom_line() + theme_bw() +
+  labs(x = "Ano da medição",
+       y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 50, colour = "red") + geom_hline(yintercept = 0.5, colour = "red")
+```
 
-sur environ 3 espcèes contrastées et si possible présente à Tapajos
+::: notes
+G representa o potencial máximo de crescimento da espécie atingido em um diâmetro D, K representa a largura dessa resposta de crescimento em forma de sino.
+:::
 
-# les trais pour expliquer gmax
+## Uma inferência com *Cecropia obtusa*
 
-repartir des gmax de Ecology Letters et faire un lm en frequentiste =\> cf exam Géraldine
+```{r}
+#| eval: false
+fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
+              G ~ 1, D ~ 1, K ~ 1,
+              nl = TRUE),
+           prior = c(
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "G"),
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
+                 prior("uniform(1,30)", lb = 1, ub = 30, nlpar = "D")
+          ),
+           data = filter(dt_P6, GenSp  == "Cecropia_obtusa"),
+           cores = 4)
+save(fit, file = "data/fit_cecro.Rdata")
+```
+```{r}
+load(file = "data/fit_cecro.Rdata") ; fit
+```
+
+::: notes
+Estamos começando com uma espécie pioneira
+:::
+
+## Uma inferência com *Cecropia obtusa*
+
+```{r}
+filter(dt_P6, GenSp  == "Cecropia_obtusa") %>% 
+  ggplot(aes(x=DBH, y = log(Growth+1))) + 
+  geom_point() + 
+  stat_function(fun = function(x) 0.44*exp(-0.5*(log(x/18.79)^2/0.98)),
+                colour = "red", size = 2) +
+      labs(x = "Ano da medição",
+           y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 18.79, colour = "red") + 
+  geom_hline(yintercept = 0.44, colour = "red") +
+  ylim(0, NA) + xlim(10, NA)
+```
+
+## Uma inferência com *Dicorynia guianensis*
+
+```{r}
+#| eval: false
+fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
+              G ~ 1, D ~ 1, K ~ 1,
+              nl = TRUE),
+           prior = c(
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "G"),
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
+                 prior("uniform(1,300)", lb = 1, ub = 300, nlpar = "D")
+          ),
+           data = filter(dt_P6, GenSp  == "Dicorynia_guianensis"),
+           cores = 4)
+save(fit, file = "data/fit_dico.Rdata")
+```
+```{r}
+load(file = "data/fit_dico.Rdata") ; fit
+```
+
+::: notes
+A Dicorynia é a espécie mais explorada na Guiana Francesa, semelhante ao ipê
+:::
+
+## Uma inferência com *Dicorynia guianensis*
+
+```{r}
+filter(dt_P6, GenSp  == "Dicorynia_guianensis") %>% 
+  ggplot(aes(x=DBH, y = log(Growth+1))) + 
+  geom_point() + 
+  stat_function(fun = function(x) 0.29*exp(-0.5*(log(x/33.79)^2/0.63)),
+                colour = "red", size = 2) +
+      labs(x = "Ano da medição",
+           y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 33.79, colour = "red") + 
+  geom_hline(yintercept = 0.29, colour = "red") +
+  ylim(0, NA)
+```
+
+## Uma inferência com *Eschweilera sagotiana*
+
+```{r}
+#| eval: false
+fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
+              G ~ 1, D ~ 1, K ~ 1,
+              nl = TRUE),
+           prior = c(
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "G"),
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
+                 prior("uniform(1,300)", lb = 1, ub = 300, nlpar = "D")
+          ),
+           data = filter(dt_P6, GenSp  == "Eschweilera_sagotiana"),
+           cores = 4)
+save(fit, file = "data/fit_esch.Rdata")
+```
+```{r}
+load(file = "data/fit_esch.Rdata") ; fit
+```
+
+::: notes
+A Eschweilera é a espécie mais abundante na Amazônia e cresce muito lentamente.
+:::
+
+## Uma inferência com *Eschweilera sagotiana*
+
+```{r}
+filter(dt_P6, GenSp  == "Eschweilera_sagotiana") %>% 
+  ggplot(aes(x=DBH, y = log(Growth+1))) + 
+  geom_point() + 
+  stat_function(fun = function(x) 0.10*exp(-0.5*(log(x/27.59)^2/2.77)),
+                colour = "red", size = 2) +
+      labs(x = "Ano da medição",
+           y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 27.59, colour = "red") + 
+  geom_hline(yintercept = 0.10, colour = "red") +
+  ylim(0, NA)
+```
+
+## Modelo de crescimento individual
+
+$$log(AGR+1)= G_{tree} \times exp[-0.5 \times( \frac{log(DBH/D)^2}{K})] ~~|~~G_{tree} = G_{species}+\epsilon_{tree}$$
+
+```{r}
+expand_grid(DBH = 1:100, G_tree = rnorm(10, 0.5, 0.1)) %>% 
+  mutate(log_agr = G_tree*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
+  ggplot(aes(DBH, log_agr, group = as.character(G_tree))) + geom_line() + theme_bw() +
+  labs(x = "Ano da medição",
+       y = "log(Crescimento anual + 1)") + theme_bw() +
+  geom_vline(xintercept = 50, colour = "red") + geom_hline(yintercept = 0.5, colour = "red")
+```
+
+::: notes
+Para levar em conta a variação de um indivíduo para outro, redefinimos o potencial G do indivíduo como seguindo uma distribuição normal centrada no potencial da espécie
+:::
+
+## Modelo de crescimento individual
+
+```{r}
+#| eval: false
+fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
+              G ~ 1|idTree, D ~ 1, K ~ 1,
+              nl = TRUE),
+           prior = c(
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "G"),
+                 prior("uniform(0.001,3)", lb = 0.001, ub = 3, nlpar = "K"),
+                 prior("uniform(1,300)", lb = 1, ub = 300, nlpar = "D")
+          ),
+           data = filter(dt_P6, GenSp  == "Dicorynia_guianensis"),
+           cores = 4)
+save(fit, file = "data/fit_dico_ind.Rdata")
+```
+```{r}
+load(file = "data/fit_dico_ind.Rdata") ; fit
+```
+
+## Modelo de crescimento individual
+
+```{r}
+fit %>% 
+  tidybayes::spread_draws(b_G_Intercept, r_idTree__G[idTree,]) %>% 
+  mutate(G_tree = b_G_Intercept + r_idTree__G) %>% 
+  group_by(idTree) %>% 
+  summarise(G_tree = median(G_tree)) %>% 
+  ggplot(aes(G_tree)) + geom_histogram() + theme_bw()
+```
+
+# Usar características funcionais para explicar o crescimento
+
+## Distribuição das crescimentos
+
+Começamos recuperando todos os crescimentos das espécies de Paracou disponíveis em [Schmitt, Hérault, Derroire (2023)](https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14318), e selecionamos as espécies para as quais temos valores de características
+
+```{r}
+dt <- read_csv("data/growth_raw.csv", locale = locale(decimal_mark = ",")) %>% 
+  select(Species, `Median Gmax`) %>% 
+  rename(species = Species, Gmax =  `Median Gmax`) %>% 
+  mutate(species = gsub(" ", "_", species)) %>% 
+  right_join(dt_traits) %>% 
+  filter(Gmax < 3)
+dt %>% ggplot(aes(Gmax)) + geom_histogram() + theme_bw() + scale_x_log10()
+```
+
+## Correlações entre pares de características
+
+Primeiro, podemos analisar a correlação com o crescimento. Como as características estão correlacionadas, usamos apenas wsg e sla para representar as diferentes estratégias.
+
+```{r}
+ggpairs(dt, columns = c("Gmax", "LMA", "wsg"))
+```
+
+## Regressão linear
+
+Também podemos usar a regressão linear para identificar estratégias relacionadas ao crescimento das espécies.
+
+```{r}
+lm(Gmax ~ LMA + wsg, dt) %>% 
+  summary()
+```
+
+# Conclusão
+
+Parabéns 👏 , agora vocês são profissionais do modelagem do crescimento!
+
+Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas que você possa ter.
+
+::: footer
+*Sylvain Schmitt (sylvain.schmitt\@cirad.fr) & Géraldine Derroire (geraldine.derroire\@cirad.fr)*
+:::
+
+::: notes
+Muito obrigado por sua antenção!​ Agora responderemos suas perguntas.
+:::
+
