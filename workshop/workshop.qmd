@@ -67,20 +67,12 @@ library(tidybayes)
 Começamos carregando os dados na forma de objetos no formato Rdata.
 
 ```{r}
-#| eval: false
-#| echo: false
 dt_P6 <- read_csv(file = "data/2024-08-29_ParacouP6AllYears.csv")
 dt_P6 <- dt_P6 %>% 
   select(Forest, Plot, PlotArea, SubPlot, 
          idTree, Xutm, Yutm, 
          Family, Genus, Species,
          CensusYear, CodeAlive, CircCorr)
-save(dt_P6, file = "data/data_paracou_p6.RData")
-```
-
-```{r}
-load(file = "data/data_paracou_p6.RData")
-dt_P6
 ```
 
 [⚠️ Esses dados NÃO são de acesso livre, por favor, não os distribua nem utilize para qualquer outro fim.]{.fragment}
@@ -123,7 +115,6 @@ Esses dados contêm:
 
 Vamos usar os dados das características funcionais das árvores da Guiana Francesa obtidos na base de dados [TRY](https://www.try-db.org/TryWeb/Home.php) e compilados no pacote [rcontroll](https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14215).
 
-Esses dados estão disponíveis [aqui](https://github.com/sylvainschmitt/fefaccion_2025/workshop/data/data/dt_traits.RData).
 
 ```{r}
 dt_traits <- read_tsv("https://raw.githubusercontent.com/sylvainschmitt/rcontroll/refs/heads/main/inst/extdata/TROLLv3_species.txt") %>% 

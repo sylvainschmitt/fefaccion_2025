@@ -417,22 +417,13 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </section>
 <section id="pacotes-r" class="slide level2">
 <h2>Pacotes R</h2>
-<<<<<<< HEAD
-<p>Usaremos os pacotes <code>tidyverse</code> e <code>GGally</code> para manipular tabelas e criar gráficos, <code>vegan</code> para fazer análises da vegetação e <code>brms</code> para fazer modelização bayesiana.</p>
+<p>Usaremos os pacotes <code>tidyverse</code> e <code>GGally</code> para manipular tabelas e criar gráficos, <code>vegan</code> para fazer análises da vegetação e <code>brms</code> e <code>tidybayes</code> para fazer modelização bayesiana.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href=""></a><span class="fu">library</span>(GGally)</span>
 <span id="cb1-3"><a href=""></a><span class="fu">library</span>(vegan)</span>
-<span id="cb1-4"><a href=""></a><span class="fu">library</span>(brms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<p>Usaremos os pacotes <code>tidyverse</code> e <code>GGally</code> para manipular tabelas e criar gráficos, <code>vegan</code> para fazer análises da vegetação e <code>brms</code> e <code>tidybayes</code> para fazer modelização bayesiana.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(vegan)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="fu">library</span>(brms)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">library</span>(tidybayes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<span id="cb1-4"><a href=""></a><span class="fu">library</span>(brms)</span>
+<span id="cb1-5"><a href=""></a><span class="fu">library</span>(tidybayes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -462,36 +453,15 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <h2>Dados de parcelas florestais permanentes</h2>
 <p>Começamos carregando os dados na forma de objetos no formato Rdata.</p>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/data_paracou_p6.RData"</span>)</span>
-<span id="cb2-2"><a href=""></a>dt_P6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="at">file =</span> <span class="st">"data/2024-08-29_ParacouP6AllYears.csv"</span>)</span>
+<span id="cb2-2"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href=""></a>  <span class="fu">select</span>(Forest, Plot, PlotArea, SubPlot, </span>
+<span id="cb2-4"><a href=""></a>         idTree, Xutm, Yutm, </span>
+<span id="cb2-5"><a href=""></a>         Family, Genus, Species,</span>
+<span id="cb2-6"><a href=""></a>         CensusYear, CodeAlive, CircCorr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-=======
-
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/data_paracou_p6.RData"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>dt_P6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
 <div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 127,732 × 13
-   Forest   Plot PlotArea SubPlot idTree    Xutm    Yutm Family    Genus Species
-   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;  
- 1 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
- 2 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
- 3 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
- 4 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
- 5 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
- 6 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
- 7 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
- 8 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
- 9 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
-10 Paracou     6     6.25       1 100621 286421. 583171. Euphorbi… Sand… guyane…
-# ℹ 127,722 more rows
-# ℹ 3 more variables: CensusYear &lt;dbl&gt;, CodeAlive &lt;dbl&gt;, CircCorr &lt;dbl&gt;</code></pre>
-</div>
+
 </div>
 <p><span class="fragment">⚠️ Esses dados NÃO são de acesso livre, por favor, não os distribua nem utilize para qualquer outro fim.</span></p>
 </section>
@@ -522,19 +492,13 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <section id="dados-de-características-funcionais" class="slide level2">
 <h2>Dados de características funcionais</h2>
 <p>Vamos usar os dados das características funcionais das árvores da Guiana Francesa obtidos na base de dados <a href="https://www.try-db.org/TryWeb/Home.php">TRY</a> e compilados no pacote <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14215">rcontroll</a>.</p>
-<p>Esses dados estão disponíveis <a href="https://github.com/sylvainschmitt/fefaccion_2025/workshop/data/data/dt_traits.RData">aqui</a>.</p>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/dt_traits.RData"</span>)</span>
-<span id="cb4-2"><a href=""></a>dt_traits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>dt_traits <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"https://raw.githubusercontent.com/sylvainschmitt/rcontroll/refs/heads/main/inst/extdata/TROLLv3_species.txt"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">select</span>(<span class="sc">-</span>s_seedmass, <span class="sc">-</span>s_regionalfreq, <span class="sc">-</span>s_drymass) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">rename</span>(<span class="at">species =</span> s_name, <span class="at">LMA =</span> s_LMA, <span class="at">Nmass =</span> s_Nmass,</span>
-<span id="cb4-4"><a href="#cb4-4"></a>         <span class="at">Pmass =</span> s_Pmass, <span class="at">wsg =</span> s_wsg, <span class="at">dbhmax =</span> s_dbhmax, </span>
-<span id="cb4-5"><a href="#cb4-5"></a>         <span class="at">hmax =</span> s_hmax, <span class="at">ah =</span> s_ah, <span class="at">tlp =</span> s_tlp)</span>
-<span id="cb4-6"><a href="#cb4-6"></a>dt_traits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>dt_traits <span class="ot">&lt;-</span> <span class="fu">read_tsv</span>(<span class="st">"https://raw.githubusercontent.com/sylvainschmitt/rcontroll/refs/heads/main/inst/extdata/TROLLv3_species.txt"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href=""></a>  <span class="fu">select</span>(<span class="sc">-</span>s_seedmass, <span class="sc">-</span>s_regionalfreq, <span class="sc">-</span>s_drymass) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href=""></a>  <span class="fu">rename</span>(<span class="at">species =</span> s_name, <span class="at">LMA =</span> s_LMA, <span class="at">Nmass =</span> s_Nmass,</span>
+<span id="cb3-4"><a href=""></a>         <span class="at">Pmass =</span> s_Pmass, <span class="at">wsg =</span> s_wsg, <span class="at">dbhmax =</span> s_dbhmax, </span>
+<span id="cb3-5"><a href=""></a>         <span class="at">hmax =</span> s_hmax, <span class="at">ah =</span> s_ah, <span class="at">tlp =</span> s_tlp)</span>
+<span id="cb3-6"><a href=""></a>dt_traits</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -569,17 +533,10 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>dt_traits <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href=""></a>  <span class="fu">select</span>(species, LMA, Nmass, Pmass, wsg, tlp)</span>
-<span id="cb6-3"><a href=""></a></span>
-<span id="cb6-4"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>dt_traits <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">select</span>(species, LMA, Nmass, Pmass, wsg, tlp)</span>
-<span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>dt_traits <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> </span>
+<span id="cb5-2"><a href=""></a>  <span class="fu">select</span>(species, LMA, Nmass, Pmass, wsg, tlp)</span>
+<span id="cb5-3"><a href=""></a></span>
+<span id="cb5-4"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -604,29 +561,17 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <h2>Distribuição das valores das características</h2>
 <p>Podemos começar examinando a distribuição de valores para cada um dos recursos com um histograma usando o pacote <code>ggplot</code> (parte de <code>tidyverse</code>).</p>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href=""></a>  <span class="fu">pivot_longer</span>(LMA <span class="sc">:</span> tlp, </span>
-<span id="cb8-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"traits"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb8-5"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> traits, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>dt_traits <span class="sc">%&gt;%</span> </span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">pivot_longer</span>(LMA <span class="sc">:</span> tlp, </span>
-<span id="cb8-3"><a href="#cb8-3"></a>               <span class="at">names_to =</span> <span class="st">"traits"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href="#cb8-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> traits, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href=""></a>  <span class="fu">pivot_longer</span>(LMA <span class="sc">:</span> tlp, </span>
+<span id="cb7-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"traits"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb7-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb7-5"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> traits, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-6-1.png" width="768"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-5-1.png" class="quarto-figure quarto-figure-center" width="768"></p>
 </figure>
 </div>
 </div>
@@ -650,15 +595,9 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <p>Podemos ver que as características são mais ou menos variáveis, mas para quantificar isso adequadamente, podemos usar o coeficiente de variação definido como:</p>
 <p><span class="math display">\[CV = \frac{desvio\ padrão}{média}\]</span></p>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
-<span id="cb9-2"><a href=""></a>  <span class="fu">across</span>(LMA <span class="sc">:</span> tlp,</span>
-<span id="cb9-3"><a href=""></a>         <span class="cf">function</span>(v) {<span class="fu">round</span>(<span class="fu">sd</span>(v)<span class="sc">/</span><span class="fu">abs</span>(<span class="fu">mean</span>(v)), <span class="dv">3</span>)}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">across</span>(LMA <span class="sc">:</span> tlp,</span>
-<span id="cb9-3"><a href="#cb9-3"></a>         <span class="cf">function</span>(v) {<span class="fu">round</span>(<span class="fu">sd</span>(v)<span class="sc">/</span><span class="fu">abs</span>(<span class="fu">mean</span>(v)), <span class="dv">3</span>)}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
+<span id="cb8-2"><a href=""></a>  <span class="fu">across</span>(LMA <span class="sc">:</span> tlp,</span>
+<span id="cb8-3"><a href=""></a>         <span class="cf">function</span>(v) {<span class="fu">round</span>(<span class="fu">sd</span>(v)<span class="sc">/</span><span class="fu">abs</span>(<span class="fu">mean</span>(v)), <span class="dv">3</span>)}))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -686,21 +625,13 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <h2>Correlações entre pares de características</h2>
 <p>As características não variam de forma independente, portanto, podemos explorar as relações entre cada par de características usando os coeficientes de correlação.</p>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">ggpairs</span>(dt_traits, <span class="at">columns =</span> <span class="fu">names</span>(dt_traits)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">ggpairs</span>(dt_traits, <span class="at">columns =</span> <span class="fu">names</span>(dt_traits)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">ggpairs</span>(dt_traits, <span class="at">columns =</span> <span class="fu">names</span>(dt_traits)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-8-1.png" width="960"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-7-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -724,15 +655,9 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <h2>Axes de covariância de características funcionais</h2>
 <p>Para entender melhor a organização geral de todos os recursos em “estratégias funcionais”, podemos construir uma análise de componentes principais (ACP) com o pacote <code>vegan</code>.</p>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>trait_pca <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>species) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href=""></a>  <span class="fu">pca</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-3"><a href=""></a><span class="fu">summary</span>(trait_pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>trait_pca <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>species) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">pca</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="fu">summary</span>(trait_pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>trait_pca <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>species) <span class="sc">%&gt;%</span> </span>
+<span id="cb11-2"><a href=""></a>  <span class="fu">pca</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-3"><a href=""></a><span class="fu">summary</span>(trait_pca)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -774,31 +699,18 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <div class="columns">
 <div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># display as características</span></span>
-<span id="cb14-2"><a href=""></a><span class="fu">biplot</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
-<span id="cb14-3"><a href=""></a>       <span class="at">display =</span> <span class="st">"species"</span>) </span>
-<span id="cb14-4"><a href=""></a><span class="co"># display as espécies</span></span>
-<span id="cb14-5"><a href=""></a><span class="fu">points</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
-<span id="cb14-6"><a href=""></a>       <span class="at">display =</span> <span class="st">"sites"</span>, <span class="at">type =</span><span class="st">"points"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># display as características</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">biplot</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
-<span id="cb14-3"><a href="#cb14-3"></a>       <span class="at">display =</span> <span class="st">"species"</span>) </span>
-<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># display as espécies</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="fu">points</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
-<span id="cb14-6"><a href="#cb14-6"></a>       <span class="at">display =</span> <span class="st">"sites"</span>, <span class="at">type =</span><span class="st">"points"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="co"># display as características</span></span>
+<span id="cb13-2"><a href=""></a><span class="fu">biplot</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
+<span id="cb13-3"><a href=""></a>       <span class="at">display =</span> <span class="st">"species"</span>) </span>
+<span id="cb13-4"><a href=""></a><span class="co"># display as espécies</span></span>
+<span id="cb13-5"><a href=""></a><span class="fu">points</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
+<span id="cb13-6"><a href=""></a>       <span class="at">display =</span> <span class="st">"sites"</span>, <span class="at">type =</span><span class="st">"points"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-10-1.png" width="480"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
 </figure>
 </div>
 </div>
@@ -839,13 +751,8 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <li>Manter apenas as árvores totalmente determinadas</li>
 </ul>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href=""></a>  <span class="fu">filter</span>(Species <span class="sc">!=</span> <span class="st">"Indet."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">filter</span>(Species <span class="sc">!=</span> <span class="st">"Indet."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb14-2"><a href=""></a>  <span class="fu">filter</span>(Species <span class="sc">!=</span> <span class="st">"Indet."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -854,13 +761,8 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <li>Calcular o DAP</li>
 </ul>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">DBH =</span> CircCorr <span class="sc">/</span> pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">mutate</span>(<span class="at">DBH =</span> CircCorr <span class="sc">/</span> pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb15-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">DBH =</span> CircCorr <span class="sc">/</span> pi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -869,13 +771,8 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <li>Manter apenas a observação de árvores vivas com <span class="math inline">\(DAP ≥ 10 cm\)</span></li>
 </ul>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href=""></a>  <span class="fu">filter</span>(DBH <span class="sc">&gt;=</span> <span class="dv">10</span> <span class="sc">&amp;</span> CodeAlive <span class="sc">==</span><span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">filter</span>(DBH <span class="sc">&gt;=</span> <span class="dv">10</span> <span class="sc">&amp;</span> CodeAlive <span class="sc">==</span><span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb16-2"><a href=""></a>  <span class="fu">filter</span>(DBH <span class="sc">&gt;=</span> <span class="dv">10</span> <span class="sc">&amp;</span> CodeAlive <span class="sc">==</span><span class="dv">1</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -884,19 +781,11 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <li>Adicionar os nomes completos das espécies</li>
 </ul>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href=""></a>  <span class="fu">unite</span>(GenSp,</span>
-<span id="cb18-3"><a href=""></a>        Genus, Species,</span>
-<span id="cb18-4"><a href=""></a>        <span class="at">sep =</span> <span class="st">"_"</span>, </span>
-<span id="cb18-5"><a href=""></a>        <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">unite</span>(GenSp,</span>
-<span id="cb18-3"><a href="#cb18-3"></a>        Genus, Species,</span>
-<span id="cb18-4"><a href="#cb18-4"></a>        <span class="at">sep =</span> <span class="st">"_"</span>, </span>
-<span id="cb18-5"><a href="#cb18-5"></a>        <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb17-2"><a href=""></a>  <span class="fu">unite</span>(GenSp,</span>
+<span id="cb17-3"><a href=""></a>        Genus, Species,</span>
+<span id="cb17-4"><a href=""></a>        <span class="at">sep =</span> <span class="st">"_"</span>, </span>
+<span id="cb17-5"><a href=""></a>        <span class="at">remove =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -908,11 +797,7 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <li>Número total de indivíduos</li>
 </ul>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">n_distinct</span>(dt_P6<span class="sc">$</span>idTree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">n_distinct</span>(dt_P6<span class="sc">$</span>idTree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="fu">n_distinct</span>(dt_P6<span class="sc">$</span>idTree)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -924,31 +809,18 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <li>Número de indivíduos por censo e duração do monitoramento</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">count</span>(CensusYear)  <span class="sc">%&gt;%</span> </span>
-<span id="cb21-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> CensusYear, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
-<span id="cb21-3"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb21-4"><a href=""></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">4000</span>) <span class="sc">+</span></span>
-<span id="cb21-5"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>, <span class="at">y =</span> <span class="st">"Número de indivíduos"</span>) <span class="sc">+</span></span>
-<span id="cb21-6"><a href=""></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">count</span>(CensusYear)  <span class="sc">%&gt;%</span> </span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> CensusYear, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">4000</span>) <span class="sc">+</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>, <span class="at">y =</span> <span class="st">"Número de indivíduos"</span>) <span class="sc">+</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">count</span>(CensusYear)  <span class="sc">%&gt;%</span> </span>
+<span id="cb20-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> CensusYear, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href=""></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb20-4"><a href=""></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">4000</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>, <span class="at">y =</span> <span class="st">"Número de indivíduos"</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href=""></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-16-1.png" width="480"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-15-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
 </figure>
 </div>
 </div>
@@ -972,29 +844,16 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <section id="cálculo-do-crescimento-anual" class="slide level2">
 <h2>Cálculo do crescimento anual</h2>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-3"><a href=""></a>  <span class="fu">arrange</span>(CensusYear) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">Growth =</span> (DBH <span class="sc">-</span> <span class="fu">lag</span>(DBH)) <span class="sc">/</span> (CensusYear <span class="sc">-</span> <span class="fu">lag</span>(CensusYear))) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-5"><a href=""></a>  <span class="fu">filter</span>(Growth <span class="sc">&gt;=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-6"><a href=""></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb22-7"><a href=""></a></span>
-<span id="cb22-8"><a href=""></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">select</span>(idTree, CensusYear, DBH, Growth) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-9"><a href=""></a>  <span class="fu">filter</span>(idTree <span class="sc">==</span> <span class="dv">100621</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-10"><a href=""></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">arrange</span>(CensusYear) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">mutate</span>(<span class="at">Growth =</span> (DBH <span class="sc">-</span> <span class="fu">lag</span>(DBH)) <span class="sc">/</span> (CensusYear <span class="sc">-</span> <span class="fu">lag</span>(CensusYear))) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">filter</span>(Growth <span class="sc">&gt;=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-6"><a href="#cb22-6"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb22-7"><a href="#cb22-7"></a></span>
-<span id="cb22-8"><a href="#cb22-8"></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">select</span>(idTree, CensusYear, DBH, Growth) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-9"><a href="#cb22-9"></a>  <span class="fu">filter</span>(idTree <span class="sc">==</span> <span class="dv">100621</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb22-10"><a href="#cb22-10"></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href=""></a>  <span class="fu">arrange</span>(CensusYear) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">Growth =</span> (DBH <span class="sc">-</span> <span class="fu">lag</span>(DBH)) <span class="sc">/</span> (CensusYear <span class="sc">-</span> <span class="fu">lag</span>(CensusYear))) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-5"><a href=""></a>  <span class="fu">filter</span>(Growth <span class="sc">&gt;=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-6"><a href=""></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb21-7"><a href=""></a></span>
+<span id="cb21-8"><a href=""></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">select</span>(idTree, CensusYear, DBH, Growth) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-9"><a href=""></a>  <span class="fu">filter</span>(idTree <span class="sc">==</span> <span class="dv">100621</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-10"><a href=""></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1035,45 +894,25 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <section id="trajetórias-de-crescimento" class="slide level2">
 <h2>Trajetórias de crescimento</h2>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>plot_traj_DBH <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
-<span id="cb24-2"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp) <span class="co"># especie</span></span>
-<span id="cb24-3"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
-<span id="cb24-4"><a href=""></a>    <span class="fu">filter</span>(dt, idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-5"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>CensusYear, <span class="at">y =</span> DBH)) <span class="sc">+</span> </span>
-<span id="cb24-6"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb24-7"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb24-8"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb24-9"><a href=""></a>           <span class="at">y =</span> <span class="st">"Diâmetro à altura do peito (em cm)"</span>,</span>
-<span id="cb24-10"><a href=""></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória do diâmetro - Indivíduo "</span>, id, </span>
-<span id="cb24-11"><a href=""></a>                          <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
-<span id="cb24-12"><a href=""></a>}</span>
-<span id="cb24-13"><a href=""></a><span class="fu">plot_traj_DBH</span>(<span class="at">id =</span> <span class="st">"103768"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>plot_traj_DBH <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
-<span id="cb24-2"><a href="#cb24-2"></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp) <span class="co"># especie</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a>    <span class="fu">filter</span>(dt, idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-5"><a href="#cb24-5"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>CensusYear, <span class="at">y =</span> DBH)) <span class="sc">+</span> </span>
-<span id="cb24-6"><a href="#cb24-6"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb24-7"><a href="#cb24-7"></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb24-8"><a href="#cb24-8"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb24-9"><a href="#cb24-9"></a>           <span class="at">y =</span> <span class="st">"Diâmetro à altura do peito (em cm)"</span>,</span>
-<span id="cb24-10"><a href="#cb24-10"></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória do diâmetro - Indivíduo "</span>, id, </span>
-<span id="cb24-11"><a href="#cb24-11"></a>                          <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
-<span id="cb24-12"><a href="#cb24-12"></a>}</span>
-<span id="cb24-13"><a href="#cb24-13"></a><span class="fu">plot_traj_DBH</span>(<span class="at">id =</span> <span class="st">"103768"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a>plot_traj_DBH <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
+<span id="cb23-2"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp) <span class="co"># especie</span></span>
+<span id="cb23-3"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
+<span id="cb23-4"><a href=""></a>    <span class="fu">filter</span>(dt, idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-5"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>CensusYear, <span class="at">y =</span> DBH)) <span class="sc">+</span> </span>
+<span id="cb23-6"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb23-7"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb23-8"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb23-9"><a href=""></a>           <span class="at">y =</span> <span class="st">"Diâmetro à altura do peito (em cm)"</span>,</span>
+<span id="cb23-10"><a href=""></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória do diâmetro - Indivíduo "</span>, id, </span>
+<span id="cb23-11"><a href=""></a>                          <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
+<span id="cb23-12"><a href=""></a>}</span>
+<span id="cb23-13"><a href=""></a><span class="fu">plot_traj_DBH</span>(<span class="at">id =</span> <span class="st">"103768"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-18-1.png" width="672"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-17-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1097,45 +936,25 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <section id="trajetórias-de-crescimento-1" class="slide level2">
 <h2>Trajetórias de crescimento</h2>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>plot_traj_Growth <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
-<span id="cb25-2"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp) <span class="co"># especie</span></span>
-<span id="cb25-3"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
-<span id="cb25-4"><a href=""></a>    <span class="fu">filter</span>(dt, idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-5"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
-<span id="cb25-6"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb25-7"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb25-8"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb25-9"><a href=""></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
-<span id="cb25-10"><a href=""></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória de crecimento - Indivíduo "</span>, id, </span>
-<span id="cb25-11"><a href=""></a>                          <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
-<span id="cb25-12"><a href=""></a>}</span>
-<span id="cb25-13"><a href=""></a><span class="fu">plot_traj_Growth</span>(<span class="at">id =</span> <span class="st">"103768"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>plot_traj_Growth <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
-<span id="cb25-2"><a href="#cb25-2"></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp) <span class="co"># especie</span></span>
-<span id="cb25-3"><a href="#cb25-3"></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
-<span id="cb25-4"><a href="#cb25-4"></a>    <span class="fu">filter</span>(dt, idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-5"><a href="#cb25-5"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
-<span id="cb25-6"><a href="#cb25-6"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb25-7"><a href="#cb25-7"></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb25-8"><a href="#cb25-8"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb25-9"><a href="#cb25-9"></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
-<span id="cb25-10"><a href="#cb25-10"></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória de crecimento - Indivíduo "</span>, id, </span>
-<span id="cb25-11"><a href="#cb25-11"></a>                          <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
-<span id="cb25-12"><a href="#cb25-12"></a>}</span>
-<span id="cb25-13"><a href="#cb25-13"></a><span class="fu">plot_traj_Growth</span>(<span class="at">id =</span> <span class="st">"103768"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>plot_traj_Growth <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
+<span id="cb24-2"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp) <span class="co"># especie</span></span>
+<span id="cb24-3"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
+<span id="cb24-4"><a href=""></a>    <span class="fu">filter</span>(dt, idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-5"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
+<span id="cb24-6"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb24-7"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb24-8"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb24-9"><a href=""></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
+<span id="cb24-10"><a href=""></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória de crecimento - Indivíduo "</span>, id, </span>
+<span id="cb24-11"><a href=""></a>                          <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
+<span id="cb24-12"><a href=""></a>}</span>
+<span id="cb24-13"><a href=""></a><span class="fu">plot_traj_Growth</span>(<span class="at">id =</span> <span class="st">"103768"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-19-1.png" width="672"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-18-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1159,43 +978,24 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <section id="trajetórias-de-crescimento-2" class="slide level2">
 <h2>Trajetórias de crescimento</h2>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>plot_traj_sp <span class="ot">&lt;-</span> <span class="cf">function</span>(sp, dt) {</span>
-<span id="cb26-2"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(GenSp <span class="sc">==</span> sp) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
-<span id="cb26-3"><a href=""></a>    <span class="fu">filter</span>(dt, GenSp <span class="sc">==</span> sp) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-4"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
-<span id="cb26-5"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb26-6"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb26-7"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb26-8"><a href=""></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
-<span id="cb26-9"><a href=""></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória de crecimento - "</span>,</span>
-<span id="cb26-10"><a href=""></a>                          sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
-<span id="cb26-11"><a href=""></a>}</span>
-<span id="cb26-12"><a href=""></a><span class="fu">plot_traj_sp</span>(<span class="at">sp =</span> <span class="st">"Cecropia_obtusa"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>plot_traj_sp <span class="ot">&lt;-</span> <span class="cf">function</span>(sp, dt) {</span>
-<span id="cb26-2"><a href="#cb26-2"></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(GenSp <span class="sc">==</span> sp) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a>    <span class="fu">filter</span>(dt, GenSp <span class="sc">==</span> sp) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-4"><a href="#cb26-4"></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
-<span id="cb26-5"><a href="#cb26-5"></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb26-6"><a href="#cb26-6"></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb26-7"><a href="#cb26-7"></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb26-8"><a href="#cb26-8"></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
-<span id="cb26-9"><a href="#cb26-9"></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória de crecimento - "</span>,</span>
-<span id="cb26-10"><a href="#cb26-10"></a>                          sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
-<span id="cb26-11"><a href="#cb26-11"></a>}</span>
-<span id="cb26-12"><a href="#cb26-12"></a><span class="fu">plot_traj_sp</span>(<span class="at">sp =</span> <span class="st">"Cecropia_obtusa"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>plot_traj_sp <span class="ot">&lt;-</span> <span class="cf">function</span>(sp, dt) {</span>
+<span id="cb25-2"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(GenSp <span class="sc">==</span> sp) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
+<span id="cb25-3"><a href=""></a>    <span class="fu">filter</span>(dt, GenSp <span class="sc">==</span> sp) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-4"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
+<span id="cb25-5"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb25-6"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb25-7"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb25-8"><a href=""></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
+<span id="cb25-9"><a href=""></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória de crecimento - "</span>,</span>
+<span id="cb25-10"><a href=""></a>                          sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
+<span id="cb25-11"><a href=""></a>}</span>
+<span id="cb25-12"><a href=""></a><span class="fu">plot_traj_sp</span>(<span class="at">sp =</span> <span class="st">"Cecropia_obtusa"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-20-1.png" width="672"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1225,31 +1025,18 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <h2>Modelo de Canham</h2>
 <p><span class="math display">\[log(AGR+1)=G \times exp[-0.5 \times( \frac{log(DBH/D)}{K}^2)]\]</span></p>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">data_frame</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">log_agr =</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, log_agr)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb27-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb27-4"><a href=""></a>       <span class="at">y =</span> <span class="st">"log(Crescimento anual + 1)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb27-5"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb27-6"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">data_frame</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">log_agr =</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, <span class="fu">exp</span>(log_agr)<span class="sc">-</span><span class="dv">1</span>)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb27-4"><a href="#cb27-4"></a>       <span class="at">y =</span> <span class="st">"Crescimento anual"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb27-5"><a href="#cb27-5"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb27-6"><a href="#cb27-6"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">exp</span>(<span class="fl">0.5</span>)<span class="sc">-</span><span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">data_frame</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">log_agr =</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, <span class="fu">exp</span>(log_agr)<span class="sc">-</span><span class="dv">1</span>)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb26-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb26-4"><a href=""></a>       <span class="at">y =</span> <span class="st">"Crescimento anual"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb26-5"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb26-6"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">exp</span>(<span class="fl">0.5</span>)<span class="sc">-</span><span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1271,41 +1058,23 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 <section id="uma-inferência-com-cecropia-obtusa" class="slide level2">
 <h2>Uma inferência com <em>Cecropia obtusa</em></h2>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb28-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb28-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb28-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb28-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb28-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb28-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,30)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">30</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb28-8"><a href=""></a>          ),</span>
-<span id="cb28-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Cecropia_obtusa"</span>),</span>
-<span id="cb28-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">8000</span>)</span>
-<span id="cb28-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_cecro.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb28-2"><a href="#cb28-2"></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb28-3"><a href="#cb28-3"></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb28-4"><a href="#cb28-4"></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb28-5"><a href="#cb28-5"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb28-6"><a href="#cb28-6"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb28-7"><a href="#cb28-7"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,30)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">30</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb28-8"><a href="#cb28-8"></a>          ),</span>
-<span id="cb28-9"><a href="#cb28-9"></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Cecropia_obtusa"</span>),</span>
-<span id="cb28-10"><a href="#cb28-10"></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb28-11"><a href="#cb28-11"></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_cecro.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb27-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb27-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb27-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb27-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb27-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb27-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,30)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">30</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb27-8"><a href=""></a>          ),</span>
+<span id="cb27-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Cecropia_obtusa"</span>),</span>
+<span id="cb27-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb27-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_cecro.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_cecro.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_cecro.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_cecro.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1316,28 +1085,18 @@ Formula: log(Growth + 1) ~ G * exp(-0.5 * (log(DBH/D)^2/K))
          D ~ 1
          K ~ 1
    Data: filter(dt_P6, GenSp == "Cecropia_obtusa") (Number of observations: 94) 
-  Draws: 4 chains, each with iter = 8000; warmup = 4000; thin = 1;
-         total post-warmup draws = 16000
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
 
 Regression Coefficients:
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-<<<<<<< HEAD
-G_Intercept     0.44      0.10     0.31     0.66 1.03      128      150
-D_Intercept    18.92      4.69     8.44    28.99 1.02     3758     3258
-K_Intercept     0.95      0.96     0.04     2.88 1.03      117      165
+G_Intercept     0.44      0.09     0.31     0.65 1.05      114      373
+D_Intercept    18.81      4.60     8.33    28.89 1.01     1127      793
+K_Intercept     0.94      0.96     0.04     2.87 1.05      107      602
 
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     0.33      0.03     0.28     0.39 1.03      198      108
-=======
-G_Intercept     0.44      0.10     0.31     0.67 1.05       76      319
-D_Intercept    18.79      4.67     8.26    28.51 1.04      712      773
-K_Intercept     0.98      0.97     0.04     2.89 1.05       85      476
-
-Further Distributional Parameters:
-      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     0.33      0.03     0.29     0.39 1.02      410      724
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+sigma     0.33      0.03     0.29     0.39 1.01      585      760
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1361,37 +1120,20 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-cecropia-obtusa-1" class="slide level2">
 <h2>Uma inferência com <em>Cecropia obtusa</em></h2>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>plot_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, Species) {</span>
-<span id="cb31-2"><a href=""></a>  G <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">1</span>, <span class="st">"Estimate"</span>]</span>
-<span id="cb31-3"><a href=""></a>  D <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">2</span>, <span class="st">"Estimate"</span>]</span>
-<span id="cb31-4"><a href=""></a>  K <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">3</span>, <span class="st">"Estimate"</span>]</span>
-<span id="cb31-5"><a href=""></a>  <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="sc">!!</span>Species) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-6"><a href=""></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb31-7"><a href=""></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">exp</span>(G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(x<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K))) <span class="sc">-</span> <span class="dv">1</span>,</span>
-<span id="cb31-8"><a href=""></a>                  <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb31-9"><a href=""></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb31-10"><a href=""></a>             <span class="at">y =</span> <span class="st">"Crescimento anual"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb31-11"><a href=""></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> D, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb31-12"><a href=""></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> G, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb31-13"><a href=""></a>    <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">10</span>, <span class="cn">NA</span>)</span>
-<span id="cb31-14"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>plot_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, Species) {</span>
-<span id="cb31-2"><a href="#cb31-2"></a>  G <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">1</span>, <span class="st">"Estimate"</span>]</span>
-<span id="cb31-3"><a href="#cb31-3"></a>  D <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">2</span>, <span class="st">"Estimate"</span>]</span>
-<span id="cb31-4"><a href="#cb31-4"></a>  K <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">3</span>, <span class="st">"Estimate"</span>]</span>
-<span id="cb31-5"><a href="#cb31-5"></a>  <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="sc">!!</span>Species) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-6"><a href="#cb31-6"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb31-7"><a href="#cb31-7"></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">exp</span>(G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(x<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K))) <span class="sc">-</span> <span class="dv">1</span>,</span>
-<span id="cb31-8"><a href="#cb31-8"></a>                  <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb31-9"><a href="#cb31-9"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb31-10"><a href="#cb31-10"></a>             <span class="at">y =</span> <span class="st">"Crescimento anual"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb31-11"><a href="#cb31-11"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> D, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb31-12"><a href="#cb31-12"></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">exp</span>(G)<span class="sc">-</span><span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
-<span id="cb31-13"><a href="#cb31-13"></a>    <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">10</span>, <span class="cn">NA</span>)</span>
-<span id="cb31-14"><a href="#cb31-14"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a>plot_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, Species) {</span>
+<span id="cb30-2"><a href=""></a>  G <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">1</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb30-3"><a href=""></a>  D <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">2</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb30-4"><a href=""></a>  K <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">3</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb30-5"><a href=""></a>  <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="sc">!!</span>Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-6"><a href=""></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb30-7"><a href=""></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">exp</span>(G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(x<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K))) <span class="sc">-</span> <span class="dv">1</span>,</span>
+<span id="cb30-8"><a href=""></a>                  <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb30-9"><a href=""></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb30-10"><a href=""></a>             <span class="at">y =</span> <span class="st">"Crescimento anual"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb30-11"><a href=""></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> D, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb30-12"><a href=""></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">exp</span>(G)<span class="sc">-</span><span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb30-13"><a href=""></a>    <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">10</span>, <span class="cn">NA</span>)</span>
+<span id="cb30-14"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -1400,21 +1142,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-cecropia-obtusa-2" class="slide level2">
 <h2>Uma inferência com <em>Cecropia obtusa</em></h2>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Cecropia_obtusa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Cecropia_obtusa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Cecropia_obtusa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-25-1.png" width="672"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-24-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1423,41 +1157,23 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-dicorynia-guianensis" class="slide level2">
 <h2>Uma inferência com <em>Dicorynia guianensis</em></h2>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb33-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb33-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb33-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb33-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb33-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb33-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb33-8"><a href=""></a>          ),</span>
-<span id="cb33-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
-<span id="cb33-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb33-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb33-2"><a href="#cb33-2"></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb33-3"><a href="#cb33-3"></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb33-4"><a href="#cb33-4"></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb33-5"><a href="#cb33-5"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb33-6"><a href="#cb33-6"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb33-7"><a href="#cb33-7"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb33-8"><a href="#cb33-8"></a>          ),</span>
-<span id="cb33-9"><a href="#cb33-9"></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
-<span id="cb33-10"><a href="#cb33-10"></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb33-11"><a href="#cb33-11"></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb32-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb32-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb32-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb32-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb32-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb32-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb32-8"><a href=""></a>          ),</span>
+<span id="cb32-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
+<span id="cb32-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb32-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1473,7 +1189,6 @@ Formula: log(Growth + 1) ~ G * exp(-0.5 * (log(DBH/D)^2/K))
 
 Regression Coefficients:
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-<<<<<<< HEAD
 G_Intercept     0.29      0.01     0.27     0.30 1.00     2015     2518
 D_Intercept    33.76      1.39    31.47    36.86 1.00     2212     2101
 K_Intercept     0.62      0.09     0.48     0.83 1.00     1682     1955
@@ -1481,15 +1196,6 @@ K_Intercept     0.62      0.09     0.48     0.83 1.00     1682     1955
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma     0.18      0.00     0.17     0.18 1.00     3586     2904
-=======
-G_Intercept     0.29      0.01     0.27     0.30 1.00     1923     2082
-D_Intercept    33.79      1.35    31.39    36.79 1.00     2223     2076
-K_Intercept     0.63      0.08     0.49     0.81 1.00     1784     2086
-
-Further Distributional Parameters:
-      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     0.18      0.00     0.17     0.18 1.00     3111     2469
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1513,21 +1219,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-dicorynia-guianensis-1" class="slide level2">
 <h2>Uma inferência com <em>Dicorynia guianensis</em></h2>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Dicorynia_guianensis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Dicorynia_guianensis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Dicorynia_guianensis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-28-1.png" width="672"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-27-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1536,41 +1234,23 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-eschweilera-sagotiana" class="slide level2">
 <h2>Uma inferência com <em>Eschweilera sagotiana</em></h2>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb37-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb37-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb37-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb37-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb37-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb37-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb37-8"><a href=""></a>          ),</span>
-<span id="cb37-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Eschweilera_sagotiana"</span>),</span>
-<span id="cb37-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb37-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb37-2"><a href="#cb37-2"></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb37-3"><a href="#cb37-3"></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb37-4"><a href="#cb37-4"></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb37-5"><a href="#cb37-5"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb37-6"><a href="#cb37-6"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb37-7"><a href="#cb37-7"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb37-8"><a href="#cb37-8"></a>          ),</span>
-<span id="cb37-9"><a href="#cb37-9"></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Eschweilera_sagotiana"</span>),</span>
-<span id="cb37-10"><a href="#cb37-10"></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb37-11"><a href="#cb37-11"></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb36-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb36-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb36-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb36-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb36-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb36-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb36-8"><a href=""></a>          ),</span>
+<span id="cb36-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Eschweilera_sagotiana"</span>),</span>
+<span id="cb36-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb36-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1586,7 +1266,6 @@ Formula: log(Growth + 1) ~ G * exp(-0.5 * (log(DBH/D)^2/K))
 
 Regression Coefficients:
             Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-<<<<<<< HEAD
 G_Intercept     0.10      0.00     0.10     0.11 1.00     4335     2730
 D_Intercept    27.63      3.92    20.82    36.10 1.00     3677     3077
 K_Intercept     2.77      0.20     2.25     2.99 1.00     2754     1740
@@ -1594,15 +1273,6 @@ K_Intercept     2.77      0.20     2.25     2.99 1.00     2754     1740
 Further Distributional Parameters:
       Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
 sigma     0.13      0.00     0.13     0.13 1.00     4047     2565
-=======
-G_Intercept     0.10      0.00     0.10     0.11 1.00     3517     2751
-D_Intercept    27.59      3.86    20.89    35.84 1.00     3210     2336
-K_Intercept     2.77      0.20     2.24     2.99 1.00     3095     1694
-
-Further Distributional Parameters:
-      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma     0.13      0.00     0.13     0.13 1.00     4203     2866
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -1626,21 +1296,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-eschweilera-sagotiana-1" class="slide level2">
 <h2>Uma inferência com <em>Eschweilera sagotiana</em></h2>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Eschweilera_sagotiana"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Eschweilera_sagotiana"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Eschweilera_sagotiana"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-31-1.png" width="672"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-30-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1650,34 +1312,20 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Modelo de crescimento individual</h2>
 <p><span class="math display">\[log(AGR+1)= G_{tree} \times exp[-0.5 \times( \frac{log(DBH/D)^2}{K})] ~~|~~G_{tree} = G_{species}+\epsilon_{tree}\]</span></p>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">expand_grid</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">G_tree =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">log_agr =</span> G_tree<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, log_agr, <span class="at">group =</span> <span class="fu">as.character</span>(G_tree))) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb41-4"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb41-5"><a href=""></a>       <span class="at">y =</span> <span class="st">"log(Crescimento anual + 1)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb41-6"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb41-7"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">expand_grid</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">G_tree =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">mutate</span>(<span class="at">log_agr =</span> G_tree<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb41-3"><a href="#cb41-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, <span class="fu">exp</span>(log_agr)<span class="sc">-</span><span class="dv">1</span>,</span>
-<span id="cb41-4"><a href="#cb41-4"></a>             <span class="at">group =</span> <span class="fu">as.character</span>(G_tree))) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb41-5"><a href="#cb41-5"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb41-6"><a href="#cb41-6"></a>       <span class="at">y =</span> <span class="st">"Crescimento anual"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb41-7"><a href="#cb41-7"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb41-8"><a href="#cb41-8"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">exp</span>(<span class="fl">0.5</span>)<span class="sc">-</span><span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">expand_grid</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">G_tree =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">log_agr =</span> G_tree<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, <span class="fu">exp</span>(log_agr)<span class="sc">-</span><span class="dv">1</span>,</span>
+<span id="cb40-4"><a href=""></a>             <span class="at">group =</span> <span class="fu">as.character</span>(G_tree))) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-5"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb40-6"><a href=""></a>       <span class="at">y =</span> <span class="st">"Crescimento anual"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-7"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb40-8"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">exp</span>(<span class="fl">0.5</span>)<span class="sc">-</span><span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-33-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-32-1.png" width="576"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
@@ -1699,41 +1347,23 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="modelo-de-crescimento-individual-1" class="slide level2">
 <h2>Modelo de crescimento individual</h2>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb42-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span><span class="sc">|</span>idTree, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb42-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb42-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb42-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb42-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb42-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb42-8"><a href=""></a>          ),</span>
-<span id="cb42-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
-<span id="cb42-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb42-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb42-2"><a href="#cb42-2"></a>              G <span class="sc">~</span> <span class="dv">1</span><span class="sc">|</span>idTree, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb42-3"><a href="#cb42-3"></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb42-4"><a href="#cb42-4"></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb42-5"><a href="#cb42-5"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb42-6"><a href="#cb42-6"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb42-7"><a href="#cb42-7"></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb42-8"><a href="#cb42-8"></a>          ),</span>
-<span id="cb42-9"><a href="#cb42-9"></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
-<span id="cb42-10"><a href="#cb42-10"></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb42-11"><a href="#cb42-11"></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb41-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span><span class="sc">|</span>idTree, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb41-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb41-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb41-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb41-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb41-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb41-8"><a href=""></a>          ),</span>
+<span id="cb41-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
+<span id="cb41-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb41-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1771,33 +1401,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="modelo-de-crescimento-individual-2" class="slide level2">
 <h2>Modelo de crescimento individual</h2>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb45-2"><a href=""></a>  tidybayes<span class="sc">::</span><span class="fu">spread_draws</span>(b_G_Intercept, r_idTree__G[idTree,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">G_tree =</span> <span class="fu">exp</span>(b_G_Intercept <span class="sc">+</span> r_idTree__G) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-4"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-5"><a href=""></a>  <span class="fu">summarise</span>(<span class="at">G_tree =</span> <span class="fu">median</span>(G_tree)) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-6"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(G_tree)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb45-7"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Crescimento previsto (em cm/ano)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb45-2"><a href="#cb45-2"></a>  <span class="fu">spread_draws</span>(b_G_Intercept, r_idTree__G[idTree,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">mutate</span>(<span class="at">G_tree =</span> <span class="fu">exp</span>(b_G_Intercept <span class="sc">+</span> r_idTree__G) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-4"><a href="#cb45-4"></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">summarise</span>(<span class="at">G_tree =</span> <span class="fu">median</span>(G_tree)) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-6"><a href="#cb45-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(G_tree)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb45-7"><a href="#cb45-7"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Crescimento individual (em cm/ano)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href=""></a>  <span class="fu">spread_draws</span>(b_G_Intercept, r_idTree__G[idTree,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">G_tree =</span> <span class="fu">exp</span>(b_G_Intercept <span class="sc">+</span> r_idTree__G) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-4"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-5"><a href=""></a>  <span class="fu">summarise</span>(<span class="at">G_tree =</span> <span class="fu">median</span>(G_tree)) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-6"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(G_tree)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb44-7"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Crescimento individual (em cm/ano)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-36-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-35-1.png" width="960"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-34-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1812,33 +1428,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Distribuição das crescimentos</h2>
 <p>Começamos recuperando todos os crescimentos das espécies de Paracou disponíveis em <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14318">Schmitt, Hérault, Derroire (2023)</a>, e selecionamos as espécies para as quais temos valores de características</p>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>dt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/growth_raw.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">","</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-2"><a href=""></a>  <span class="fu">select</span>(Species, <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-3"><a href=""></a>  <span class="fu">rename</span>(<span class="at">species =</span> Species, <span class="at">Gmax =</span>  <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, species)) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-5"><a href=""></a>  <span class="fu">right_join</span>(dt_traits) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-6"><a href=""></a>  <span class="fu">filter</span>(Gmax <span class="sc">&lt;</span> <span class="dv">3</span>)</span>
-<span id="cb46-7"><a href=""></a>dt <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(Gmax)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/growth_raw.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">","</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">select</span>(Species, <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-3"><a href="#cb46-3"></a>  <span class="fu">rename</span>(<span class="at">species =</span> Species, <span class="at">Gmax =</span>  <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-4"><a href="#cb46-4"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, species)) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-5"><a href="#cb46-5"></a>  <span class="fu">right_join</span>(dt_traits) <span class="sc">%&gt;%</span> </span>
-<span id="cb46-6"><a href="#cb46-6"></a>  <span class="fu">filter</span>(Gmax <span class="sc">&lt;</span> <span class="dv">3</span>)</span>
-<span id="cb46-7"><a href="#cb46-7"></a>dt <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(Gmax)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>dt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/growth_raw.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">","</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href=""></a>  <span class="fu">select</span>(Species, <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href=""></a>  <span class="fu">rename</span>(<span class="at">species =</span> Species, <span class="at">Gmax =</span>  <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-5"><a href=""></a>  <span class="fu">right_join</span>(dt_traits) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-6"><a href=""></a>  <span class="fu">filter</span>(Gmax <span class="sc">&lt;</span> <span class="dv">3</span>)</span>
+<span id="cb45-7"><a href=""></a>dt <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(Gmax)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-37-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-36-1.png" width="960"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1861,21 +1463,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Correlações entre características e crescimento</h2>
 <p>Primeiro, podemos analisar a correlação com o crescimento. Como as características estão correlacionadas, usamos apenas wsg e sla para representar as diferentes estratégias.</p>
 <div class="cell" data-layout-align="center">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">ggpairs</span>(dt, <span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Gmax"</span>, <span class="st">"LMA"</span>, <span class="st">"wsg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">ggpairs</span>(dt, <span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Gmax"</span>, <span class="st">"LMA"</span>, <span class="st">"wsg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">ggpairs</span>(dt, <span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Gmax"</span>, <span class="st">"LMA"</span>, <span class="st">"wsg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<<<<<<< HEAD
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-38-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
-=======
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-37-1.png" width="960"></p>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-36-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1885,13 +1479,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Regressão linear</h2>
 <p>Também podemos usar a regressão linear para identificar estratégias relacionadas ao crescimento das espécies.</p>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">lm</span>(Gmax <span class="sc">~</span> LMA <span class="sc">+</span> wsg, dt) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-=======
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">lm</span>(Gmax <span class="sc">~</span> LMA <span class="sc">+</span> wsg, dt) <span class="sc">%&gt;%</span> </span>
-<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
->>>>>>> a53e0504975794dc81620d83a04e2c08e859913b
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">lm</span>(Gmax <span class="sc">~</span> LMA <span class="sc">+</span> wsg, dt) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
