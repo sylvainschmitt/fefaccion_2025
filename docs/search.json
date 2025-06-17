@@ -60,7 +60,10 @@
     "href": "21_presentations.html",
     "title": "Presentations",
     "section": "",
-    "text": "Forest dynamic with R"
+    "text": "Forest dynamic with R",
+    "crumbs": [
+      "Presentations"
+    ]
   },
   {
     "objectID": "97_meeting.html#discussion-the-program",
