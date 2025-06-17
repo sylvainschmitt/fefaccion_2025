@@ -36,13 +36,14 @@ include-in-header:
 
 ## Pacotes R
 
-Usaremos os pacotes `tidyverse` e `GGally` para manipular tabelas e criar gráficos,  `vegan` para fazer análises da vegetação e `brms` para fazer modelização bayesiana.
+Usaremos os pacotes `tidyverse` e `GGally` para manipular tabelas e criar gráficos, `vegan` para fazer análises da vegetação e `brms` e `tidybayes` para fazer modelização bayesiana.
 
 ```{r }
 library(tidyverse)
 library(GGally)
 library(vegan)
 library(brms)
+library(tidybayes)
 ```
 
 # Dados
@@ -125,24 +126,11 @@ Vamos usar os dados das características funcionais das árvores da Guiana Franc
 Esses dados estão disponíveis [aqui](https://github.com/sylvainschmitt/fefaccion_2025/workshop/data/data/dt_traits.RData).
 
 ```{r}
-#| eval: false
-#| echo: false
-dt_traits <- rcontroll::TROLLv3_species %>% 
-  select(-s_seedmass, -s_regionalfreq, -s_drymass)
-dt_traits <- dt_traits %>% rename(species = s_name, 
-                                  LMA = s_LMA,
-                                  Nmass = s_Nmass, 
-                                  Pmass = s_Pmass, 
-                                  wsg = s_wsg, 
-                                  dbhmax = s_dbhmax, 
-                                  hmax = s_hmax, 
-                                  ah = s_ah,
-                                  tlp = s_tlp)
-save(dt_traits, file = "data/dt_traits.RData")
-```
-
-```{r}
-load(file = "data/dt_traits.RData")
+dt_traits <- read_tsv("https://raw.githubusercontent.com/sylvainschmitt/rcontroll/refs/heads/main/inst/extdata/TROLLv3_species.txt") %>% 
+  select(-s_seedmass, -s_regionalfreq, -s_drymass) %>% 
+  rename(species = s_name, LMA = s_LMA, Nmass = s_Nmass,
+         Pmass = s_Pmass, wsg = s_wsg, dbhmax = s_dbhmax, 
+         hmax = s_hmax, ah = s_ah, tlp = s_tlp)
 dt_traits
 ```
 
@@ -343,7 +331,6 @@ dt_P6 %>% count(CensusYear)  %>%
 cerca de 3600-3800 indivíduos por censo
 :::
 
-
 ## Cálculo do crescimento anual
 
 ```{r}
@@ -383,7 +370,6 @@ plot_traj_DBH <- function(id, dt) {
 }
 plot_traj_DBH(id = "103768", dt = dt_P6)
 ```
-
 
 ::: notes
 Podemos representar o crescimento como diâmetro ao longo do tempo
@@ -459,11 +445,11 @@ $$log(AGR+1)=G \times exp[-0.5 \times( \frac{log(DBH/D)}{K}^2)]$$
 ```{r}
 #| fig-align: center
 data_frame(DBH = 10:100) %>% mutate(log_agr = 0.5*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
-  ggplot(aes(DBH, log_agr)) + geom_line() + theme_bw() +
+  ggplot(aes(DBH, exp(log_agr)-1)) + geom_line() + theme_bw() +
   labs(x = "Ano da medição",
-       y = "log(Crescimento anual + 1)") + theme_bw() +
+       y = "Crescimento anual") + theme_bw() +
   geom_vline(xintercept = 50, colour = "red", linetype = "dashed") + 
-  geom_hline(yintercept = 0.5, colour = "red", linetype = "dashed")
+  geom_hline(yintercept = exp(0.5)-1, colour = "red", linetype = "dashed")
 ```
 
 ::: notes
@@ -483,7 +469,7 @@ fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
                  prior("uniform(1,30)", lb = 1, ub = 30, nlpar = "D")
           ),
            data = filter(dt_P6, GenSp  == "Cecropia_obtusa"),
-           cores = 4, iter = 8000)
+           cores = 4)
 save(fit, file = "data/fit_cecro.Rdata")
 ```
 
@@ -495,7 +481,7 @@ load(file = "data/fit_cecro.Rdata") ; fit
 Estamos começando com uma espécie pioneira
 :::
 
-## Uma inferência com *Cecropia obtusa* 
+## Uma inferência com *Cecropia obtusa*
 
 ```{r}
 plot_fit <- function(fit, Species) {
@@ -509,12 +495,12 @@ plot_fit <- function(fit, Species) {
         labs(x = "Ano da medição",
              y = "Crescimento anual") + theme_bw() +
     geom_vline(xintercept = D, colour = "red", linetype = "dashed") + 
-    geom_hline(yintercept = G, colour = "red", linetype = "dashed") +
+    geom_hline(yintercept = exp(G)-1, colour = "red", linetype = "dashed") +
     ylim(0, NA) + xlim(10, NA)
 }
 ```
 
-## Uma inferência com *Cecropia obtusa* 
+## Uma inferência com *Cecropia obtusa*
 
 ```{r}
 #| fig-height: 4.5
@@ -522,7 +508,6 @@ plot_fit <- function(fit, Species) {
 #| fig-align: center
 plot_fit(fit = fit, Species = "Cecropia_obtusa")
 ```
-
 
 ## Uma inferência com *Dicorynia guianensis*
 
@@ -540,6 +525,7 @@ fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
            cores = 4)
 save(fit, file = "data/fit_dico.Rdata")
 ```
+
 ```{r}
 load(file = "data/fit_dico.Rdata") ; fit
 ```
@@ -573,6 +559,7 @@ fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
            cores = 4)
 save(fit, file = "data/fit_esch.Rdata")
 ```
+
 ```{r}
 load(file = "data/fit_esch.Rdata") ; fit
 ```
@@ -600,11 +587,12 @@ $$log(AGR+1)= G_{tree} \times exp[-0.5 \times( \frac{log(DBH/D)^2}{K})] ~~|~~G_{
 #| fig-align: center
 expand_grid(DBH = 10:100, G_tree = rnorm(10, 0.5, 0.1)) %>% 
   mutate(log_agr = G_tree*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
-  ggplot(aes(DBH, log_agr, group = as.character(G_tree))) + geom_line() + theme_bw() +
+  ggplot(aes(DBH, exp(log_agr)-1,
+             group = as.character(G_tree))) + geom_line() + theme_bw() +
   labs(x = "Ano da medição",
-       y = "log(Crescimento anual + 1)") + theme_bw() +
+       y = "Crescimento anual") + theme_bw() +
   geom_vline(xintercept = 50, colour = "red", linetype = "dashed") + 
-  geom_hline(yintercept = 0.5, colour = "red", linetype = "dashed")
+  geom_hline(yintercept = exp(0.5)-1, colour = "red", linetype = "dashed")
 ```
 
 ::: notes
@@ -627,6 +615,7 @@ fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
            cores = 4)
 save(fit, file = "data/fit_dico_ind.Rdata")
 ```
+
 ```{r}
 load(file = "data/fit_dico_ind.Rdata") ; fit
 ```
@@ -637,12 +626,12 @@ load(file = "data/fit_dico_ind.Rdata") ; fit
 #| fig-align: center
 #| fig-height: 4
 fit %>% 
-  tidybayes::spread_draws(b_G_Intercept, r_idTree__G[idTree,]) %>% 
+  spread_draws(b_G_Intercept, r_idTree__G[idTree,]) %>% 
   mutate(G_tree = exp(b_G_Intercept + r_idTree__G) - 1) %>% 
   group_by(idTree) %>% 
   summarise(G_tree = median(G_tree)) %>% 
   ggplot(aes(G_tree)) + geom_histogram() + theme_bw() + 
-  labs(x = "Crescimento previsto (em cm/ano)")
+  labs(x = "Crescimento individual (em cm/ano)")
 ```
 
 # Usar características funcionais para explicar o crescimento
@@ -664,12 +653,13 @@ dt %>% ggplot(aes(Gmax)) + geom_histogram() + theme_bw() + scale_x_log10()
 ```
 
 ::: notes
-Filtramos os crescimentos < 3 para remover a Cecropia, que é um outlier.
+Filtramos os crescimentos \< 3 para remover a Cecropia, que é um outlier.
 :::
 
 ## Correlações entre características e crescimento
 
-Primeiro, podemos analisar a correlação com o crescimento. Como as características estão correlacionadas, usamos apenas wsg e sla para representar as diferentes estratégias.
+Primeiro, podemos analisar a correlação com o crescimento.
+Como as características estão correlacionadas, usamos apenas wsg e sla para representar as diferentes estratégias.
 
 ```{r}
 #| fig-align: center
@@ -697,6 +687,6 @@ Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas qu
 :::
 
 ::: notes
-Muito obrigado por sua antenção! Agora responderemos suas perguntas.
+Muito obrigado por sua antenção!
+Agora responderemos suas perguntas.
 :::
-
