@@ -11,6 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Géraldine Derroire &amp; Sylvain Schmitt">
+  <meta name="dcterms.date" content="2025-11-07">
   <title>Dinâmica florestal com R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -387,6 +388,12 @@
       margin-right: 0; 
     }
   </style>
+  <style>
+  .reveal .slide-logo {
+    max-height: unset;
+    height: 75px;
+  }
+  </style>
 </head>
 <body class="quarto-dark">
   <div class="reveal">
@@ -406,18 +413,16 @@ Géraldine Derroire &amp; Sylvain Schmitt
     </div>
 </div>
 
-  <p class="date">Invalid Date</p>
+  <p class="date">2025-11-07</p>
 </section>
-<section class="slide level2">
-
-<!-- TO DO, put the logos on the title page-->
-<!-- Translate the code comments -->
-<!-- @Sylvain: pour l'instant, je mets la structure en français, on changera en avançant -->
-<!-- TO DO: ajouter les packages à installer dans le doc d'installation -->
+<section id="pacotes-r" class="slide level2">
+<h2>Pacotes R</h2>
+<p>Usaremos os pacotes <code>tidyverse</code> e <code>GGally</code> para manipular tabelas e criar gráficos, <code>vegan</code> para fazer análises da vegetação e <code>brms</code> para fazer modelização bayesiana.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href=""></a><span class="fu">library</span>(GGally)</span>
-<span id="cb1-3"><a href=""></a><span class="fu">library</span>(vegan)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href=""></a><span class="fu">library</span>(vegan)</span>
+<span id="cb1-4"><a href=""></a><span class="fu">library</span>(brms)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
@@ -437,16 +442,15 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="foto_inventorio.png" class="quarto-figure quarto-figure-center" style="height:60.0%"></p>
+<p><img data-src="figs/foto_inventorio.png" class="quarto-figure quarto-figure-center" style="height:60.0%"></p>
 </figure>
 </div>
-</div><div class="column" style="width:5%;">
-
 </div><div class="column" style="width:35%;">
-<p><img data-src="paracou.png"></p>
+<p><img data-src="figs/paracou.png"></p>
 </div></section>
 <section id="dados-de-parcelas-florestais-permanentes-1" class="slide level2">
 <h2>Dados de parcelas florestais permanentes</h2>
+<p>Começamos carregando os dados na forma de objetos no formato Rdata.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/data_paracou_p6.RData"</span>)</span>
 <span id="cb2-2"><a href=""></a>dt_P6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -475,6 +479,7 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <section id="dados-de-parcelas-florestais-permanentes-2" class="slide level2">
 <h2>Dados de parcelas florestais permanentes</h2>
 <p>Esses dados contêm:</p>
+<div class="columns">
 <div class="column" style="width:50%;">
 <ul>
 <li><p><strong>Forest</strong>: Nome da floresta</p></li>
@@ -493,10 +498,10 @@ Géraldine Derroire &amp; Sylvain Schmitt
 <li><p><strong>CodeAlive</strong>: A árvore está viva (1) ou morta (0)?</p></li>
 <li><p><strong>CircCorr</strong>: Circunferência (cm) da árvore no ponto de medição</p></li>
 </ul>
-</div></section>
+</div></div>
+</section>
 <section id="dados-de-características-funcionais" class="slide level2">
 <h2>Dados de características funcionais</h2>
-<!-- @Sylvain: confirme que les données de traits viennet de TRY-->
 <p>Vamos usar os dados das características funcionais das árvores da Guiana Francesa obtidos na base de dados <a href="https://www.try-db.org/TryWeb/Home.php">TRY</a> e compilados no pacote <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/2041-210X.14215">rcontroll</a>.</p>
 <p>Esses dados estão disponíveis <a href="https://github.com/sylvainschmitt/fefaccion_2025/workshop/data/data/dt_traits.RData">aqui</a>.</p>
 <div class="cell">
@@ -505,40 +510,35 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 45 × 12
-   species     LMA  Nmass   Pmass   wsg dbhmax  hmax    ah seedmass regionalfreq
-   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;        &lt;dbl&gt;
- 1 Abarema_… 110.  0.0232 5.7 e-4 0.576   0.66  50.9 0.308        1      0.00526
- 2 Bocoa_pr…  95.6 0.0255 5.05e-4 0.798   0.4   47.9 0.251        1      0.00526
- 3 Brosimum…  85.8 0.0188 6.88e-4 0.619   0.52  50.9 0.308        1      0.00526
- 4 Carapa_p… 130.  0.0177 6.36e-4 0.55    0.49  41.4 0.187        1      0.00526
- 5 Caryocar…  84.2 0.0217 8.13e-4 0.612   1.15  48.6 0.275        1      0.00526
- 6 Cecropia…  69.5 0.0276 1.38e-3 0.388   0.35  50.9 0.308        1      0.00526
- 7 Chrysoph… 151.  0.0154 4.69e-4 0.566   0.67  50.9 0.308        1      0.00526
- 8 Concevei…  86.7 0.0235 7.29e-4 0.537   0.23  33.3 0.16         1      0.00526
- 9 Cordia_s… 134.  0.0253 5.92e-4 0.443   0.47  36.4 0.139        1      0.00526
-10 Couepia_… 123.  0.015  4.82e-4 0.784   0.45  50.9 0.308        1      0.00526
-# ℹ 35 more rows
-# ℹ 2 more variables: tlp &lt;dbl&gt;, drymass &lt;dbl&gt;</code></pre>
+<pre><code># A tibble: 45 × 9
+   species                     LMA  Nmass   Pmass   wsg dbhmax  hmax    ah   tlp
+   &lt;chr&gt;                     &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 Abarema_jupunba           110.  0.0232 5.7 e-4 0.576   0.66  50.9 0.308 -1.60
+ 2 Bocoa_prouacensis          95.6 0.0255 5.05e-4 0.798   0.4   47.9 0.251 -2.08
+ 3 Brosimum_rubescens         85.8 0.0188 6.88e-4 0.619   0.52  50.9 0.308 -2.28
+ 4 Carapa_procera            130.  0.0177 6.36e-4 0.55    0.49  41.4 0.187 -1.93
+ 5 Caryocar_glabrum           84.2 0.0217 8.13e-4 0.612   1.15  48.6 0.275 -1.88
+ 6 Cecropia_obtusa            69.5 0.0276 1.38e-3 0.388   0.35  50.9 0.308 -1.43
+ 7 Chrysophyllum_sanguinole… 151.  0.0154 4.69e-4 0.566   0.67  50.9 0.308 -1.45
+ 8 Conceveiba_guianensis      86.7 0.0235 7.29e-4 0.537   0.23  33.3 0.16  -1.70
+ 9 Cordia_sagotii            134.  0.0253 5.92e-4 0.443   0.47  36.4 0.139 -1.91
+10 Couepia_bracteosa         123.  0.015  4.82e-4 0.784   0.45  50.9 0.308 -2.26
+# ℹ 35 more rows</code></pre>
 </div>
 </div>
 </section>
 <section id="dados-de-características-funcionais-1" class="slide level2">
 <h2>Dados de características funcionais</h2>
-<!-- @Sylvain: unités OK?-->
+<div class="columns">
 <div class="column" style="width:50%;">
 <p><span style="font-size: 25px">Esses dados contêm os valores de 11 características funcionais para 45 espécies. Vamos focar nos seguintes características:</span></p>
 <ul>
-<li><p><span style="font-size: 25px">massa foliar por área (<strong>LMA</strong>, em <span class="math inline">\(kg/m^2\)</span>)</span></p></li>
-<li><p><span style="font-size: 25px">massa de nitrogênio foliar (<strong>Nmass</strong>, em <span class="math inline">\(mg/g\)</span>)</span></p></li>
-<li><p><span style="font-size: 25px">massa de fósforo foliar (<strong>Pmass</strong>, em <span class="math inline">\(mg/g\)</span>)</span></p></li>
-<li><p><span style="font-size: 25px">gravidade específica da madeira (<strong>wsg</strong>, em <span class="math inline">\(g/cm^3\)</span>)</span></p></li>
+<li><p><span style="font-size: 25px">massa foliar por área (<strong>LMA</strong>, em <span class="math inline">\(g~m^{-2}\)</span>)</span></p></li>
+<li><p><span style="font-size: 25px">massa de nitrogênio foliar (<strong>Nmass</strong>, em <span class="math inline">\(g~g^{-1}\)</span>)</span></p></li>
+<li><p><span style="font-size: 25px">massa de fósforo foliar (<strong>Pmass</strong>, em <span class="math inline">\(g~g^{-1}\)</span>)</span></p></li>
+<li><p><span style="font-size: 25px">gravidade específica da madeira (<strong>wsg</strong>, em <span class="math inline">\(g~cm^{-3}\)</span>)</span></p></li>
+<li><p><span style="font-size: 25px">potencial hídrico foliar no ponto de perda de turgor (<strong>tlp</strong>, em <span class="math inline">\(MPa\)</span>)</span></p></li>
 </ul>
-<!-- * [altura máxima da espécie] (**hmax**, em $m$)]{style="font-size: 25px"}-->
-<ul>
-<li><span style="font-size: 25px">potencial hídrico foliar no ponto de perda de turgor (<strong>tlp</strong>, em <span class="math inline">\(MPa\)</span>)</span></li>
-</ul>
-<!--* massa seca foliar (*s_drymass*, em $g$)-->
 </div><div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>dt_traits <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> </span>
@@ -558,7 +558,8 @@ Géraldine Derroire &amp; Sylvain Schmitt
 5 Caryocar_glabrum    84.2 0.0217 0.000813 0.612 -1.88</code></pre>
 </div>
 </div>
-</div></section></section>
+</div></div>
+</section></section>
 <section>
 <section id="exploração-de-dados-de-características-funcionais" class="title-slide slide level1 center">
 <h1>Exploração de dados de características funcionais</h1>
@@ -566,11 +567,12 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </section>
 <section id="distribuição-das-valores-das-características" class="slide level2">
 <h2>Distribuição das valores das características</h2>
+<p>Podemos começar examinando a distribuição de valores para cada um dos recursos com um histograma usando o pacote <code>ggplot</code> (parte de <code>tidyverse</code>).</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> </span>
 <span id="cb8-2"><a href=""></a>  <span class="fu">pivot_longer</span>(LMA <span class="sc">:</span> tlp, </span>
 <span id="cb8-3"><a href=""></a>               <span class="at">names_to =</span> <span class="st">"traits"</span>, <span class="at">values_to =</span> <span class="st">"values"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb8-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> values, <span class="at">colour =</span> traits)) <span class="sc">+</span> <span class="fu">geom_density</span>() <span class="sc">+</span></span>
+<span id="cb8-4"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> values)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
 <span id="cb8-5"><a href=""></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> traits, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
@@ -583,8 +585,7 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </div>
 </div>
 <aside class="notes">
-<p>LMA, Nmass, e Pmass tendem a valores pequenos</p>
-<p>hmax a valores grandes</p>
+<p>LMA, Nmass, e Pmass tendem a valores pequenos TLP e wsg a valores grandes</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -599,6 +600,8 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </section>
 <section id="coeficientes-de-variação-das-características" class="slide level2">
 <h2>Coeficientes de variação das características</h2>
+<p>Podemos ver que as características são mais ou menos variáveis, mas para quantificar isso adequadamente, podemos usar o coeficiente de variação definido como:</p>
+<p><span class="math display">\[CV = \frac{desvio\ padrão}{média}\]</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>dt_traits <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(</span>
 <span id="cb9-2"><a href=""></a>  <span class="fu">across</span>(LMA <span class="sc">:</span> tlp,</span>
@@ -612,17 +615,31 @@ Géraldine Derroire &amp; Sylvain Schmitt
 1 0.295 0.253 0.455 0.161 0.127</code></pre>
 </div>
 </div>
+<aside class="notes">
+<p>CV igual o desvio padrão (sigma) dividida pela média (mu)</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 </section>
 <section id="correlações-entre-pares-de-características" class="slide level2">
 <h2>Correlações entre pares de características</h2>
-<div class="cell">
+<p>As características não variam de forma independente, portanto, podemos explorar as relações entre cada par de características usando os coeficientes de correlação.</p>
+<div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">ggpairs</span>(dt_traits, <span class="at">columns =</span> <span class="fu">names</span>(dt_traits)[<span class="sc">-</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment">
+<div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-9-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -644,7 +661,7 @@ Géraldine Derroire &amp; Sylvain Schmitt
 </section>
 <section id="axes-de-covariância-de-características-funcionais" class="slide level2">
 <h2>Axes de covariância de características funcionais</h2>
-<p>Análise de componentes principais</p>
+<p>Para entender melhor a organização geral de todos os recursos em “estratégias funcionais”, podemos construir uma análise de componentes principais (ACP) com o pacote <code>vegan</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>trait_pca <span class="ot">&lt;-</span> dt_traits <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>species) <span class="sc">%&gt;%</span> </span>
 <span id="cb12-2"><a href=""></a>  <span class="fu">pca</span>(<span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
@@ -671,7 +688,7 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 </div>
 </div>
 <aside class="notes">
-<p>os dois primeiros eixos capturam XXX % da variabilidade total do conjunto de dados</p>
+<p>os dois primeiros eixos capturam 73% da variabilidade total do conjunto de dados</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -686,11 +703,9 @@ Cumulative Proportion 0.4517 0.7281 0.8464 0.93292 1.00000</code></pre>
 </section>
 <section id="axes-de-covariância-de-características-funcionais-1" class="slide level2">
 <h2>Axes de covariância de características funcionais</h2>
-<!-- @Sylvain, je suis embeter pour l'interpretation de l'axe 2, je trouve ca surprenant qu'il oppose wsg et tlp...
-dans la literature tlp est loin aligné sur le LES (cf papier Joannès), soit sur un autre axe que le LES et wsg (thèse de Daniela par ex...)
-Est-ce que tu vois mieux à proposer que mon interpretation?
--->
-<div class="column" style="width:50%;">
+<p>Podemos representar a PCA em um biplot de eixos 1-2 com as características como variáveis representadas por setas e as espécies por pontos posicionados de acordo com os valores de suas características.</p>
+<div class="columns">
+<div class="column" style="width:40%;">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="co"># display as características</span></span>
 <span id="cb14-2"><a href=""></a><span class="fu">biplot</span>(trait_pca, <span class="at">scaling =</span> <span class="dv">2</span>, </span>
@@ -703,19 +718,20 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-11-1.png" class="quarto-figure quarto-figure-center" width="480"></p>
 </figure>
 </div>
 </div>
 </div>
-</div><div class="column" style="width:50%;">
+</div><div class="column" style="width:60%;">
 <div>
 <ul>
 <li class="fragment"><p>Axe 1: <strong>espectro econômico das folhas</strong>: estratégias de aquisição de recursos conservadoras (lentas) <em>versus</em> aquisitivas (rápidas) <a href="https://www.nature.com/articles/nature02403">Wright <em>et al</em> 2004</a></p></li>
 <li class="fragment"><p>As características da madeira <a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2010.01517.x">Baraloto <em>et al</em> 2010</a> e as características relacionadas com a água <a href="https://besjournals.onlinelibrary.wiley.com/doi/full/10.1111/1365-2745.13321">Maréchaux <em>et al</em> 2019</a> são independentes do espectro econômico das folhas.</p></li>
 </ul>
 </div>
-</div><aside class="notes">
+</div></div>
+<aside class="notes">
 <p>display não é intuitiva no vegan, se não estiver trabalhando com uma tabela florística</p>
 <p>“species” são as variáveis (aqui, as características)</p>
 <p>“sites” são as observações (aqui, as espécies)</p>
@@ -738,6 +754,7 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 </section>
 <section id="preparação-dos-dados" class="slide level2">
 <h2>Preparação dos dados</h2>
+<p>Para usar os dados de crescimento, começamos filtrando os dados da parcela 6.</p>
 <ul>
 <li>Manter apenas as árvores totalmente determinadas</li>
 </ul>
@@ -834,31 +851,42 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
 </section>
 <section id="cálculo-do-crescimento-anual" class="slide level2">
 <h2>Cálculo do crescimento anual</h2>
-<ul>
-<li>Obter os anos do censo e os anos dos censos anteriores</li>
-</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>dt_years <span class="ot">&lt;-</span> dt_P6  <span class="sc">%&gt;%</span> </span>
-<span id="cb22-2"><a href=""></a>  <span class="fu">distinct</span>(CensusYear) <span class="sc">%&gt;%</span></span>
-<span id="cb22-3"><a href=""></a>  <span class="fu">arrange</span>(CensusYear) <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">PrevYear =</span> <span class="fu">c</span>(<span class="cn">NA</span>, CensusYear[<span class="sc">-</span><span class="fu">length</span>(CensusYear)]))</span>
-<span id="cb22-5"><a href=""></a></span>
-<span id="cb22-6"><a href=""></a><span class="fu">head</span>(dt_years, <span class="at">n =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span> </span>
+<span id="cb22-2"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-3"><a href=""></a>  <span class="fu">arrange</span>(CensusYear) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">Growth =</span> (DBH <span class="sc">-</span> <span class="fu">lag</span>(DBH)) <span class="sc">/</span> (CensusYear <span class="sc">-</span> <span class="fu">lag</span>(CensusYear))) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-5"><a href=""></a>  <span class="fu">filter</span>(Growth <span class="sc">&gt;=</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-6"><a href=""></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb22-7"><a href=""></a></span>
+<span id="cb22-8"><a href=""></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">select</span>(idTree, CensusYear, DBH, Growth) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-9"><a href=""></a>  <span class="fu">filter</span>(idTree <span class="sc">==</span> <span class="dv">100621</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb22-10"><a href=""></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 2
-  CensusYear PrevYear
-       &lt;dbl&gt;    &lt;dbl&gt;
-1       1984       NA
-2       1985     1984
-3       1986     1985
-4       1987     1986
-5       1988     1987</code></pre>
+<pre><code># A tibble: 15 × 4
+   idTree CensusYear   DBH Growth
+    &lt;dbl&gt;      &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+ 1 100621       1985  12.7 0     
+ 2 100621       1986  12.7 0     
+ 3 100621       1987  12.9 0.159 
+ 4 100621       1988  12.9 0     
+ 5 100621       1989  13.2 0.318 
+ 6 100621       1991  12.9 0     
+ 7 100621       1992  12.9 0     
+ 8 100621       1993  13.1 0.159 
+ 9 100621       1994  13.2 0.159 
+10 100621       1997  13.1 0     
+11 100621       1999  13.2 0.0796
+12 100621       2001  13.2 0     
+13 100621       2003  13.2 0     
+14 100621       2005  13.2 0     
+15 100621       2007  13.2 0     </code></pre>
 </div>
 </div>
 <aside class="notes">
-<p>2 etapas</p>
+<p>O crescimento anual é calculado como a diferença de diâmetro entre dois anos dividida pela diferença de tempo entre esses dois anos, calculada usando a função de defasagem.</p>
 <style type="text/css">
         span.MJX_Assistive_MathML {
           position:absolute!important;
@@ -871,139 +899,634 @@ Est-ce que tu vois mieux à proposer que mon interpretation?
           display:block!important;
       }</style></aside>
 </section>
-<section id="cálculo-do-crescimento-anual-1" class="slide level2">
-<h2>Cálculo do crescimento anual</h2>
-<ul>
-<li>Cálcular o crescimento anual</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>dt_P6 <span class="ot">&lt;-</span> dt_P6 <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a href=""></a>  <span class="fu">merge</span>(dt_years, <span class="at">by =</span> <span class="st">"CensusYear"</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="co"># add the previous year</span></span>
-<span id="cb24-3"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> <span class="co"># group by individual tree</span></span>
-<span id="cb24-4"><a href=""></a>  <span class="fu">arrange</span>(CensusYear, <span class="at">.by_group =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> <span class="co"># order the years chronologically</span></span>
-<span id="cb24-5"><a href=""></a>  <span class="fu">mutate</span>(</span>
-<span id="cb24-6"><a href=""></a>    <span class="at">Growth =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="fu">diff</span>(DBH)) <span class="sc">/</span> (CensusYear <span class="sc">-</span> PrevYear), <span class="co"># calculate annual growth</span></span>
-<span id="cb24-7"><a href=""></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb24-8"><a href=""></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb24-9"><a href=""></a></span>
-<span id="cb24-10"><a href=""></a>dt_P6 <span class="sc">%&gt;%</span> <span class="fu">select</span>(idTree, CensusYear, PrevYear, DBH, Growth) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-11"><a href=""></a>  <span class="fu">head</span>(<span class="at">n =</span> <span class="dv">15</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 15 × 5
-   idTree CensusYear PrevYear   DBH  Growth
-    &lt;dbl&gt;      &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
- 1 100621       1984       NA  12.7 NA     
- 2 100621       1985     1984  12.7  0     
- 3 100621       1986     1985  12.7  0     
- 4 100621       1987     1986  12.9  0.159 
- 5 100621       1988     1987  12.9  0     
- 6 100621       1989     1988  13.2  0.318 
- 7 100621       1990     1989  12.9 -0.318 
- 8 100621       1991     1990  12.9  0     
- 9 100621       1992     1991  12.9  0     
-10 100621       1993     1992  13.1  0.159 
-11 100621       1994     1993  13.2  0.159 
-12 100621       1995     1994  13.1 -0.159 
-13 100621       1997     1995  13.1  0     
-14 100621       1999     1997  13.2  0.0796
-15 100621       2001     1999  13.2  0     </code></pre>
-</div>
-</div>
-</section>
 <section id="trajetórias-de-crescimento" class="slide level2">
 <h2>Trajetórias de crescimento</h2>
-<!-- TO DO
-choisir des individus contrastés pour les espèces qu'on va modéliser
-
-mais ca va être tendu pour trouver des individus avec une belle courbe de croissance donc ne montrer que les trajectoires de diamètres?
--->
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>plot_traj_DBH <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
-<span id="cb26-2"><a href=""></a>  <span class="co"># Get species  for title</span></span>
-<span id="cb26-3"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp)</span>
-<span id="cb26-4"><a href=""></a>  <span class="co"># nb of measurment  </span></span>
-<span id="cb26-5"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() </span>
-<span id="cb26-6"><a href=""></a>  <span class="co"># Plot</span></span>
-<span id="cb26-7"><a href=""></a>    p <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> </span>
-<span id="cb26-8"><a href=""></a>      <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-9"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>CensusYear, <span class="at">y =</span> DBH)) <span class="sc">+</span> </span>
-<span id="cb26-10"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb26-11"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb26-12"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb26-13"><a href=""></a>           <span class="at">y =</span> <span class="st">"Diâmetro à altura do peito (em cm)"</span>,</span>
-<span id="cb26-14"><a href=""></a>           <span class="at">title =</span> <span class="st">"Trajetória do diâmetro"</span>,</span>
-<span id="cb26-15"><a href=""></a>           <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Indivíduo "</span>, id, <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>, </span>
-<span id="cb26-16"><a href=""></a>                            <span class="at">sep =</span> <span class="st">""</span>)) <span class="sc">+</span> </span>
-<span id="cb26-17"><a href=""></a>        <span class="fu">theme_bw</span>() </span>
-<span id="cb26-18"><a href=""></a>  <span class="fu">return</span>(p)</span>
-<span id="cb26-19"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a>plot_traj_DBH <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
+<span id="cb24-2"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp) <span class="co"># especie</span></span>
+<span id="cb24-3"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
+<span id="cb24-4"><a href=""></a>    <span class="fu">filter</span>(dt, idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
+<span id="cb24-5"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>CensusYear, <span class="at">y =</span> DBH)) <span class="sc">+</span> </span>
+<span id="cb24-6"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb24-7"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb24-8"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb24-9"><a href=""></a>           <span class="at">y =</span> <span class="st">"Diâmetro à altura do peito (em cm)"</span>,</span>
+<span id="cb24-10"><a href=""></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória do diâmetro - Indivíduo "</span>, id, </span>
+<span id="cb24-11"><a href=""></a>                          <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
+<span id="cb24-12"><a href=""></a>}</span>
+<span id="cb24-13"><a href=""></a><span class="fu">plot_traj_DBH</span>(<span class="at">id =</span> <span class="st">"103768"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell fragment">
-
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">plot_traj_DBH</span>(<span class="at">id =</span> <span class="st">"102557"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell fragment">
+<div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-21-1.png" width="960"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-19-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<aside class="notes">
+<p>Podemos representar o crescimento como diâmetro ao longo do tempo</p>
+<p>Aqui por so um individuo</p>
+<p>Como escrevemos uma função, você pode experimentá-la facilmente para outros indivíduos.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="trajetórias-de-crescimento-1" class="slide level2">
+<h2>Trajetórias de crescimento</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a>plot_traj_Growth <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
+<span id="cb25-2"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp) <span class="co"># especie</span></span>
+<span id="cb25-3"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
+<span id="cb25-4"><a href=""></a>    <span class="fu">filter</span>(dt, idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
+<span id="cb25-5"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
+<span id="cb25-6"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb25-7"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb25-8"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb25-9"><a href=""></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
+<span id="cb25-10"><a href=""></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória de crecimento - Indivíduo "</span>, id, </span>
+<span id="cb25-11"><a href=""></a>                          <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
+<span id="cb25-12"><a href=""></a>}</span>
+<span id="cb25-13"><a href=""></a><span class="fu">plot_traj_Growth</span>(<span class="at">id =</span> <span class="st">"103768"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-20-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Podemos representar o crescimento como um incremento anual em função do diâmetro para representar melhor o efeito da ontogenia</p>
+<p>Aqui por so um individuo</p>
+<p>Como escrevemos uma função, você pode experimentá-la facilmente para outros indivíduos.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="trajetórias-de-crescimento-2" class="slide level2">
+<h2>Trajetórias de crescimento</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a>plot_traj_sp <span class="ot">&lt;-</span> <span class="cf">function</span>(sp, dt) {</span>
+<span id="cb26-2"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(GenSp <span class="sc">==</span> sp) <span class="sc">%&gt;%</span> <span class="fu">count</span>() <span class="co"># medições</span></span>
+<span id="cb26-3"><a href=""></a>    <span class="fu">filter</span>(dt, GenSp <span class="sc">==</span> sp) <span class="sc">%&gt;%</span> </span>
+<span id="cb26-4"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
+<span id="cb26-5"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb26-6"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb26-7"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb26-8"><a href=""></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
+<span id="cb26-9"><a href=""></a>           <span class="at">title =</span> <span class="fu">paste0</span>(<span class="st">"Trajetória de crecimento - "</span>,</span>
+<span id="cb26-10"><a href=""></a>                          sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>)) <span class="sc">+</span> <span class="fu">theme_bw</span>() </span>
+<span id="cb26-11"><a href=""></a>}</span>
+<span id="cb26-12"><a href=""></a><span class="fu">plot_traj_sp</span>(<span class="at">sp =</span> <span class="st">"Cecropia_obtusa"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-21-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Podemos representar o crescimento como um incremento anual em função do diâmetro para representar melhor o efeito da ontogenia</p>
+<p>Aqui por todos os individuos da especie Cecropia obtusa</p>
+<p>Como escrevemos uma função, você pode experimentá-la facilmente para outras especies.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="modelagem-do-crescimento" class="title-slide slide level1 center">
+<h1>Modelagem do crescimento</h1>
+
+</section>
+<section id="modelo-de-canham" class="slide level2">
+<h2>Modelo de Canham</h2>
+<p><span class="math display">\[log(AGR+1)=G \times exp[-0.5 \times( \frac{log(DBH/D)}{K}^2)]\]</span></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href=""></a><span class="fu">data_frame</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">log_agr =</span> <span class="fl">0.5</span><span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb27-2"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, log_agr)) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb27-3"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb27-4"><a href=""></a>       <span class="at">y =</span> <span class="st">"log(Crescimento anual + 1)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb27-5"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb27-6"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-22-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>G representa o potencial máximo de crescimento da espécie atingido em um diâmetro D, K representa a largura dessa resposta de crescimento em forma de sino.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="uma-inferência-com-cecropia-obtusa" class="slide level2">
+<h2>Uma inferência com <em>Cecropia obtusa</em></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>plot_traj_Growth <span class="ot">&lt;-</span> <span class="cf">function</span>(id, dt) {</span>
-<span id="cb28-2"><a href=""></a>  <span class="co"># Get species  for title</span></span>
-<span id="cb28-3"><a href=""></a>    sp <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(GenSp)</span>
-<span id="cb28-4"><a href=""></a>  <span class="co"># nb of measurment  </span></span>
-<span id="cb28-5"><a href=""></a>    n <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> <span class="fu">count</span>() </span>
-<span id="cb28-6"><a href=""></a>  <span class="co"># Plot</span></span>
-<span id="cb28-7"><a href=""></a>    p <span class="ot">&lt;-</span> dt <span class="sc">%&gt;%</span> </span>
-<span id="cb28-8"><a href=""></a>      <span class="fu">filter</span>(idTree <span class="sc">==</span> id) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-9"><a href=""></a>      <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> </span>
-<span id="cb28-10"><a href=""></a>      <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb28-11"><a href=""></a>      <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb28-12"><a href=""></a>      <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"DBH"</span>,</span>
-<span id="cb28-13"><a href=""></a>           <span class="at">y =</span> <span class="st">"Crescimento anual (em cm/ano)"</span>,</span>
-<span id="cb28-14"><a href=""></a>           <span class="at">title =</span> <span class="st">"Trajetória do crescimento"</span>,</span>
-<span id="cb28-15"><a href=""></a>           <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Indivíduo "</span>, id, <span class="st">" - "</span>, sp, <span class="st">" ("</span>, n, <span class="st">" medições)"</span>, </span>
-<span id="cb28-16"><a href=""></a>                            <span class="at">sep =</span> <span class="st">""</span>)) <span class="sc">+</span> </span>
-<span id="cb28-17"><a href=""></a>        <span class="fu">theme_bw</span>() </span>
-<span id="cb28-18"><a href=""></a>  <span class="fu">return</span>(p)</span>
-<span id="cb28-19"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb28-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb28-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb28-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb28-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb28-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb28-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,30)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">30</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb28-8"><a href=""></a>          ),</span>
+<span id="cb28-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Cecropia_obtusa"</span>),</span>
+<span id="cb28-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">8000</span>)</span>
+<span id="cb28-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_cecro.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">plot_traj_Growth</span>(<span class="at">id =</span> <span class="st">"102557"</span>, <span class="at">dt =</span> dt_P6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_cecro.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: log(Growth + 1) ~ G * exp(-0.5 * (log(DBH/D)^2/K)) 
+         G ~ 1
+         D ~ 1
+         K ~ 1
+   Data: filter(dt_P6, GenSp == "Cecropia_obtusa") (Number of observations: 94) 
+  Draws: 4 chains, each with iter = 8000; warmup = 4000; thin = 1;
+         total post-warmup draws = 16000
+
+Regression Coefficients:
+            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+G_Intercept     0.44      0.10     0.31     0.66 1.03      128      150
+D_Intercept    18.92      4.69     8.44    28.99 1.02     3758     3258
+K_Intercept     0.95      0.96     0.04     2.88 1.03      117      165
+
+Further Distributional Parameters:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma     0.33      0.03     0.28     0.39 1.03      198      108
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>Estamos começando com uma espécie pioneira</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="uma-inferência-com-cecropia-obtusa-1" class="slide level2">
+<h2>Uma inferência com <em>Cecropia obtusa</em></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>plot_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, Species) {</span>
+<span id="cb31-2"><a href=""></a>  G <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">1</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb31-3"><a href=""></a>  D <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">2</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb31-4"><a href=""></a>  K <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">3</span>, <span class="st">"Estimate"</span>]</span>
+<span id="cb31-5"><a href=""></a>  <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="sc">!!</span>Species) <span class="sc">%&gt;%</span> </span>
+<span id="cb31-6"><a href=""></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>DBH, <span class="at">y =</span> Growth)) <span class="sc">+</span> <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb31-7"><a href=""></a>    <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">exp</span>(G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(x<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K))) <span class="sc">-</span> <span class="dv">1</span>,</span>
+<span id="cb31-8"><a href=""></a>                  <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb31-9"><a href=""></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb31-10"><a href=""></a>             <span class="at">y =</span> <span class="st">"Crescimento anual"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb31-11"><a href=""></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> D, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb31-12"><a href=""></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> G, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb31-13"><a href=""></a>    <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">10</span>, <span class="cn">NA</span>)</span>
+<span id="cb31-14"><a href=""></a>}</span>
+<span id="cb31-15"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Cecropia_obtusa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
-<div>
+<div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-23-1.png" width="960"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="uma-inferência-com-dicorynia-guianensis" class="slide level2">
+<h2>Uma inferência com <em>Dicorynia guianensis</em></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb32-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb32-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb32-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb32-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb32-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb32-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb32-8"><a href=""></a>          ),</span>
+<span id="cb32-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
+<span id="cb32-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb32-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: log(Growth + 1) ~ G * exp(-0.5 * (log(DBH/D)^2/K)) 
+         G ~ 1
+         D ~ 1
+         K ~ 1
+   Data: filter(dt_P6, GenSp == "Dicorynia_guianensis") (Number of observations: 1268) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Regression Coefficients:
+            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+G_Intercept     0.29      0.01     0.27     0.30 1.00     2015     2518
+D_Intercept    33.76      1.39    31.47    36.86 1.00     2212     2101
+K_Intercept     0.62      0.09     0.48     0.83 1.00     1682     1955
+
+Further Distributional Parameters:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma     0.18      0.00     0.17     0.18 1.00     3586     2904
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>A Dicorynia é a espécie mais explorada na Guiana Francesa, semelhante ao ipê</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="uma-inferência-com-dicorynia-guianensis-1" class="slide level2">
+<h2>Uma inferência com <em>Dicorynia guianensis</em></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Dicorynia_guianensis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="uma-inferência-com-eschweilera-sagotiana" class="slide level2">
+<h2>Uma inferência com <em>Eschweilera sagotiana</em></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb36-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb36-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb36-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb36-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb36-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb36-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb36-8"><a href=""></a>          ),</span>
+<span id="cb36-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Eschweilera_sagotiana"</span>),</span>
+<span id="cb36-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb36-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: log(Growth + 1) ~ G * exp(-0.5 * (log(DBH/D)^2/K)) 
+         G ~ 1
+         D ~ 1
+         K ~ 1
+   Data: filter(dt_P6, GenSp == "Eschweilera_sagotiana") (Number of observations: 4529) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Regression Coefficients:
+            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+G_Intercept     0.10      0.00     0.10     0.11 1.00     4335     2730
+D_Intercept    27.63      3.92    20.82    36.10 1.00     3677     3077
+K_Intercept     2.77      0.20     2.25     2.99 1.00     2754     1740
+
+Further Distributional Parameters:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma     0.13      0.00     0.13     0.13 1.00     4047     2565
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+<aside class="notes">
+<p>A Eschweilera é a espécie mais abundante na Amazônia e cresce muito lentamente.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="uma-inferência-com-eschweilera-sagotiana-1" class="slide level2">
+<h2>Uma inferência com <em>Eschweilera sagotiana</em></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Eschweilera_sagotiana"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="modelo-de-crescimento-individual" class="slide level2">
+<h2>Modelo de crescimento individual</h2>
+<p><span class="math display">\[log(AGR+1)= G_{tree} \times exp[-0.5 \times( \frac{log(DBH/D)^2}{K})] ~~|~~G_{tree} = G_{species}+\epsilon_{tree}\]</span></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">expand_grid</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">G_tree =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">log_agr =</span> G_tree<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb40-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, log_agr, <span class="at">group =</span> <span class="fu">as.character</span>(G_tree))) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-4"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb40-5"><a href=""></a>       <span class="at">y =</span> <span class="st">"log(Crescimento anual + 1)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb40-6"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb40-7"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Para levar em conta a variação de um indivíduo para outro, redefinimos o potencial G do indivíduo como seguindo uma distribuição normal centrada no potencial da espécie</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="modelo-de-crescimento-individual-1" class="slide level2">
+<h2>Modelo de crescimento individual</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb41-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span><span class="sc">|</span>idTree, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb41-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb41-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb41-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb41-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb41-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb41-8"><a href=""></a>          ),</span>
+<span id="cb41-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
+<span id="cb41-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb41-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian 
+  Links: mu = identity; sigma = identity 
+Formula: log(Growth + 1) ~ G * exp(-0.5 * (log(DBH/D)^2/K)) 
+         G ~ 1 | idTree
+         D ~ 1
+         K ~ 1
+   Data: filter(dt_P6, GenSp == "Dicorynia_guianensis") (Number of observations: 1268) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Multilevel Hyperparameters:
+~idTree (Number of levels: 51) 
+                Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(G_Intercept)     0.10      0.01     0.07     0.12 1.00      843     1708
+
+Regression Coefficients:
+            Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+G_Intercept     0.24      0.02     0.20     0.28 1.00      775     1235
+D_Intercept    44.30     11.20    29.64    72.26 1.01     1085     1531
+K_Intercept     2.04      0.57     1.02     2.95 1.00     1274     1447
+
+Further Distributional Parameters:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma     0.16      0.00     0.16     0.17 1.00     3887     2804
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+</section>
+<section id="modelo-de-crescimento-individual-2" class="slide level2">
+<h2>Modelo de crescimento individual</h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb44-2"><a href=""></a>  tidybayes<span class="sc">::</span><span class="fu">spread_draws</span>(b_G_Intercept, r_idTree__G[idTree,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">G_tree =</span> <span class="fu">exp</span>(b_G_Intercept <span class="sc">+</span> r_idTree__G) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-4"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-5"><a href=""></a>  <span class="fu">summarise</span>(<span class="at">G_tree =</span> <span class="fu">median</span>(G_tree)) <span class="sc">%&gt;%</span> </span>
+<span id="cb44-6"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(G_tree)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb44-7"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Crescimento previsto (em cm/ano)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
 </div>
 </section></section>
-<section id="modeliser-la-croissance" class="title-slide slide level1 center">
-<h1>Modeliser la croissance</h1>
-<p>!! en fonction de ce qu’on fait pour le paramètre individuel, il faudra peut-être faire un subset des individus avec assez de census (a rajouter dans prep de données)</p>
-<p>modèle de Canham avec brms avec (à tester) paramètres à l’espèce + 1 effet indiv aléatoire additif?</p>
-<p>avec brms</p>
-<p>sur environ 3 espcèes contrastées et si possible présente à Tapajos</p>
-</section>
+<section>
+<section id="usar-características-funcionais-para-explicar-o-crescimento" class="title-slide slide level1 center">
+<h1>Usar características funcionais para explicar o crescimento</h1>
 
-<section id="les-trais-pour-expliquer-gmax" class="title-slide slide level1 center">
-<h1>les trais pour expliquer gmax</h1>
-<p>repartir des gmax de Ecology Letters et faire un lm en frequentiste =&gt; cf exam Géraldine</p>
+</section>
+<section id="distribuição-das-crescimentos" class="slide level2">
+<h2>Distribuição das crescimentos</h2>
+<p>Começamos recuperando todos os crescimentos das espécies de Paracou disponíveis em <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14318">Schmitt, Hérault, Derroire (2023)</a>, e selecionamos as espécies para as quais temos valores de características</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>dt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/growth_raw.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">","</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href=""></a>  <span class="fu">select</span>(Species, <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href=""></a>  <span class="fu">rename</span>(<span class="at">species =</span> Species, <span class="at">Gmax =</span>  <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-5"><a href=""></a>  <span class="fu">right_join</span>(dt_traits) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-6"><a href=""></a>  <span class="fu">filter</span>(Gmax <span class="sc">&lt;</span> <span class="dv">3</span>)</span>
+<span id="cb45-7"><a href=""></a>dt <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(Gmax)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-36-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p>Filtramos os crescimentos &lt; 3 para remover a Cecropia, que é um outlier.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="correlações-entre-características-e-crescimento" class="slide level2">
+<h2>Correlações entre características e crescimento</h2>
+<p>Primeiro, podemos analisar a correlação com o crescimento. Como as características estão correlacionadas, usamos apenas wsg e sla para representar as diferentes estratégias.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">ggpairs</span>(dt, <span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Gmax"</span>, <span class="st">"LMA"</span>, <span class="st">"wsg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-37-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="regressão-linear" class="slide level2">
+<h2>Regressão linear</h2>
+<p>Também podemos usar a regressão linear para identificar estratégias relacionadas ao crescimento das espécies.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">lm</span>(Gmax <span class="sc">~</span> LMA <span class="sc">+</span> wsg, dt) <span class="sc">%&gt;%</span> </span>
+<span id="cb47-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Gmax ~ LMA + wsg, data = dt)
+
+Residuals:
+      Min        1Q    Median        3Q       Max 
+-0.239838 -0.082860 -0.002604  0.090345  0.208692 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  1.2191956  0.2169689   5.619 2.48e-05 ***
+LMA          0.0001114  0.0011878   0.094  0.92633    
+wsg         -0.9041136  0.2920908  -3.095  0.00624 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1309 on 18 degrees of freedom
+Multiple R-squared:  0.3476,    Adjusted R-squared:  0.2752 
+F-statistic: 4.796 on 2 and 18 DF,  p-value: 0.0214</code></pre>
+</div>
+</div>
+</section></section>
+<section id="conclusão" class="title-slide slide level1 center">
+<h1>Conclusão</h1>
+<p>Parabéns 👏 , agora vocês são profissionais do modelagem do crescimento!</p>
+<p>Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas que você possa ter.</p>
+<div class="footer">
+<p><em>Sylvain Schmitt (sylvain.schmitt@cirad.fr) &amp; Géraldine Derroire (geraldine.derroire@cirad.fr)</em></p>
+</div>
+<aside class="notes">
+<p>Muito obrigado por sua antenção! Agora responderemos suas perguntas.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
 <div class="quarto-auto-generated-content">
+<p><img src="figs/logo.png" class="slide-logo"></p>
 <div class="footer footer-default">
 
 </div>

@@ -20,7 +20,7 @@ execute:
   echo: true   
   warning: false
   message: false
-  cache: true
+  cache: false
 editor: 
   markdown: 
     wrap: sentence
@@ -36,7 +36,7 @@ include-in-header:
 
 ## Pacotes R
 
-Usaremos o `tidyverse` e o `GGally` para manipular tabelas e criar gráficos, o `vegan` para fazer análises da vegetação e o `brms` para fazer modelização bayesiana.
+Usaremos os pacotes `tidyverse` e `GGally` para manipular tabelas e criar gráficos,  `vegan` para fazer análises da vegetação e `brms` para fazer modelização bayesiana.
 
 ```{r }
 library(tidyverse)
@@ -63,7 +63,7 @@ library(brms)
 
 ## Dados de parcelas florestais permanentes
 
-Começamos carregando os dados do gráfico na forma de objetos no formato Rdata.
+Começamos carregando os dados na forma de objetos no formato Rdata.
 
 ```{r}
 #| eval: false
@@ -177,10 +177,10 @@ dt_traits %>% slice_head(n = 5)
 
 ## Distribuição das valores das características
 
-Podemos começar examinando a distribuição de valores para cada um dos recursos com um histograma usando a biblioteca `ggplot'.
+Podemos começar examinando a distribuição de valores para cada um dos recursos com um histograma usando o pacote `ggplot` (parte de `tidyverse`).
 
 ```{r}
-#| fig-height: 4
+#| fig-height: 3.5
 #| fig-width: 8
 #| fig-align: center
 dt_traits %>% 
@@ -198,7 +198,7 @@ LMA, Nmass, e Pmass tendem a valores pequenos TLP e wsg a valores grandes
 
 Podemos ver que as características são mais ou menos variáveis, mas para quantificar isso adequadamente, podemos usar o coeficiente de variação definido como:
 
-$$CV = \frac{\sigma}{\mu}$$
+$$CV = \frac{desvio\ padrão}{média}$$
 
 ```{r}
 dt_traits %>% summarise(
@@ -207,14 +207,16 @@ dt_traits %>% summarise(
 ```
 
 ::: notes
-CV igual à variância sigma dividida pela média mu
+CV igual o desvio padrão (sigma) dividida pela média (mu)
 :::
 
 ## Correlações entre pares de características
 
-As características não variam de forma independente, portanto, podemos explorar esses vínculos um a um usando os coeficientes de correlação.
+As características não variam de forma independente, portanto, podemos explorar as relações entre cada par de características usando os coeficientes de correlação.
 
 ```{r}
+#| fig-height: 3.5
+#| fig-align: center
 ggpairs(dt_traits, columns = names(dt_traits)[-1])
 ```
 
@@ -226,7 +228,7 @@ wsg tlp correlacionados
 
 ## Axes de covariância de características funcionais
 
-Mas para entender melhor a organização geral de todos os recursos em “estratégias funcionais”, podemos construir uma análise de componente principal (ACP) com o pacote `vegan`.
+Para entender melhor a organização geral de todos os recursos em “estratégias funcionais”, podemos construir uma análise de componentes principais (ACP) com o pacote `vegan`.
 
 ```{r}
 trait_pca <- dt_traits %>% select(-species) %>% 
@@ -240,13 +242,13 @@ os dois primeiros eixos capturam 73% da variabilidade total do conjunto de dados
 
 ## Axes de covariância de características funcionais
 
-Podemos representar a PCA em um biplot de eixos1-2 com as características como variáveis representadas por setas e as espécies por pontos posicionados de acordo com o velru de suas características.
+Podemos representar a PCA em um biplot de eixos 1-2 com as características como variáveis representadas por setas e as espécies por pontos posicionados de acordo com os valores de suas características.
 
 :::::: columns
-::: {.column width="50%"}
+::: {.column width="40%"}
 ```{r}
-#| fig-height: 5
-#| fig-width: 6
+#| fig-height: 4
+#| fig-width: 5
 #| fig-align: center
 # display as características
 biplot(trait_pca, scaling = 2, 
@@ -257,7 +259,7 @@ points(trait_pca, scaling = 2,
 ```
 :::
 
-:::: {.column width="50%"}
+:::: {.column width="60%"}
 ::: incremental
 -   Axe 1: **espectro econômico das folhas**: estratégias de aquisição de recursos conservadoras (lentas) *versus* aquisitivas (rápidas) [Wright *et al* 2004](https://www.nature.com/articles/nature02403)
 
@@ -278,7 +280,7 @@ display não é intuitiva no vegan, se não estiver trabalhando com uma tabela f
 
 ## Preparação dos dados
 
-Para usar os dados de crescimento, começamos filtrando os dados do lote 6.
+Para usar os dados de crescimento, começamos filtrando os dados da parcela 6.
 
 -   Manter apenas as árvores totalmente determinadas
 
@@ -341,22 +343,8 @@ dt_P6 %>% count(CensusYear)  %>%
 cerca de 3600-3800 indivíduos por censo
 :::
 
-## Cálculo do crescimento anual
-
--   Obter os anos do censo e os anos dos censos anteriores
-
-```{r}
-dt_years <- dt_P6  %>% 
-  distinct(CensusYear) %>%
-  arrange(CensusYear) %>% 
-  mutate(PrevYear = lag(CensusYear))
-
-head(dt_years, n = 5)
-```
 
 ## Cálculo do crescimento anual
-
--   Cálcular o crescimento anual
 
 ```{r}
 dt_P6 <- dt_P6 %>% 
@@ -378,6 +366,9 @@ O crescimento anual é calculado como a diferença de diâmetro entre dois anos 
 ## Trajetórias de crescimento
 
 ```{r}
+#| fig-height: 3.5
+#| fig-width: 7
+#| fig-align: center
 plot_traj_DBH <- function(id, dt) {
     sp <- dt %>% filter(idTree == id) %>% distinct(GenSp) # especie
     n <- dt %>% filter(idTree == id) %>% count() # medições
@@ -396,11 +387,18 @@ plot_traj_DBH(id = "103768", dt = dt_P6)
 
 ::: notes
 Podemos representar o crescimento como diâmetro ao longo do tempo
+
+Aqui por so um individuo
+
+Como escrevemos uma função, você pode experimentá-la facilmente para outros indivíduos.
 :::
 
 ## Trajetórias de crescimento
 
 ```{r}
+#| fig-height: 3.5
+#| fig-width: 7
+#| fig-align: center
 plot_traj_Growth <- function(id, dt) {
     sp <- dt %>% filter(idTree == id) %>% distinct(GenSp) # especie
     n <- dt %>% filter(idTree == id) %>% count() # medições
@@ -410,19 +408,26 @@ plot_traj_Growth <- function(id, dt) {
       geom_smooth(method = "loess", se = FALSE) + 
       labs(x = "Ano da medição",
            y = "Crescimento anual (em cm/ano)",
-           title = paste0("Trajetória do diâmetro - Indivíduo ", id, 
+           title = paste0("Trajetória de crecimento - Indivíduo ", id, 
                           " - ", sp, " (", n, " medições)")) + theme_bw() 
 }
 plot_traj_Growth(id = "103768", dt = dt_P6)
 ```
 
 ::: notes
-Podemos representar o crescimento como crescimento annual ao longo do tempo
+Podemos representar o crescimento como um incremento anual em função do diâmetro para representar melhor o efeito da ontogenia
+
+Aqui por so um individuo
+
+Como escrevemos uma função, você pode experimentá-la facilmente para outros indivíduos.
 :::
 
 ## Trajetórias de crescimento
 
 ```{r}
+#| fig-height: 3.5
+#| fig-width: 7
+#| fig-align: center
 plot_traj_sp <- function(sp, dt) {
     n <- dt %>% filter(GenSp == sp) %>% count() # medições
     filter(dt, GenSp == sp) %>% 
@@ -431,7 +436,7 @@ plot_traj_sp <- function(sp, dt) {
       geom_smooth(method = "loess", se = FALSE) + 
       labs(x = "Ano da medição",
            y = "Crescimento anual (em cm/ano)",
-           title = paste0("Trajetória do diâmetro - ",
+           title = paste0("Trajetória de crecimento - ",
                           sp, " (", n, " medições)")) + theme_bw() 
 }
 plot_traj_sp(sp = "Cecropia_obtusa", dt = dt_P6)
@@ -439,6 +444,10 @@ plot_traj_sp(sp = "Cecropia_obtusa", dt = dt_P6)
 
 ::: notes
 Podemos representar o crescimento como um incremento anual em função do diâmetro para representar melhor o efeito da ontogenia
+
+Aqui por todos os individuos da especie Cecropia obtusa
+
+Como escrevemos uma função, você pode experimentá-la facilmente para outras especies.
 :::
 
 # Modelagem do crescimento
@@ -448,11 +457,13 @@ Podemos representar o crescimento como um incremento anual em função do diâme
 $$log(AGR+1)=G \times exp[-0.5 \times( \frac{log(DBH/D)}{K}^2)]$$
 
 ```{r}
-data_frame(DBH = 1:100) %>% mutate(log_agr = 0.5*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
+#| fig-align: center
+data_frame(DBH = 10:100) %>% mutate(log_agr = 0.5*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
   ggplot(aes(DBH, log_agr)) + geom_line() + theme_bw() +
   labs(x = "Ano da medição",
        y = "log(Crescimento anual + 1)") + theme_bw() +
-  geom_vline(xintercept = 50, colour = "red") + geom_hline(yintercept = 0.5, colour = "red")
+  geom_vline(xintercept = 50, colour = "red", linetype = "dashed") + 
+  geom_hline(yintercept = 0.5, colour = "red", linetype = "dashed")
 ```
 
 ::: notes
@@ -472,9 +483,10 @@ fit <- brm(bf(log(Growth+1) ~ G*exp(-0.5*(log(DBH/D)^2/K)),
                  prior("uniform(1,30)", lb = 1, ub = 30, nlpar = "D")
           ),
            data = filter(dt_P6, GenSp  == "Cecropia_obtusa"),
-           cores = 4)
+           cores = 4, iter = 8000)
 save(fit, file = "data/fit_cecro.Rdata")
 ```
+
 ```{r}
 load(file = "data/fit_cecro.Rdata") ; fit
 ```
@@ -486,16 +498,24 @@ Estamos começando com uma espécie pioneira
 ## Uma inferência com *Cecropia obtusa*
 
 ```{r}
-filter(dt_P6, GenSp  == "Cecropia_obtusa") %>% 
-  ggplot(aes(x=DBH, y = log(Growth+1))) + 
-  geom_point() + 
-  stat_function(fun = function(x) 0.44*exp(-0.5*(log(x/18.79)^2/0.98)),
-                colour = "red", size = 2) +
-      labs(x = "Ano da medição",
-           y = "log(Crescimento anual + 1)") + theme_bw() +
-  geom_vline(xintercept = 18.79, colour = "red") + 
-  geom_hline(yintercept = 0.44, colour = "red") +
-  ylim(0, NA) + xlim(10, NA)
+#| fig-height: 4.5
+#| fig-width: 7
+#| fig-align: center
+plot_fit <- function(fit, Species) {
+  G <- posterior_summary(fit)[1, "Estimate"]
+  D <- posterior_summary(fit)[2, "Estimate"]
+  K <- posterior_summary(fit)[3, "Estimate"]
+  filter(dt_P6, GenSp  == !!Species) %>% 
+    ggplot(aes(x=DBH, y = Growth)) + geom_point() + 
+    stat_function(fun = function(x) exp(G*exp(-0.5*(log(x/D)^2/K))) - 1,
+                  colour = "red", size = 2) +
+        labs(x = "Ano da medição",
+             y = "Crescimento anual") + theme_bw() +
+    geom_vline(xintercept = D, colour = "red", linetype = "dashed") + 
+    geom_hline(yintercept = G, colour = "red", linetype = "dashed") +
+    ylim(0, NA) + xlim(10, NA)
+}
+plot_fit(fit = fit, Species = "Cecropia_obtusa")
 ```
 
 ## Uma inferência com *Dicorynia guianensis*
@@ -525,16 +545,10 @@ A Dicorynia é a espécie mais explorada na Guiana Francesa, semelhante ao ipê
 ## Uma inferência com *Dicorynia guianensis*
 
 ```{r}
-filter(dt_P6, GenSp  == "Dicorynia_guianensis") %>% 
-  ggplot(aes(x=DBH, y = log(Growth+1))) + 
-  geom_point() + 
-  stat_function(fun = function(x) 0.29*exp(-0.5*(log(x/33.79)^2/0.63)),
-                colour = "red", size = 2) +
-      labs(x = "Ano da medição",
-           y = "log(Crescimento anual + 1)") + theme_bw() +
-  geom_vline(xintercept = 33.79, colour = "red") + 
-  geom_hline(yintercept = 0.29, colour = "red") +
-  ylim(0, NA)
+#| fig-height: 4.5
+#| fig-width: 7
+#| fig-align: center
+plot_fit(fit = fit, Species = "Dicorynia_guianensis")
 ```
 
 ## Uma inferência com *Eschweilera sagotiana*
@@ -564,16 +578,10 @@ A Eschweilera é a espécie mais abundante na Amazônia e cresce muito lentament
 ## Uma inferência com *Eschweilera sagotiana*
 
 ```{r}
-filter(dt_P6, GenSp  == "Eschweilera_sagotiana") %>% 
-  ggplot(aes(x=DBH, y = log(Growth+1))) + 
-  geom_point() + 
-  stat_function(fun = function(x) 0.10*exp(-0.5*(log(x/27.59)^2/2.77)),
-                colour = "red", size = 2) +
-      labs(x = "Ano da medição",
-           y = "log(Crescimento anual + 1)") + theme_bw() +
-  geom_vline(xintercept = 27.59, colour = "red") + 
-  geom_hline(yintercept = 0.10, colour = "red") +
-  ylim(0, NA)
+#| fig-height: 4.5
+#| fig-width: 7
+#| fig-align: center
+plot_fit(fit = fit, Species = "Eschweilera_sagotiana")
 ```
 
 ## Modelo de crescimento individual
@@ -581,12 +589,14 @@ filter(dt_P6, GenSp  == "Eschweilera_sagotiana") %>%
 $$log(AGR+1)= G_{tree} \times exp[-0.5 \times( \frac{log(DBH/D)^2}{K})] ~~|~~G_{tree} = G_{species}+\epsilon_{tree}$$
 
 ```{r}
-expand_grid(DBH = 1:100, G_tree = rnorm(10, 0.5, 0.1)) %>% 
+#| fig-align: center
+expand_grid(DBH = 10:100, G_tree = rnorm(10, 0.5, 0.1)) %>% 
   mutate(log_agr = G_tree*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
   ggplot(aes(DBH, log_agr, group = as.character(G_tree))) + geom_line() + theme_bw() +
   labs(x = "Ano da medição",
        y = "log(Crescimento anual + 1)") + theme_bw() +
-  geom_vline(xintercept = 50, colour = "red") + geom_hline(yintercept = 0.5, colour = "red")
+  geom_vline(xintercept = 50, colour = "red", linetype = "dashed") + 
+  geom_hline(yintercept = 0.5, colour = "red", linetype = "dashed")
 ```
 
 ::: notes
@@ -616,12 +626,14 @@ load(file = "data/fit_dico_ind.Rdata") ; fit
 ## Modelo de crescimento individual
 
 ```{r}
+#| fig-align: center
 fit %>% 
   tidybayes::spread_draws(b_G_Intercept, r_idTree__G[idTree,]) %>% 
-  mutate(G_tree = b_G_Intercept + r_idTree__G) %>% 
+  mutate(G_tree = exp(b_G_Intercept + r_idTree__G) - 1) %>% 
   group_by(idTree) %>% 
   summarise(G_tree = median(G_tree)) %>% 
-  ggplot(aes(G_tree)) + geom_histogram() + theme_bw()
+  ggplot(aes(G_tree)) + geom_histogram() + theme_bw() + 
+  labs(x = "Crescimento previsto (em cm/ano)")
 ```
 
 # Usar características funcionais para explicar o crescimento
@@ -631,6 +643,8 @@ fit %>%
 Começamos recuperando todos os crescimentos das espécies de Paracou disponíveis em [Schmitt, Hérault, Derroire (2023)](https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14318), e selecionamos as espécies para as quais temos valores de características
 
 ```{r}
+#| fig-align: center
+#| fig-height: 3.5
 dt <- read_csv("data/growth_raw.csv", locale = locale(decimal_mark = ",")) %>% 
   select(Species, `Median Gmax`) %>% 
   rename(species = Species, Gmax =  `Median Gmax`) %>% 
@@ -640,11 +654,17 @@ dt <- read_csv("data/growth_raw.csv", locale = locale(decimal_mark = ",")) %>%
 dt %>% ggplot(aes(Gmax)) + geom_histogram() + theme_bw() + scale_x_log10()
 ```
 
-## Correlações entre pares de características
+::: notes
+Filtramos os crescimentos < 3 para remover a Cecropia, que é um outlier.
+:::
+
+## Correlações entre características e crescimento
 
 Primeiro, podemos analisar a correlação com o crescimento. Como as características estão correlacionadas, usamos apenas wsg e sla para representar as diferentes estratégias.
 
 ```{r}
+#| fig-align: center
+#| fig-height: 4
 ggpairs(dt, columns = c("Gmax", "LMA", "wsg"))
 ```
 
@@ -668,6 +688,6 @@ Falando mais seriamente, ficaremos felizes em responder a quaisquer perguntas qu
 :::
 
 ::: notes
-Muito obrigado por sua antenção!​ Agora responderemos suas perguntas.
+Muito obrigado por sua antenção! Agora responderemos suas perguntas.
 :::
 
