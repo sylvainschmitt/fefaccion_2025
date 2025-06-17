@@ -495,12 +495,9 @@ load(file = "data/fit_cecro.Rdata") ; fit
 Estamos começando com uma espécie pioneira
 :::
 
-## Uma inferência com *Cecropia obtusa*
+## Uma inferência com *Cecropia obtusa* 
 
 ```{r}
-#| fig-height: 4.5
-#| fig-width: 7
-#| fig-align: center
 plot_fit <- function(fit, Species) {
   G <- posterior_summary(fit)[1, "Estimate"]
   D <- posterior_summary(fit)[2, "Estimate"]
@@ -515,8 +512,17 @@ plot_fit <- function(fit, Species) {
     geom_hline(yintercept = G, colour = "red", linetype = "dashed") +
     ylim(0, NA) + xlim(10, NA)
 }
+```
+
+## Uma inferência com *Cecropia obtusa* 
+
+```{r}
+#| fig-height: 4.5
+#| fig-width: 7
+#| fig-align: center
 plot_fit(fit = fit, Species = "Cecropia_obtusa")
 ```
+
 
 ## Uma inferência com *Dicorynia guianensis*
 
@@ -589,6 +595,8 @@ plot_fit(fit = fit, Species = "Eschweilera_sagotiana")
 $$log(AGR+1)= G_{tree} \times exp[-0.5 \times( \frac{log(DBH/D)^2}{K})] ~~|~~G_{tree} = G_{species}+\epsilon_{tree}$$
 
 ```{r}
+#| fig-height: 3
+#| fig-width: 6
 #| fig-align: center
 expand_grid(DBH = 10:100, G_tree = rnorm(10, 0.5, 0.1)) %>% 
   mutate(log_agr = G_tree*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
@@ -627,6 +635,7 @@ load(file = "data/fit_dico_ind.Rdata") ; fit
 
 ```{r}
 #| fig-align: center
+#| fig-height: 4
 fit %>% 
   tidybayes::spread_draws(b_G_Intercept, r_idTree__G[idTree,]) %>% 
   mutate(G_tree = exp(b_G_Intercept + r_idTree__G) - 1) %>% 

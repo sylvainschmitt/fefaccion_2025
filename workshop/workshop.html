@@ -1127,7 +1127,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="uma-inferência-com-cecropia-obtusa-1" class="slide level2">
 <h2>Uma inferência com <em>Cecropia obtusa</em></h2>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a>plot_fit <span class="ot">&lt;-</span> <span class="cf">function</span>(fit, Species) {</span>
 <span id="cb31-2"><a href=""></a>  G <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">1</span>, <span class="st">"Estimate"</span>]</span>
 <span id="cb31-3"><a href=""></a>  D <span class="ot">&lt;-</span> <span class="fu">posterior_summary</span>(fit)[<span class="dv">2</span>, <span class="st">"Estimate"</span>]</span>
@@ -1141,14 +1141,22 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <span id="cb31-11"><a href=""></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> D, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
 <span id="cb31-12"><a href=""></a>    <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> G, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
 <span id="cb31-13"><a href=""></a>    <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="cn">NA</span>) <span class="sc">+</span> <span class="fu">xlim</span>(<span class="dv">10</span>, <span class="cn">NA</span>)</span>
-<span id="cb31-14"><a href=""></a>}</span>
-<span id="cb31-15"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Cecropia_obtusa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-14"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment">
+
+</div>
+</section>
+<section id="uma-inferência-com-cecropia-obtusa-2" class="slide level2">
+<h2>Uma inferência com <em>Cecropia obtusa</em></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Cecropia_obtusa"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-25-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-26-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1157,23 +1165,23 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-dicorynia-guianensis" class="slide level2">
 <h2>Uma inferência com <em>Dicorynia guianensis</em></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb32-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb32-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb32-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb32-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb32-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb32-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb32-8"><a href=""></a>          ),</span>
-<span id="cb32-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
-<span id="cb32-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb32-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb33-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb33-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb33-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb33-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb33-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb33-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb33-8"><a href=""></a>          ),</span>
+<span id="cb33-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
+<span id="cb33-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb33-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1219,13 +1227,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-dicorynia-guianensis-1" class="slide level2">
 <h2>Uma inferência com <em>Dicorynia guianensis</em></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Dicorynia_guianensis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Dicorynia_guianensis"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-28-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-29-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1234,23 +1242,23 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-eschweilera-sagotiana" class="slide level2">
 <h2>Uma inferência com <em>Eschweilera sagotiana</em></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb36-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb36-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb36-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb36-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb36-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb36-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb36-8"><a href=""></a>          ),</span>
-<span id="cb36-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Eschweilera_sagotiana"</span>),</span>
-<span id="cb36-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb36-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb37-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span>, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb37-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb37-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb37-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb37-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb37-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb37-8"><a href=""></a>          ),</span>
+<span id="cb37-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Eschweilera_sagotiana"</span>),</span>
+<span id="cb37-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb37-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_esch.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1296,13 +1304,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="uma-inferência-com-eschweilera-sagotiana-1" class="slide level2">
 <h2>Uma inferência com <em>Eschweilera sagotiana</em></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Eschweilera_sagotiana"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">plot_fit</span>(<span class="at">fit =</span> fit, <span class="at">Species =</span> <span class="st">"Eschweilera_sagotiana"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-31-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1312,19 +1320,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Modelo de crescimento individual</h2>
 <p><span class="math display">\[log(AGR+1)= G_{tree} \times exp[-0.5 \times( \frac{log(DBH/D)^2}{K})] ~~|~~G_{tree} = G_{species}+\epsilon_{tree}\]</span></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href=""></a><span class="fu">expand_grid</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">G_tree =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">log_agr =</span> G_tree<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, log_agr, <span class="at">group =</span> <span class="fu">as.character</span>(G_tree))) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb40-4"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
-<span id="cb40-5"><a href=""></a>       <span class="at">y =</span> <span class="st">"log(Crescimento anual + 1)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb40-6"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
-<span id="cb40-7"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">expand_grid</span>(<span class="at">DBH =</span> <span class="dv">10</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">G_tree =</span> <span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="fl">0.5</span>, <span class="fl">0.1</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">log_agr =</span> G_tree<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span><span class="dv">50</span>)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="fl">0.2</span>))) <span class="sc">%&gt;%</span> </span>
+<span id="cb41-3"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(DBH, log_agr, <span class="at">group =</span> <span class="fu">as.character</span>(G_tree))) <span class="sc">+</span> <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb41-4"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Ano da medição"</span>,</span>
+<span id="cb41-5"><a href=""></a>       <span class="at">y =</span> <span class="st">"log(Crescimento anual + 1)"</span>) <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb41-6"><a href=""></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">50</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span> </span>
+<span id="cb41-7"><a href=""></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fl">0.5</span>, <span class="at">colour =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-32-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-33-1.png" class="quarto-figure quarto-figure-center" width="576"></p>
 </figure>
 </div>
 </div>
@@ -1346,23 +1354,23 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="modelo-de-crescimento-individual-1" class="slide level2">
 <h2>Modelo de crescimento individual</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
-<span id="cb41-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span><span class="sc">|</span>idTree, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb41-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb41-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
-<span id="cb41-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
-<span id="cb41-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
-<span id="cb41-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
-<span id="cb41-8"><a href=""></a>          ),</span>
-<span id="cb41-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
-<span id="cb41-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
-<span id="cb41-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="fu">bf</span>(<span class="fu">log</span>(Growth<span class="sc">+</span><span class="dv">1</span>) <span class="sc">~</span> G<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span><span class="fl">0.5</span><span class="sc">*</span>(<span class="fu">log</span>(DBH<span class="sc">/</span>D)<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span>K)),</span>
+<span id="cb42-2"><a href=""></a>              G <span class="sc">~</span> <span class="dv">1</span><span class="sc">|</span>idTree, D <span class="sc">~</span> <span class="dv">1</span>, K <span class="sc">~</span> <span class="dv">1</span>,</span>
+<span id="cb42-3"><a href=""></a>              <span class="at">nl =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb42-4"><a href=""></a>           <span class="at">prior =</span> <span class="fu">c</span>(</span>
+<span id="cb42-5"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"G"</span>),</span>
+<span id="cb42-6"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(0.001,3)"</span>, <span class="at">lb =</span> <span class="fl">0.001</span>, <span class="at">ub =</span> <span class="dv">3</span>, <span class="at">nlpar =</span> <span class="st">"K"</span>),</span>
+<span id="cb42-7"><a href=""></a>                 <span class="fu">prior</span>(<span class="st">"uniform(1,300)"</span>, <span class="at">lb =</span> <span class="dv">1</span>, <span class="at">ub =</span> <span class="dv">300</span>, <span class="at">nlpar =</span> <span class="st">"D"</span>)</span>
+<span id="cb42-8"><a href=""></a>          ),</span>
+<span id="cb42-9"><a href=""></a>           <span class="at">data =</span> <span class="fu">filter</span>(dt_P6, GenSp  <span class="sc">==</span> <span class="st">"Dicorynia_guianensis"</span>),</span>
+<span id="cb42-10"><a href=""></a>           <span class="at">cores =</span> <span class="dv">4</span>)</span>
+<span id="cb42-11"><a href=""></a><span class="fu">save</span>(fit, <span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">load</span>(<span class="at">file =</span> <span class="st">"data/fit_dico_ind.Rdata"</span>) ; fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">
@@ -1400,19 +1408,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="modelo-de-crescimento-individual-2" class="slide level2">
 <h2>Modelo de crescimento individual</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>fit <span class="sc">%&gt;%</span> </span>
-<span id="cb44-2"><a href=""></a>  tidybayes<span class="sc">::</span><span class="fu">spread_draws</span>(b_G_Intercept, r_idTree__G[idTree,]) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">G_tree =</span> <span class="fu">exp</span>(b_G_Intercept <span class="sc">+</span> r_idTree__G) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-4"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-5"><a href=""></a>  <span class="fu">summarise</span>(<span class="at">G_tree =</span> <span class="fu">median</span>(G_tree)) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-6"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(G_tree)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb44-7"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Crescimento previsto (em cm/ano)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>fit <span class="sc">%&gt;%</span> </span>
+<span id="cb45-2"><a href=""></a>  tidybayes<span class="sc">::</span><span class="fu">spread_draws</span>(b_G_Intercept, r_idTree__G[idTree,]) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">G_tree =</span> <span class="fu">exp</span>(b_G_Intercept <span class="sc">+</span> r_idTree__G) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-4"><a href=""></a>  <span class="fu">group_by</span>(idTree) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-5"><a href=""></a>  <span class="fu">summarise</span>(<span class="at">G_tree =</span> <span class="fu">median</span>(G_tree)) <span class="sc">%&gt;%</span> </span>
+<span id="cb45-6"><a href=""></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(G_tree)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb45-7"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Crescimento previsto (em cm/ano)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-35-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-36-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1427,19 +1435,19 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Distribuição das crescimentos</h2>
 <p>Começamos recuperando todos os crescimentos das espécies de Paracou disponíveis em <a href="https://onlinelibrary.wiley.com/doi/full/10.1111/ele.14318">Schmitt, Hérault, Derroire (2023)</a>, e selecionamos as espécies para as quais temos valores de características</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>dt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/growth_raw.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">","</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-2"><a href=""></a>  <span class="fu">select</span>(Species, <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-3"><a href=""></a>  <span class="fu">rename</span>(<span class="at">species =</span> Species, <span class="at">Gmax =</span>  <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, species)) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-5"><a href=""></a>  <span class="fu">right_join</span>(dt_traits) <span class="sc">%&gt;%</span> </span>
-<span id="cb45-6"><a href=""></a>  <span class="fu">filter</span>(Gmax <span class="sc">&lt;</span> <span class="dv">3</span>)</span>
-<span id="cb45-7"><a href=""></a>dt <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(Gmax)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a>dt <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/growth_raw.csv"</span>, <span class="at">locale =</span> <span class="fu">locale</span>(<span class="at">decimal_mark =</span> <span class="st">","</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-2"><a href=""></a>  <span class="fu">select</span>(Species, <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-3"><a href=""></a>  <span class="fu">rename</span>(<span class="at">species =</span> Species, <span class="at">Gmax =</span>  <span class="st">`</span><span class="at">Median Gmax</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">gsub</span>(<span class="st">" "</span>, <span class="st">"_"</span>, species)) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-5"><a href=""></a>  <span class="fu">right_join</span>(dt_traits) <span class="sc">%&gt;%</span> </span>
+<span id="cb46-6"><a href=""></a>  <span class="fu">filter</span>(Gmax <span class="sc">&lt;</span> <span class="dv">3</span>)</span>
+<span id="cb46-7"><a href=""></a>dt <span class="sc">%&gt;%</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(Gmax)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() <span class="sc">+</span> <span class="fu">theme_bw</span>() <span class="sc">+</span> <span class="fu">scale_x_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-36-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-37-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1462,13 +1470,13 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Correlações entre características e crescimento</h2>
 <p>Primeiro, podemos analisar a correlação com o crescimento. Como as características estão correlacionadas, usamos apenas wsg e sla para representar as diferentes estratégias.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href=""></a><span class="fu">ggpairs</span>(dt, <span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Gmax"</span>, <span class="st">"LMA"</span>, <span class="st">"wsg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">ggpairs</span>(dt, <span class="at">columns =</span> <span class="fu">c</span>(<span class="st">"Gmax"</span>, <span class="st">"LMA"</span>, <span class="st">"wsg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-37-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
+<p><img data-src="workshop_files/figure-revealjs/unnamed-chunk-38-1.png" class="quarto-figure quarto-figure-center" width="960"></p>
 </figure>
 </div>
 </div>
@@ -1478,8 +1486,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <h2>Regressão linear</h2>
 <p>Também podemos usar a regressão linear para identificar estratégias relacionadas ao crescimento das espécies.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">lm</span>(Gmax <span class="sc">~</span> LMA <span class="sc">+</span> wsg, dt) <span class="sc">%&gt;%</span> </span>
-<span id="cb47-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href=""></a><span class="fu">lm</span>(Gmax <span class="sc">~</span> LMA <span class="sc">+</span> wsg, dt) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-2"><a href=""></a>  <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell fragment">
 <div class="cell-output cell-output-stdout">

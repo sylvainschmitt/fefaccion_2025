@@ -1,3 +1,3 @@
 # Presentations {.unnumbered}
 
--   [Forest dynamic with R](workshop/workshop.html)
+-   [Forest dynamic with R](https://sylvainschmitt.github.io/fefaccion_2025/workshop/workshop.html)
