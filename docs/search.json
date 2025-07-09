@@ -56,14 +56,18 @@
     "text": "Small material\n\nField support\nAA batteries\nFlat batteries\nCisors\nZiplocks\nLabels\nTissues\nBin bafs\nPlastic box\nMister\nPencil\nMarkers\nMaps\nField notebook\nPruning shears\nEnvelopes\nJournal\nPress\nPaper towel\nMetal tea ball\nTin foil\nNeedle\nLiquid nitrogen gloves\nLiquid nitrogen goggles\nLiquid nitrogen contenant\n2 Tweezers\nCork borer"
   },
   {
+    "objectID": "14_maps.html",
+    "href": "14_maps.html",
+    "title": "Maps",
+    "section": "",
+    "text": "Code\nforest %&gt;% \n  group_by(name, code) %&gt;% \n  summarise(N = n()) %&gt;% \n  arrange(desc(N)) %&gt;% \n  knitr::kable()\n\n\n\n\n\nname\ncode\nN\n\n\n\n\nCOPAIBA\nCOPAI\n11\n\n\nTATAJUBA\nTATAJ\n11\n\n\nANDIROBA\nANDIR\n10\n\n\nANGELIM VERMELHO\nANGEL\n10\n\n\nARARAQUANGA\nARARA\n10\n\n\nCASTANHA DO PARA\nCASTA\n10\n\n\nCEDRURANA\nCEDRU\n10\n\n\nCUMARU\nCUMAR\n10\n\n\nCUPIUBA\nCUPIU\n10\n\n\nFAVA\nFAVA\n10\n\n\nFAVA AMARGA\nFAVAA\n10\n\n\nFREIJO\nFREIJ\n10\n\n\nJUTAI\nJUTAI\n10\n\n\nMARUPA\nMARUP\n10\n\n\nMELANCIEIRA\nMELAN\n10\n\n\nPARAPARA\nPARAP\n10\n\n\nPIQUIA\nPIQUI\n10\n\n\nQUARUBA\nQUARU\n10\n\n\nTACHI BRANCO\nTACHI\n10\n\n\nJARANA\nJARAN\n9\n\n\nVIROLA CASCA DE VIDRO\nVIROL\n9\n\n\nFAVA ORELHA DE MACACO\nFAVAO\n6\n\n\n\n\n\n\n\nCode\nggplot() +\n  geom_sf(data = roads) +\n  geom_sf(data = path) +\n  geom_sf(data = inventory, aes(col = code)) +\n  theme_bw()\n\n\n\n\n\n\n\nCode\ng &lt;- ggplot() +\n  geom_sf(data = path, col = \"darkgrey\") +\n  geom_sf(data = inventory) +\n  ggrepel::geom_text_repel(\n      data = inventory,\n      aes(label = label, geometry = geometry),\n      stat = \"sf_coordinates\",\n      size = 2, max.overlaps = 20) +\n  theme_bw() +\n  theme(axis.title = element_blank(), axis.text = element_blank(),\n        axis.ticks = element_blank(), axis.line = element_blank())\nggsave(g, file = \"documents/map.pdf\",\n       width = 420, height = 297, unit = 'mm', dpi = 300)\nknitr::include_graphics(\"documents/map.pdf\")\n\n\n\n\n\n\n\nCode\ng &lt;- forest %&gt;% \n  ggplot(aes(x, y, size = dbh, col = name)) +\n  geom_point() +\n  theme_bw() +\n  coord_equal() +\n  scale_color_discrete(guide = \"none\")\n\n\n\n\nCode\nforest %&gt;% \n  ggplot(aes(x, y, size = dbh, col = plate)) +\n  geom_point() +\n  theme_bw() +\n  scale_color_viridis_c() +\n  coord_equal()\n\n\n\n\n\n\n\nCode\nforest %&gt;% \n  ggplot(aes(dbh)) +\n  geom_histogram() +\n  facet_wrap(~ name, scales = \"free_y\") +\n  theme_bw()"
+  },
+  {
     "objectID": "21_presentations.html",
     "href": "21_presentations.html",
     "title": "Presentations",
     "section": "",
-    "text": "Forest dynamic with R",
-    "crumbs": [
-      "Presentations"
-    ]
+    "text": "Forest dynamic with R"
   },
   {
     "objectID": "97_meeting.html#discussion-the-program",

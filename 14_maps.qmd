@@ -1,0 +1,124 @@
+```{r set}
+#| include: false
+library(tidyverse)
+library(sf)
+species <- c(
+ "ANDIROBA",
+ "ANGELIM VERMELHO",
+ "ARARAQUANGA",
+ "CASTANHA DO PARA",
+ "COPAIBA",
+ "CUMARU",
+ "CUPIUBA",
+ "FAVA",
+ "FAVA AMARGA",
+ "FAVA ORELHA DE MACACO",
+ "FREIJO",
+ "JARANA",
+ "JUTAI",
+ "MARUPA",
+ "MELANCIEIRA",
+ "PARAPARA",
+ "PIQUIA",
+ "TACHI BRANCO",
+ "TATAJUBA",
+ "VIROLA CASCA DE VIDRO",
+ "CEDRURANA",
+ "QUARUBA"
+ )
+forest <- readxl::read_excel("data/Dados brutos do inventário da estrada 5.xlsx") %>% 
+  rename(plate = Placa, name = `Nome vernacular`,
+         x = `Easting (UTM)`, y =  `Northing (UTM)`) %>% 
+  mutate(dbh = as.numeric(CAP1)/pi) %>% 
+  select(plate, name, x, y, dbh) %>% 
+  filter(!is.na(name)) %>% 
+  filter(name %in% species) %>% 
+  group_by(name) %>% 
+  top_n(10, dbh) %>% 
+  mutate(code = str_sub(gsub(" ", "", name), 1, 5)) %>% 
+  mutate(label = paste0(code, "\n", plate))
+roads <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "EstradasdoPPesquisa")
+inventory <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "Inventario")
+mother <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "MATRIZES")
+limits <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "PerimetroEstrada5")
+path <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "TrilhaParqPesq")
+inventory <- forest %>% 
+  st_as_sf(coords = c("x", "y"), crs = 31981)
+```
+
+# Maps {.unnumbered}
+
+```{r}
+#| message: false
+#| warning: false
+forest %>% 
+  group_by(name, code) %>% 
+  summarise(N = n()) %>% 
+  arrange(desc(N)) %>% 
+  knitr::kable()
+```
+
+```{r}
+#| message: false
+#| warning: false
+ggplot() +
+  geom_sf(data = roads) +
+  geom_sf(data = path) +
+  geom_sf(data = inventory, aes(col = code)) +
+  theme_bw()
+```
+
+```{r}
+#| message: false
+#| warning: false
+g <- ggplot() +
+  geom_sf(data = path, col = "darkgrey") +
+  geom_sf(data = inventory) +
+  ggrepel::geom_text_repel(
+      data = inventory,
+      aes(label = label, geometry = geometry),
+      stat = "sf_coordinates",
+      size = 2, max.overlaps = 20) +
+  theme_bw() +
+  theme(axis.title = element_blank(), axis.text = element_blank(),
+        axis.ticks = element_blank(), axis.line = element_blank())
+ggsave(g, file = "documents/map.pdf",
+       width = 420, height = 297, unit = 'mm', dpi = 300)
+knitr::include_graphics("documents/map.pdf")
+```
+
+```{r}
+#| message: false
+#| warning: false
+g <- forest %>% 
+  ggplot(aes(x, y, size = dbh, col = name)) +
+  geom_point() +
+  theme_bw() +
+  coord_equal() +
+  scale_color_discrete(guide = "none")
+```
+
+```{r}
+#| message: false
+#| warning: false
+forest %>% 
+  ggplot(aes(x, y, size = dbh, col = plate)) +
+  geom_point() +
+  theme_bw() +
+  scale_color_viridis_c() +
+  coord_equal()
+```
+
+```{r}
+#| message: false
+#| warning: false
+forest %>% 
+  ggplot(aes(dbh)) +
+  geom_histogram() +
+  facet_wrap(~ name, scales = "free_y") +
+  theme_bw()
+```
+
+```{r}
+
+```
