@@ -411,7 +411,7 @@ plot_traj_sp <- function(sp, dt) {
       ggplot(aes(x=DBH, y = Growth)) + 
       geom_point() + 
       geom_smooth(method = "loess", se = FALSE) + 
-      labs(x = "Ano da medição",
+      labs(x = "Diâmetro à altura do peito (em cm)",
            y = "Crescimento anual (em cm/ano)",
            title = paste0("Trajetória de crecimento - ",
                           sp, " (", n, " medições)")) + theme_bw() 
@@ -437,7 +437,7 @@ $$log(AGR+1)=G \times exp[-0.5 \times( \frac{log(DBH/D)}{K}^2)]$$
 #| fig-align: center
 data_frame(DBH = 10:100) %>% mutate(log_agr = 0.5*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
   ggplot(aes(DBH, exp(log_agr)-1)) + geom_line() + theme_bw() +
-  labs(x = "Ano da medição",
+  labs(x = "Diâmetro à altura do peito",
        y = "Crescimento anual") + theme_bw() +
   geom_vline(xintercept = 50, colour = "red", linetype = "dashed") + 
   geom_hline(yintercept = exp(0.5)-1, colour = "red", linetype = "dashed")
@@ -483,8 +483,8 @@ plot_fit <- function(fit, Species) {
     ggplot(aes(x=DBH, y = Growth)) + geom_point() + 
     stat_function(fun = function(x) exp(G*exp(-0.5*(log(x/D)^2/K))) - 1,
                   colour = "red", size = 2) +
-        labs(x = "Ano da medição",
-             y = "Crescimento anual") + theme_bw() +
+        labs(x = "Diâmetro à altura do peito (em cm)",
+             y = "Crescimento anual (em cm/ano)") + theme_bw() +
     geom_vline(xintercept = D, colour = "red", linetype = "dashed") + 
     geom_hline(yintercept = exp(G)-1, colour = "red", linetype = "dashed") +
     ylim(0, NA) + xlim(10, NA)
@@ -580,7 +580,7 @@ expand_grid(DBH = 10:100, G_tree = rnorm(10, 0.5, 0.1)) %>%
   mutate(log_agr = G_tree*exp(-0.5*(log(DBH/50)^2/0.2))) %>% 
   ggplot(aes(DBH, exp(log_agr)-1,
              group = as.character(G_tree))) + geom_line() + theme_bw() +
-  labs(x = "Ano da medição",
+  labs(x = "Diâmetro à altura do peito",
        y = "Crescimento anual") + theme_bw() +
   geom_vline(xintercept = 50, colour = "red", linetype = "dashed") + 
   geom_hline(yintercept = exp(0.5)-1, colour = "red", linetype = "dashed")
