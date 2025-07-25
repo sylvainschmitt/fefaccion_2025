@@ -13,6 +13,13 @@ book:
         - 12_protocols.qmd
         - 13_material.qmd
         - 14_maps.qmd
+    - part: 20_cleaning.qmd
+      chapters: 
+        - 21_tlp.qmd
+        - 22_scans.qmd
+        - 23_hydrated.qmd
+        - 24_dry.qmd
+        - 25_junction.qmd
   appendices:
     - 97_meeting.qmd
     - 99_references.qmd

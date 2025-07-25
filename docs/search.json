@@ -63,6 +63,48 @@
     "text": "We will collect the following species:\n\n\nCode\nforest %&gt;% \n  group_by(name, code) %&gt;% \n  summarise(N = n()) %&gt;% \n  arrange(desc(N)) %&gt;% \n  knitr::kable()\n\n\n\n\n\nname\ncode\nN\n\n\n\n\nCOPAIBA\nCOPAI\n11\n\n\nTATAJUBA\nTATAJ\n11\n\n\nANDIROBA\nANDIR\n10\n\n\nANGELIM VERMELHO\nANGEL\n10\n\n\nARARAQUANGA\nARARA\n10\n\n\nCASTANHA DO PARA\nCASTA\n10\n\n\nCEDRURANA\nCEDRU\n10\n\n\nCUMARU\nCUMAR\n10\n\n\nCUPIUBA\nCUPIU\n10\n\n\nFAVA\nFAVA\n10\n\n\nFAVA AMARGA\nFAVAA\n10\n\n\nFREIJO\nFREIJ\n10\n\n\nJUTAI\nJUTAI\n10\n\n\nMARUPA\nMARUP\n10\n\n\nMELANCIEIRA\nMELAN\n10\n\n\nPARAPARA\nPARAP\n10\n\n\nPIQUIA\nPIQUI\n10\n\n\nQUARUBA\nQUARU\n10\n\n\nTACHI BRANCO\nTACHI\n10\n\n\nJARANA\nJARAN\n9\n\n\nVIROLA CASCA DE VIDRO\nVIROL\n9\n\n\nFAVA ORELHA DE MACACO\nFAVAO\n6\n\n\n\n\n\nWe selected the 10 biggest individuals per species resulting in the following maps of individuals to be collected:\n\n\nCode\nggplot() +\n  geom_sf(data = roads) +\n  geom_sf(data = path) +\n  geom_sf(data = inventory, aes(col = code)) +\n  theme_bw()\n\n\n\n\n\n\n\nCode\ng &lt;- ggplot() +\n  geom_sf(data = path, col = \"darkgrey\") +\n  geom_sf(data = inventory) +\n  ggrepel::geom_text_repel(\n      data = inventory,\n      aes(label = label, geometry = geometry),\n      stat = \"sf_coordinates\",\n      size = 2, max.overlaps = 20) +\n  theme_bw() +\n  theme(axis.title = element_blank(), axis.text = element_blank(),\n        axis.ticks = element_blank(), axis.line = element_blank())\nggsave(g, file = \"documents/map.pdf\",\n       width = 420, height = 297, unit = 'mm', dpi = 300)\nknitr::include_graphics(\"documents/map.pdf\")"
   },
   {
+    "objectID": "20_cleaning.html",
+    "href": "20_cleaning.html",
+    "title": "Cleaning",
+    "section": "",
+    "text": "Cleaning of traits raw measurement and functional traits assembly."
+  },
+  {
+    "objectID": "21_tlp.html",
+    "href": "21_tlp.html",
+    "title": "TLP",
+    "section": "",
+    "text": "TLP cleaning."
+  },
+  {
+    "objectID": "22_scans.html",
+    "href": "22_scans.html",
+    "title": "Scans",
+    "section": "",
+    "text": "Scans treatment and cleaning."
+  },
+  {
+    "objectID": "23_hydrated.html",
+    "href": "23_hydrated.html",
+    "title": "Hydrated",
+    "section": "",
+    "text": "Hydrated leaf measurements cleaning."
+  },
+  {
+    "objectID": "24_dry.html",
+    "href": "24_dry.html",
+    "title": "Dry",
+    "section": "",
+    "text": "Dry leaf measurements cleaning."
+  },
+  {
+    "objectID": "25_junction.html",
+    "href": "25_junction.html",
+    "title": "Junction",
+    "section": "",
+    "text": "Raw data junction and cross cleaning."
+  },
+  {
     "objectID": "97_meeting.html#discussion-the-program",
     "href": "97_meeting.html#discussion-the-program",
     "title": "Meetings",
