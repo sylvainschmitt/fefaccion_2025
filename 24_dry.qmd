@@ -1,3 +1,35 @@
 # Dry {.unnumbered}
 
-Dry leaf measurements cleaning.
+From the data we computed leaves dry weight (DW, g).
+
+```{r set}
+#| include: false
+library(tidyverse)
+library(readxl)
+```
+
+```{r data}
+#| eval: false
+read_xlsx("data/raw/dry_weight.xlsx") %>% 
+  rename_all(tolower) %>% 
+  rename_all(str_squish) %>% 
+  rename(vernacular = especies, tree = idtree, leaf = idleaf, 
+         dw = "peso seco 72h", comment = comment.) %>% 
+  write_tsv("data/derived/dry_raw.tsv")
+```
+
+```{r figure}
+#| message: false
+#| warning: false
+read_tsv("data/derived/dry_raw.tsv") %>% 
+  ggplot(aes(vernacular,
+             dw)) +
+  geom_boxplot() +
+  geom_jitter(aes(col = as.factor(tree)),
+              width = 0.2, size = 3) + 
+  theme_bw() +
+  coord_flip() +
+  xlab("Vernacular name") + ylab("DW [ g ]") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
+```

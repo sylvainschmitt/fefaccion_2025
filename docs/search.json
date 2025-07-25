@@ -81,7 +81,7 @@
     "href": "22_scans.html",
     "title": "Scans",
     "section": "",
-    "text": "Scans treatment and cleaning."
+    "text": "We first use the following bash code to aggregate images and convert pdf to png.\ncd data/derived/\nmkdir pdfs\nls ../raw/scans/*/*\ncp ../raw/scans/*/* pdfs\nmkdirs pngs\nfor file in $(ls pdfs/)\ndo\n  pdftoppm pdfs/$file pngs/$file -png\ndone\nWe then use ImageJ (https://imagej.net/ij/download.html) with the following steps:\n\nOpen virtual stack\nType &gt; 8-Bit\nAdjust &gt; Threshold &gt; Automatic\nAnalyze Particles\n\nSize: 1000-Infinity\nCircularity: 0-1\nDisplay results, clear results, exclude on edges, summarize, composite ROIs\nwith or without include holes depending on the question\n\n\nThe intermediate threshold images with detected are saved for manual check.\n\n\nCode\nla_ex &lt;- read_csv(\"data/derived/area_excluded_summary.csv\") %&gt;% \n  select(Slice, `Total Area`) %&gt;% \n  rename(slice = Slice, area_excluded = `Total Area`) %&gt;% \n  separate(slice, c(\"vernacular\", \"tree\", \"leaf\")) %&gt;% \n  mutate(area_excluded = area_excluded / (1275*1755) * (21*29.7))\nla_in &lt;- read_csv(\"data/derived/area_included_summary.csv\") %&gt;% \n  select(Slice, `Total Area`) %&gt;% \n  rename(slice = Slice, area_included = `Total Area`) %&gt;% \n  separate(slice, c(\"vernacular\", \"tree\", \"leaf\")) %&gt;% \n  mutate(area_included = area_included / (1275*1755) * (21*29.7))\nla_ex %&gt;% \n  left_join(la_in) %&gt;% \n  write_tsv(\"data/derived/la.tsv\")\n\n\n\n\nCode\nread_tsv(\"data/derived/la.tsv\") %&gt;% \n  group_by(vernacular) %&gt;% \n  mutate(la_s = mean(area_included)) %&gt;% \n  ungroup() %&gt;% \n  mutate(vernacular = fct_reorder(vernacular, la_s)) %&gt;% \n  ggplot(aes(vernacular,\n             area_included)) +\n  geom_boxplot() +\n  geom_jitter(aes(col = as.factor(tree)),\n              width = 0.2, size = 3) + \n  theme_bw() +\n  labs(x = \"Vernacular name\", y = \"LA [ cm2 ]\") +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1),\n        legend.position = \"none\") +\n  scale_y_log10()"
   },
   {
     "objectID": "23_hydrated.html",
@@ -95,7 +95,7 @@
     "href": "24_dry.html",
     "title": "Dry",
     "section": "",
-    "text": "Dry leaf measurements cleaning."
+    "text": "From the data we computed leaves dry weight (DW, g).\n\n\nCode\nread_xlsx(\"data/raw/dry_weight.xlsx\") %&gt;% \n  rename_all(tolower) %&gt;% \n  rename_all(str_squish) %&gt;% \n  rename(vernacular = especies, tree = idtree, leaf = idleaf, \n         dw = \"peso seco 72h\", comment = comment.) %&gt;% \n  write_tsv(\"data/derived/dry_raw.tsv\")\n\n\n\n\nCode\nread_tsv(\"data/derived/dry_raw.tsv\") %&gt;% \n  ggplot(aes(vernacular,\n             dw)) +\n  geom_boxplot() +\n  geom_jitter(aes(col = as.factor(tree)),\n              width = 0.2, size = 3) + \n  theme_bw() +\n  coord_flip() +\n  xlab(\"Vernacular name\") + ylab(\"DW [ g ]\") +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1),\n        legend.position = \"none\")"
   },
   {
     "objectID": "25_junction.html",
@@ -110,5 +110,12 @@
     "title": "Meetings",
     "section": "25/05/16 - Discussion the program",
     "text": "25/05/16 - Discussion the program\n\nParticipants: Sylvain + Géraldine\nWorkshop on growth modelling:\n\ncan be done on Friday 11th afternoon (assuming we can keep the Saturday to finish the traits measurements JG, SS and GD)\nintegrated in the field school on traits + open to others people\nsend some resources to get familiar with R before the workshop\nfocus the workshop on\n\ncalculation of growth\nlog-log model with brms\nCanham model with brsm\nlm on relationship growth ~ traits with growth data from Ecology Letters paper\nalternativelly: allometry H-D + link Hlim / traits\n\ndata: Tapajos open data / Beleterra plantation (probably difficult) / P6 Paracou\n\nWorkshop traits\n\ntry to do everything in residencial in Belterra if we can work in Embrapa Belterra + have a “privatised” poussada\ndo some short apero bate-papo:\n\nJoannès: ecophy/traits\nGéraldine: use of traits in correlative growth models\nSylvain: use of traits in process-based models\n\n\nAdditional questions for Lucas\n\ninstall the lab in Empraba Belterra (&lt;10 people)?\naccess to lab on week-ends (first Sunday to prepare + last Saturday to finish up)?\npossible to find a poussada with a shared space?"
+  },
+  {
+    "objectID": "99_references.html",
+    "href": "99_references.html",
+    "title": "References",
+    "section": "",
+    "text": "Bartlett, Megan K, Christine Scoffoni, Rico Ardy, Ya Zhang, Shanwen Sun,\nKunfang Cao, and Lawren Sack. 2012. “Rapid Determination of\nComparative Drought Tolerance Traits: Using an Osmometer to Predict\nTurgor Loss Point.” Methods in Ecology and Evolution 3\n(5): 880–88."
   }
 ]

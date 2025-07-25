@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -232,7 +266,71 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>Scans treatment and cleaning.</p>
+<p>We first use the following bash code to aggregate images and convert pdf to png.</p>
+<pre><code>cd data/derived/
+mkdir pdfs
+ls ../raw/scans/*/*
+cp ../raw/scans/*/* pdfs
+mkdirs pngs
+for file in $(ls pdfs/)
+do
+  pdftoppm pdfs/$file pngs/$file -png
+done</code></pre>
+<p>We then use ImageJ (<a href="https://imagej.net/ij/download.html" class="uri">https://imagej.net/ij/download.html</a>) with the following steps:</p>
+<ul>
+<li>Open virtual stack</li>
+<li>Type &gt; 8-Bit</li>
+<li>Adjust &gt; Threshold &gt; Automatic</li>
+<li>Analyze Particles
+<ul>
+<li>Size: 1000-Infinity</li>
+<li>Circularity: 0-1</li>
+<li>Display results, clear results, exclude on edges, summarize, composite ROIs</li>
+<li>with or without include holes depending on the question</li>
+</ul></li>
+</ul>
+<p>The intermediate threshold images with detected are saved for manual check.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>la_ex <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/derived/area_excluded_summary.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Slice, <span class="st">`</span><span class="at">Total Area</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">slice =</span> Slice, <span class="at">area_excluded =</span> <span class="st">`</span><span class="at">Total Area</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(slice, <span class="fu">c</span>(<span class="st">"vernacular"</span>, <span class="st">"tree"</span>, <span class="st">"leaf"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">area_excluded =</span> area_excluded <span class="sc">/</span> (<span class="dv">1275</span><span class="sc">*</span><span class="dv">1755</span>) <span class="sc">*</span> (<span class="dv">21</span><span class="sc">*</span><span class="fl">29.7</span>))</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>la_in <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/derived/area_included_summary.csv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Slice, <span class="st">`</span><span class="at">Total Area</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">slice =</span> Slice, <span class="at">area_included =</span> <span class="st">`</span><span class="at">Total Area</span><span class="st">`</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate</span>(slice, <span class="fu">c</span>(<span class="st">"vernacular"</span>, <span class="st">"tree"</span>, <span class="st">"leaf"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">area_included =</span> area_included <span class="sc">/</span> (<span class="dv">1275</span><span class="sc">*</span><span class="dv">1755</span>) <span class="sc">*</span> (<span class="dv">21</span><span class="sc">*</span><span class="fl">29.7</span>))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>la_ex <span class="sc">%&gt;%</span> </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(la_in) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_tsv</span>(<span class="st">"data/derived/la.tsv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_tsv</span>(<span class="st">"data/derived/la.tsv"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(vernacular) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">la_s =</span> <span class="fu">mean</span>(area_included)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">vernacular =</span> <span class="fu">fct_reorder</span>(vernacular, la_s)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(vernacular,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>             area_included)) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="fu">aes</span>(<span class="at">col =</span> <span class="fu">as.factor</span>(tree)),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">width =</span> <span class="fl">0.2</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Vernacular name"</span>, <span class="at">y =</span> <span class="st">"LA [ cm2 ]"</span>) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"none"</span>) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="22_scans_files/figure-html/figure-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
 
