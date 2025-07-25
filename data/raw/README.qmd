@@ -1,0 +1,25 @@
+---
+title: "Raw data"
+author: Sylvain Schmitt -
+date: today
+date-format: medium
+format: 
+  gfm:
+    toc: true
+    toc-depth: 2
+---
+
+This folder will contains the raw data for all analyses. In particular:
+
+-   `dry_weight.xlsx` the leaf dry weights
+-   `hydrated/` the leaf hydrated measurements
+-   `leaves/` the sampling field sheets
+-   `osmo/` the leaf hydrated measurements with osmometer
+-   `plantation/` the inventories and GIS data of the plantation
+-   `sample_taken.xlsx` the list of sampled individuals for leaf or wood
+-   `scans/` the leaf hydrated scans
+-   `teamplates/` template files for data acquisition
+
+```{r, comment=""}
+fs::dir_tree()
+```
