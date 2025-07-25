@@ -1,3 +1,49 @@
 # Hydrated {.unnumbered}
 
-Hydrated leaf measurements cleaning.
+From the data we computed leaves mean thickness (LT, µm) and saturated weight (SW, g).
+
+```{r set}
+#| include: false
+library(tidyverse)
+library(readxl)
+```
+
+```{r data}
+#| eval: false
+list.files("data/raw/hydrated/", full.names = TRUE) %>% 
+  lapply(read_xls, col_types = "text") %>% 
+  bind_rows() %>% 
+  rename_all(tolower) %>% 
+  rename_all(str_squish) %>% 
+  rename(vernacular = especies, tree = idtree, leaf = idleaf, 
+         lt1 = esp1, lt2 = esp2, lt3 = esp3, sw = "peso hydratado", 
+         comment = comentarios) %>% 
+  mutate_at(c("lt1", "lt2", "lt3", "sw"), ~gsub(",", ".", .)) %>% 
+  mutate_at(c("lt1", "lt2", "lt3", "sw"), as.numeric) %>% 
+  rowwise() %>% 
+  mutate(lt = mean(c(lt1, lt2, lt3))) %>% 
+  ungroup() %>% 
+  select(-lt1, -lt2, -lt3) %>% 
+  select(vernacular, tree, leaf, lt, sw, comment) %>% 
+  write_tsv("data/derived/hydrated_raw.tsv")
+```
+
+```{r figure}
+#| message: false
+#| warning: false
+read_tsv("data/derived/hydrated_raw.tsv") %>% 
+  gather(trait, value, -vernacular, -tree, -leaf, -comment) %>% 
+  mutate(trait = recode(trait, "lt" = "LT [ µm ]",
+                        "sw" = "SW [ g ]")) %>% 
+  ggplot(aes(vernacular,
+             value)) +
+  geom_boxplot() +
+  geom_jitter(aes(col = as.factor(tree)),
+              width = 0.2, size = 3) + 
+  theme_bw() +
+  coord_flip() +
+  facet_wrap(~ trait, scales = "free_x") +
+  xlab("Vernacular name") + ylab("") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
+```

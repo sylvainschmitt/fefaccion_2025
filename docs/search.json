@@ -88,7 +88,7 @@
     "href": "23_hydrated.html",
     "title": "Hydrated",
     "section": "",
-    "text": "Hydrated leaf measurements cleaning."
+    "text": "From the data we computed leaves mean thickness (LT, µm) and saturated weight (SW, g).\n\n\nCode\nlist.files(\"data/raw/hydrated/\", full.names = TRUE) %&gt;% \n  lapply(read_xls, col_types = \"text\") %&gt;% \n  bind_rows() %&gt;% \n  rename_all(tolower) %&gt;% \n  rename_all(str_squish) %&gt;% \n  rename(vernacular = especies, tree = idtree, leaf = idleaf, \n         lt1 = esp1, lt2 = esp2, lt3 = esp3, sw = \"peso hydratado\", \n         comment = comentarios) %&gt;% \n  mutate_at(c(\"lt1\", \"lt2\", \"lt3\", \"sw\"), ~gsub(\",\", \".\", .)) %&gt;% \n  mutate_at(c(\"lt1\", \"lt2\", \"lt3\", \"sw\"), as.numeric) %&gt;% \n  rowwise() %&gt;% \n  mutate(lt = mean(c(lt1, lt2, lt3))) %&gt;% \n  ungroup() %&gt;% \n  select(-lt1, -lt2, -lt3) %&gt;% \n  select(vernacular, tree, leaf, lt, sw, comment) %&gt;% \n  write_tsv(\"data/derived/hydrated_raw.tsv\")\n\n\n\n\nCode\nread_tsv(\"data/derived/hydrated_raw.tsv\") %&gt;% \n  gather(trait, value, -vernacular, -tree, -leaf, -comment) %&gt;% \n  mutate(trait = recode(trait, \"lt\" = \"LT [ µm ]\",\n                        \"sw\" = \"SW [ g ]\")) %&gt;% \n  ggplot(aes(vernacular,\n             value)) +\n  geom_boxplot() +\n  geom_jitter(aes(col = as.factor(tree)),\n              width = 0.2, size = 3) + \n  theme_bw() +\n  coord_flip() +\n  facet_wrap(~ trait, scales = \"free_x\") +\n  xlab(\"Vernacular name\") + ylab(\"\") +\n  theme(axis.text.x = element_text(angle = 45, hjust = 1),\n        legend.position = \"none\")"
   },
   {
     "objectID": "24_dry.html",
