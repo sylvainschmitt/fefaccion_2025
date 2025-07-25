@@ -1,0 +1,20 @@
+---
+title: "Workshop"
+author: Sylvain Schmitt -
+date: today
+date-format: medium
+format: 
+  gfm:
+    toc: true
+    toc-depth: 2
+---
+
+This folder will contains the material for the workshop for the Friday available here [Forest dynamic with R](workshop/workshop.html) . Specifically:
+
+-   data: the data used
+-   figs: the figure used
+-   workshop.qmd: the workshop presentation
+
+```{r, comment=""}
+fs::dir_tree()
+```
