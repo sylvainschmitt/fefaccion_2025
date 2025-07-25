@@ -1,3 +1,0 @@
-# Presentations {.unnumbered}
-
--   [Forest dynamic with R](workshop/workshop.html)

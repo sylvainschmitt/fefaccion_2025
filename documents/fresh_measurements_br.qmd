@@ -1,7 +1,5 @@
 ---
 title: "Medições frescas"
-author: "Schmitt, S."
-date: last-modified
 format:
   pdf:
     classoption: twocolumn
@@ -18,14 +16,13 @@ bibliography: ../references.bib
 
 -   Selecione e limpe 5 folhas por indivíduo, removendo o pecíolo
 -   Rotular as folhas de 1 a 5 com um marcador no lado adaxial (superior)
--   Faça 3 medições SPAD no meio da lâmina da folha
 -   Faça 3 medições de espessura com um micrômetro no meio da lâmina da folha
 -   Pesar as folhas
--   Faça a varredura das folhas com o lado adaxial (superior) em relação à varredura em ordem numérica
--   Nomeie o arquivo com o ID da árvore Salve o arquivo em uma pasta datada (AAAA-MM-DD)
+-   Digitalize as folhas com o lado adaxial (superior) voltado para cima, colocando as folhas de cima para baixo em ordem numérica
+-   Nomeie o arquivo com o ID da árvore (código da espécie e número da árvore)
+-   Salve o arquivo em uma pasta datada (AAAA-MM-DD)
 -   Coloque as 5 folhas em um primeiro envelope etiquetado com o ID da árvore e a espécie
 -   Coloque as folhas restantes em um segundo envelope etiquetado com o ID da árvore, a espécie e o código extra
--   Pressione os envelopes na prensa do herbário
 
 ## Material
 
@@ -34,15 +31,8 @@ bibliography: ../references.bib
 -   Computadores
 -   Micrômetro
 -   Pilhas AA
--   SPAD
--   Pilhas planas
 -   Tesouras
 -   Etiquetas
 -   Lenços de papel
 -   Lápis Marcadores
 -   Protocolos
-
-## Referências
-
-::: {#refs}
-:::

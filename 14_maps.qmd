@@ -26,7 +26,7 @@ species <- c(
  "CEDRURANA",
  "QUARUBA"
  )
-forest <- readxl::read_excel("data/Dados brutos do inventário da estrada 5.xlsx") %>% 
+forest <- readxl::read_excel("data/raw/plantation/Dados brutos do inventário da estrada 5.xlsx") %>% 
   rename(plate = Placa, name = `Nome vernacular`,
          x = `Easting (UTM)`, y =  `Northing (UTM)`) %>% 
   mutate(dbh = as.numeric(CAP1)/pi) %>% 
@@ -37,18 +37,20 @@ forest <- readxl::read_excel("data/Dados brutos do inventário da estrada 5.xlsx
   top_n(10, dbh) %>% 
   mutate(code = str_sub(gsub(" ", "", name), 1, 5)) %>% 
   mutate(label = paste0(code, "\n", plate))
-roads <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "EstradasdoPPesquisa")
-inventory <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "Inventario")
-mother <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "MATRIZES")
-limits <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "PerimetroEstrada5")
-path <- read_sf("data/BosquePesquisaEmbrapa.gpkg", "TrilhaParqPesq")
+roads <- read_sf("data/raw/plantation/BosquePesquisaEmbrapa.gpkg", "EstradasdoPPesquisa")
+inventory <- read_sf("data/raw/plantation/BosquePesquisaEmbrapa.gpkg", "Inventario")
+mother <- read_sf("data/raw/plantation/BosquePesquisaEmbrapa.gpkg", "MATRIZES")
+limits <- read_sf("data/raw/plantation/BosquePesquisaEmbrapa.gpkg", "PerimetroEstrada5")
+path <- read_sf("data/raw/plantation/BosquePesquisaEmbrapa.gpkg", "TrilhaParqPesq")
 inventory <- forest %>% 
   st_as_sf(coords = c("x", "y"), crs = 31981)
 ```
 
 # Maps {.unnumbered}
 
-```{r}
+We will collect the following species:
+
+```{r splist}
 #| message: false
 #| warning: false
 forest %>% 
@@ -58,7 +60,9 @@ forest %>%
   knitr::kable()
 ```
 
-```{r}
+We selected the 10 biggest individuals per species resulting in the following maps of individuals to be collected:
+
+```{r map1}
 #| message: false
 #| warning: false
 ggplot() +
@@ -68,7 +72,7 @@ ggplot() +
   theme_bw()
 ```
 
-```{r}
+```{r map2}
 #| message: false
 #| warning: false
 g <- ggplot() +
@@ -85,40 +89,4 @@ g <- ggplot() +
 ggsave(g, file = "documents/map.pdf",
        width = 420, height = 297, unit = 'mm', dpi = 300)
 knitr::include_graphics("documents/map.pdf")
-```
-
-```{r}
-#| message: false
-#| warning: false
-g <- forest %>% 
-  ggplot(aes(x, y, size = dbh, col = name)) +
-  geom_point() +
-  theme_bw() +
-  coord_equal() +
-  scale_color_discrete(guide = "none")
-```
-
-```{r}
-#| message: false
-#| warning: false
-forest %>% 
-  ggplot(aes(x, y, size = dbh, col = plate)) +
-  geom_point() +
-  theme_bw() +
-  scale_color_viridis_c() +
-  coord_equal()
-```
-
-```{r}
-#| message: false
-#| warning: false
-forest %>% 
-  ggplot(aes(dbh)) +
-  geom_histogram() +
-  facet_wrap(~ name, scales = "free_y") +
-  theme_bw()
-```
-
-```{r}
-
 ```

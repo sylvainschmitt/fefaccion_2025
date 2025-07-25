@@ -1,23 +1,5 @@
 # Preparation {.unnumbered}
 
-## To do list:
+All informations and documents needed for the FEFACCION 2025 preparation.
 
--   **Me**.
-
-    -   Budget *wip*
-    -   Book transport & accommodation (+**Lucas**)
-    -   Command material *wip, tarrière & petit matériel*
-    -   Prepare lectures (+**Géradline**)
-
--   **Lucas**.
-
-    -   **Validate lab**
-    -   Distilled water
-    -   Oven
-    -   SPAD
-    -   Availability on weekend
-    -   Leaf N/P measurement
-    -   SIG and inventory data
-    -   Core drill trees
-
--   **Romain**. Validate WD protocol.
+The link toward the workshop for the Friday is available here [Forest dynamic with R](workshop/workshop.html) .

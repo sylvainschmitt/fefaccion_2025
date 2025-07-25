@@ -13,6 +13,10 @@
     -   Resulting pages in `docs/`
     -   Document structure definition in `_quarto.yml`
 -   Documents (protocols, maps, field sheets) in `documents/`
+-   The workshop presentation as a Quarto in `workshop/`
+-   Data in `data/` with:
+    -   All raw data in `raw/`
+    -   All derived data in `derived/`
 -   R environment definition with [renv](https://rstudio.github.io/renv/articles/renv.html) in `renv/` and `renv/lock`
 -   R files (`.Rbuildignore` , `.Rdata` , `.Rprofile` , `.Rhistory`)
 -   Git and GitHub files (`.gitignore` , `.github/`)
@@ -21,9 +25,6 @@
 ## People
 
 -   Sylvain Schmitt (sylvain.schmitt\@cirad.fr)
-
 -   Géraldine Derroire (geraldine.derroire\@cirad.fr)
-
 -   Joannès Guillemot (joannes.guillemot\@cirad.fr)
-
 -   Lucas Mazzei de Freitas (lucas.mazzei\@embrapa.br)

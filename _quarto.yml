@@ -13,7 +13,6 @@ book:
         - 12_protocols.qmd
         - 13_material.qmd
         - 14_maps.qmd
-    - 21_presentations.qmd
   appendices:
     - 97_meeting.qmd
     - 99_references.qmd

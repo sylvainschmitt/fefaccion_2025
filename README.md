@@ -1,5 +1,5 @@
 # FEFACCION 2025
-May 14, 2025
+Jul 25, 2025
 
 **fefaccion_2025** is a small project to help organise the FEFACCION
 2025: (i) research school on ecophysiological approaches and (ii)
@@ -25,6 +25,10 @@ proximidades.*
   - Resulting pages in `docs/`
   - Document structure definition in `_quarto.yml`
 - Documents (protocols, maps, field sheets) in `documents/`
+- The workshop presentation as a Quarto in `workshop/`
+- Data in `data/` with:
+  - All raw data in `raw/`
+  - All derived data in `derived/`
 - R environment definition with
   [renv](https://rstudio.github.io/renv/articles/renv.html) in `renv/`
   and `renv/lock`
@@ -36,9 +40,6 @@ proximidades.*
 ## People
 
 - Sylvain Schmitt (sylvain.schmitt@cirad.fr)
-
 - Géraldine Derroire (geraldine.derroire@cirad.fr)
-
 - Joannès Guillemot (joannes.guillemot@cirad.fr)
-
 - Lucas Mazzei de Freitas (lucas.mazzei@embrapa.br)

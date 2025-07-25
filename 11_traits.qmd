@@ -5,14 +5,11 @@ We will measure the following functional traits.
 -   **LA**: leaf area $cm^{2}$
 -   **LDMC**: leaf dry matter content $g.g^{-1}$
 -   **LT**: leaf thickness ($\mu m$)
--   **CC**: chlorophyll content ($\mu g.cm^{-2}$)
 -   **SLA**: specific leaf area ($g.cm^{-2}$)
--   **RWC**: relative water content ($\%$) is of special interest as it reflects the amount of water present the leaf relative to the maximum it can hold [@barrs1962]
 -   **TLP**: leaf water potential at which leaf cells lose turgor ($MPa$), a key drought tolerance trait.
--   **MajVLA**: Nervation density determining the capacity of water supply in leaves [@schneider2017].
--   **Nmass**: leaf nitrogen mass content ($mg.g^{-1}$, maybe simply collected but measured later)
--   **Pmass**: leaf phosphorus mass content ($mg.g^{-1}$, maybe simply collected but measured later)
--   **WD**: wood density ($g.cm^{-3}$, to be discussed with Romain Lehnebach)
+-   **Nmass**: leaf nitrogen mass content ($mg.g^{-1}$)
+-   **Pmass**: leaf phosphorus mass content ($mg.g^{-1}$)
+-   **WD**: wood density ($g.cm^{-3}$,)
 
 They will necessitate the following raw measurements:
 
@@ -22,4 +19,5 @@ They will necessitate the following raw measurements:
 -   Leaf scan (LA, MajVLA)
 -   Leaf saturated weight (RWC)
 -   Leaf saturated water potential (TLP)
--   ? (WD)
+-   Wood dry mass (WDM)
+-   Wood saturated volume (WSV)

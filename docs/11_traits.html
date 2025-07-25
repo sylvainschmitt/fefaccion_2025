@@ -20,26 +20,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -161,12 +142,6 @@ div.csl-indent {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./21_presentations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Presentations</span></a>
-  </div>
-</li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
@@ -223,14 +198,11 @@ div.csl-indent {
 <li><strong>LA</strong>: leaf area <span class="math inline">\(cm^{2}\)</span></li>
 <li><strong>LDMC</strong>: leaf dry matter content <span class="math inline">\(g.g^{-1}\)</span></li>
 <li><strong>LT</strong>: leaf thickness (<span class="math inline">\(\mu m\)</span>)</li>
-<li><strong>CC</strong>: chlorophyll content (<span class="math inline">\(\mu g.cm^{-2}\)</span>)</li>
 <li><strong>SLA</strong>: specific leaf area (<span class="math inline">\(g.cm^{-2}\)</span>)</li>
-<li><strong>RWC</strong>: relative water content (<span class="math inline">\(\%\)</span>) is of special interest as it reflects the amount of water present the leaf relative to the maximum it can hold <span class="citation" data-cites="barrs1962">(<a href="99_references.html#ref-barrs1962" role="doc-biblioref">Barrs and Weatherley 1962</a>)</span></li>
 <li><strong>TLP</strong>: leaf water potential at which leaf cells lose turgor (<span class="math inline">\(MPa\)</span>), a key drought tolerance trait.</li>
-<li><strong>MajVLA</strong>: Nervation density determining the capacity of water supply in leaves <span class="citation" data-cites="schneider2017">(<a href="99_references.html#ref-schneider2017" role="doc-biblioref">Schneider et al. 2017</a>)</span>.</li>
-<li><strong>Nmass</strong>: leaf nitrogen mass content (<span class="math inline">\(mg.g^{-1}\)</span>, maybe simply collected but measured later)</li>
-<li><strong>Pmass</strong>: leaf phosphorus mass content (<span class="math inline">\(mg.g^{-1}\)</span>, maybe simply collected but measured later)</li>
-<li><strong>WD</strong>: wood density (<span class="math inline">\(g.cm^{-3}\)</span>, to be discussed with Romain Lehnebach)</li>
+<li><strong>Nmass</strong>: leaf nitrogen mass content (<span class="math inline">\(mg.g^{-1}\)</span>)</li>
+<li><strong>Pmass</strong>: leaf phosphorus mass content (<span class="math inline">\(mg.g^{-1}\)</span>)</li>
+<li><strong>WD</strong>: wood density (<span class="math inline">\(g.cm^{-3}\)</span>,)</li>
 </ul>
 <p>They will necessitate the following raw measurements:</p>
 <ul>
@@ -240,18 +212,11 @@ div.csl-indent {
 <li>Leaf scan (LA, MajVLA)</li>
 <li>Leaf saturated weight (RWC)</li>
 <li>Leaf saturated water potential (TLP)</li>
-<li>? (WD)</li>
+<li>Wood dry mass (WDM)</li>
+<li>Wood saturated volume (WSV)</li>
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
-<div id="ref-barrs1962" class="csl-entry" role="listitem">
-Barrs, HD, and PE Weatherley. 1962. <span>“A Re-Examination of the Relative Turgidity Technique for Estimating Water Deficits in Leaves.”</span> <em>Australian Journal of Biological Sciences</em> 15 (3): 413–28.
-</div>
-<div id="ref-schneider2017" class="csl-entry" role="listitem">
-Schneider, Julio V, Jörg Habersetzer, Renate Rabenstein, Jens Wesenberg, Karsten Wesche, and Georg Zizka. 2017. <span>“Water Supply and Demand Remain Coordinated During Breakdown of the Global Scaling Relationship Between Leaf Size and Major Vein Density.”</span> <em>New Phytologist</em> 214 (1): 473–86.
-</div>
-</div>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

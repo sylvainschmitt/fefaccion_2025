@@ -11,7 +11,7 @@
     "href": "index.html#project",
     "title": "FEFACCION 2025",
     "section": "Project",
-    "text": "Project\nfefaccion_2025 includes:\n\nPresentation of the projects and analyses with associated documentation and figures:\n\nReproductive analyses in files.qmd\nResulting pages in docs/\nDocument structure definition in _quarto.yml\n\nDocuments (protocols, maps, field sheets) in documents/\nR environment definition with renv in renv/ and renv/lock\nR files (.Rbuildignore , .Rdata , .Rprofile , .Rhistory)\nGit and GitHub files (.gitignore , .github/)\nProject documentation (README.qmd , README.md , NEWS.md , LICENSE)"
+    "text": "Project\nfefaccion_2025 includes:\n\nPresentation of the projects and analyses with associated documentation and figures:\n\nReproductive analyses in files.qmd\nResulting pages in docs/\nDocument structure definition in _quarto.yml\n\nDocuments (protocols, maps, field sheets) in documents/\nThe workshop presentation as a Quarto in workshop/\nData in data/ with:\n\nAll raw data in raw/\nAll derived data in derived/\n\nR environment definition with renv in renv/ and renv/lock\nR files (.Rbuildignore , .Rdata , .Rprofile , .Rhistory)\nGit and GitHub files (.gitignore , .github/)\nProject documentation (README.qmd , README.md , NEWS.md , LICENSE)"
   },
   {
     "objectID": "index.html#people",
@@ -21,25 +21,25 @@
     "text": "People\n\nSylvain Schmitt (sylvain.schmitt@cirad.fr)\nGéraldine Derroire (geraldine.derroire@cirad.fr)\nJoannès Guillemot (joannes.guillemot@cirad.fr)\nLucas Mazzei de Freitas (lucas.mazzei@embrapa.br)"
   },
   {
-    "objectID": "10_preparation.html#to-do-list",
-    "href": "10_preparation.html#to-do-list",
+    "objectID": "10_preparation.html",
+    "href": "10_preparation.html",
     "title": "Preparation",
-    "section": "To do list:",
-    "text": "To do list:\n\nMe.\n\nBudget wip\nBook transport & accommodation (+Lucas)\nCommand material wip, tarrière & petit matériel\nPrepare lectures (+Géradline)\n\nLucas.\n\nValidate lab\nDistilled water\nOven\nSPAD\nAvailability on weekend\nLeaf N/P measurement\nSIG and inventory data\nCore drill trees\n\nRomain. Validate WD protocol."
+    "section": "",
+    "text": "All informations and documents needed for the FEFACCION 2025 preparation.\nThe link toward the workshop for the Friday is available here Forest dynamic with R ."
   },
   {
     "objectID": "11_traits.html",
     "href": "11_traits.html",
     "title": "Traits",
     "section": "",
-    "text": "We will measure the following functional traits.\n\nLA: leaf area \\(cm^{2}\\)\nLDMC: leaf dry matter content \\(g.g^{-1}\\)\nLT: leaf thickness (\\(\\mu m\\))\nCC: chlorophyll content (\\(\\mu g.cm^{-2}\\))\nSLA: specific leaf area (\\(g.cm^{-2}\\))\nRWC: relative water content (\\(\\%\\)) is of special interest as it reflects the amount of water present the leaf relative to the maximum it can hold (Barrs and Weatherley 1962)\nTLP: leaf water potential at which leaf cells lose turgor (\\(MPa\\)), a key drought tolerance trait.\nMajVLA: Nervation density determining the capacity of water supply in leaves (Schneider et al. 2017).\nNmass: leaf nitrogen mass content (\\(mg.g^{-1}\\), maybe simply collected but measured later)\nPmass: leaf phosphorus mass content (\\(mg.g^{-1}\\), maybe simply collected but measured later)\nWD: wood density (\\(g.cm^{-3}\\), to be discussed with Romain Lehnebach)\n\nThey will necessitate the following raw measurements:\n\nLeaf fresh thickness (LT)\nLeaf SPAD measurement (CC)\nLeaf fresh weight (LDMC, SLA, RWC)\nLeaf scan (LA, MajVLA)\nLeaf saturated weight (RWC)\nLeaf saturated water potential (TLP)\n? (WD)\n\n\n\n\n\nBarrs, HD, and PE Weatherley. 1962. “A Re-Examination of the Relative Turgidity Technique for Estimating Water Deficits in Leaves.” Australian Journal of Biological Sciences 15 (3): 413–28.\n\n\nSchneider, Julio V, Jörg Habersetzer, Renate Rabenstein, Jens Wesenberg, Karsten Wesche, and Georg Zizka. 2017. “Water Supply and Demand Remain Coordinated During Breakdown of the Global Scaling Relationship Between Leaf Size and Major Vein Density.” New Phytologist 214 (1): 473–86."
+    "text": "We will measure the following functional traits.\n\nLA: leaf area \\(cm^{2}\\)\nLDMC: leaf dry matter content \\(g.g^{-1}\\)\nLT: leaf thickness (\\(\\mu m\\))\nSLA: specific leaf area (\\(g.cm^{-2}\\))\nTLP: leaf water potential at which leaf cells lose turgor (\\(MPa\\)), a key drought tolerance trait.\nNmass: leaf nitrogen mass content (\\(mg.g^{-1}\\))\nPmass: leaf phosphorus mass content (\\(mg.g^{-1}\\))\nWD: wood density (\\(g.cm^{-3}\\),)\n\nThey will necessitate the following raw measurements:\n\nLeaf fresh thickness (LT)\nLeaf SPAD measurement (CC)\nLeaf fresh weight (LDMC, SLA, RWC)\nLeaf scan (LA, MajVLA)\nLeaf saturated weight (RWC)\nLeaf saturated water potential (TLP)\nWood dry mass (WDM)\nWood saturated volume (WSV)"
   },
   {
     "objectID": "12_protocols.html",
     "href": "12_protocols.html",
     "title": "Protocols",
     "section": "",
-    "text": "Links to all English 🏴󠁧󠁢󠁥󠁮󠁧󠁿 and Portuguese 🇧🇷 protocol to print and share:\n\nSampling\n\nSampling protocol\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : sampling_en.pdf\nPortuguese 🇧🇷 : sampling_br.pdf\n\nDawkins index: dawkins.pdf\nField sheet: ToDo, e.g. Feuille_terrain_releve.xlsx\n\nField measurements:\n\nProtocol:\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : fresh_measurements_en.pdf\nPortuguese 🇧🇷 : fresh_measurements_br.pdf\n\nSheets: ToDo\n\nLab measurements\n\nTLP:\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : tlp_en.pdf\nPortuguese 🇧🇷 : tlp_br.pdf\n\nRWC:\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : rwc_en.pdf\nPortuguese 🇧🇷 : rwc_br.pdf\n\nSheets: ToDo"
+    "text": "Links to all English 🏴󠁧󠁢󠁥󠁮󠁧󠁿 and Portuguese 🇧🇷 protocol to print and share:\n\nSampling\n\nSampling protocol\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : sampling_en.pdf\nPortuguese 🇧🇷 : sampling_br.pdf\n\nDawkins index: dawkins.pdf\n\nField measurements:\n\nProtocol:\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : fresh_measurements_en.pdf\nPortuguese 🇧🇷 : fresh_measurements_br.pdf\n\n\nLab measurements\n\nTLP:\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : tlp_en.pdf\nPortuguese 🇧🇷 : tlp_br.pdf\n\nRWC:\n\nEnglish 🏴󠁧󠁢󠁥󠁮󠁧󠁿 : rwc_en.pdf\nPortuguese 🇧🇷 : rwc_br.pdf"
   },
   {
     "objectID": "13_material.html#big-material",
@@ -60,14 +60,7 @@
     "href": "14_maps.html",
     "title": "Maps",
     "section": "",
-    "text": "Code\nforest %&gt;% \n  group_by(name, code) %&gt;% \n  summarise(N = n()) %&gt;% \n  arrange(desc(N)) %&gt;% \n  knitr::kable()\n\n\n\n\n\nname\ncode\nN\n\n\n\n\nCOPAIBA\nCOPAI\n11\n\n\nTATAJUBA\nTATAJ\n11\n\n\nANDIROBA\nANDIR\n10\n\n\nANGELIM VERMELHO\nANGEL\n10\n\n\nARARAQUANGA\nARARA\n10\n\n\nCASTANHA DO PARA\nCASTA\n10\n\n\nCEDRURANA\nCEDRU\n10\n\n\nCUMARU\nCUMAR\n10\n\n\nCUPIUBA\nCUPIU\n10\n\n\nFAVA\nFAVA\n10\n\n\nFAVA AMARGA\nFAVAA\n10\n\n\nFREIJO\nFREIJ\n10\n\n\nJUTAI\nJUTAI\n10\n\n\nMARUPA\nMARUP\n10\n\n\nMELANCIEIRA\nMELAN\n10\n\n\nPARAPARA\nPARAP\n10\n\n\nPIQUIA\nPIQUI\n10\n\n\nQUARUBA\nQUARU\n10\n\n\nTACHI BRANCO\nTACHI\n10\n\n\nJARANA\nJARAN\n9\n\n\nVIROLA CASCA DE VIDRO\nVIROL\n9\n\n\nFAVA ORELHA DE MACACO\nFAVAO\n6\n\n\n\n\n\n\n\nCode\nggplot() +\n  geom_sf(data = roads) +\n  geom_sf(data = path) +\n  geom_sf(data = inventory, aes(col = code)) +\n  theme_bw()\n\n\n\n\n\n\n\nCode\ng &lt;- ggplot() +\n  geom_sf(data = path, col = \"darkgrey\") +\n  geom_sf(data = inventory) +\n  ggrepel::geom_text_repel(\n      data = inventory,\n      aes(label = label, geometry = geometry),\n      stat = \"sf_coordinates\",\n      size = 2, max.overlaps = 20) +\n  theme_bw() +\n  theme(axis.title = element_blank(), axis.text = element_blank(),\n        axis.ticks = element_blank(), axis.line = element_blank())\nggsave(g, file = \"documents/map.pdf\",\n       width = 420, height = 297, unit = 'mm', dpi = 300)\nknitr::include_graphics(\"documents/map.pdf\")\n\n\n\n\n\n\n\nCode\ng &lt;- forest %&gt;% \n  ggplot(aes(x, y, size = dbh, col = name)) +\n  geom_point() +\n  theme_bw() +\n  coord_equal() +\n  scale_color_discrete(guide = \"none\")\n\n\n\n\nCode\nforest %&gt;% \n  ggplot(aes(x, y, size = dbh, col = plate)) +\n  geom_point() +\n  theme_bw() +\n  scale_color_viridis_c() +\n  coord_equal()\n\n\n\n\n\n\n\nCode\nforest %&gt;% \n  ggplot(aes(dbh)) +\n  geom_histogram() +\n  facet_wrap(~ name, scales = \"free_y\") +\n  theme_bw()"
-  },
-  {
-    "objectID": "21_presentations.html",
-    "href": "21_presentations.html",
-    "title": "Presentations",
-    "section": "",
-    "text": "Forest dynamic with R"
+    "text": "We will collect the following species:\n\n\nCode\nforest %&gt;% \n  group_by(name, code) %&gt;% \n  summarise(N = n()) %&gt;% \n  arrange(desc(N)) %&gt;% \n  knitr::kable()\n\n\n\n\n\nname\ncode\nN\n\n\n\n\nCOPAIBA\nCOPAI\n11\n\n\nTATAJUBA\nTATAJ\n11\n\n\nANDIROBA\nANDIR\n10\n\n\nANGELIM VERMELHO\nANGEL\n10\n\n\nARARAQUANGA\nARARA\n10\n\n\nCASTANHA DO PARA\nCASTA\n10\n\n\nCEDRURANA\nCEDRU\n10\n\n\nCUMARU\nCUMAR\n10\n\n\nCUPIUBA\nCUPIU\n10\n\n\nFAVA\nFAVA\n10\n\n\nFAVA AMARGA\nFAVAA\n10\n\n\nFREIJO\nFREIJ\n10\n\n\nJUTAI\nJUTAI\n10\n\n\nMARUPA\nMARUP\n10\n\n\nMELANCIEIRA\nMELAN\n10\n\n\nPARAPARA\nPARAP\n10\n\n\nPIQUIA\nPIQUI\n10\n\n\nQUARUBA\nQUARU\n10\n\n\nTACHI BRANCO\nTACHI\n10\n\n\nJARANA\nJARAN\n9\n\n\nVIROLA CASCA DE VIDRO\nVIROL\n9\n\n\nFAVA ORELHA DE MACACO\nFAVAO\n6\n\n\n\n\n\nWe selected the 10 biggest individuals per species resulting in the following maps of individuals to be collected:\n\n\nCode\nggplot() +\n  geom_sf(data = roads) +\n  geom_sf(data = path) +\n  geom_sf(data = inventory, aes(col = code)) +\n  theme_bw()\n\n\n\n\n\n\n\nCode\ng &lt;- ggplot() +\n  geom_sf(data = path, col = \"darkgrey\") +\n  geom_sf(data = inventory) +\n  ggrepel::geom_text_repel(\n      data = inventory,\n      aes(label = label, geometry = geometry),\n      stat = \"sf_coordinates\",\n      size = 2, max.overlaps = 20) +\n  theme_bw() +\n  theme(axis.title = element_blank(), axis.text = element_blank(),\n        axis.ticks = element_blank(), axis.line = element_blank())\nggsave(g, file = \"documents/map.pdf\",\n       width = 420, height = 297, unit = 'mm', dpi = 300)\nknitr::include_graphics(\"documents/map.pdf\")"
   },
   {
     "objectID": "97_meeting.html#discussion-the-program",
@@ -75,12 +68,5 @@
     "title": "Meetings",
     "section": "25/05/16 - Discussion the program",
     "text": "25/05/16 - Discussion the program\n\nParticipants: Sylvain + Géraldine\nWorkshop on growth modelling:\n\ncan be done on Friday 11th afternoon (assuming we can keep the Saturday to finish the traits measurements JG, SS and GD)\nintegrated in the field school on traits + open to others people\nsend some resources to get familiar with R before the workshop\nfocus the workshop on\n\ncalculation of growth\nlog-log model with brms\nCanham model with brsm\nlm on relationship growth ~ traits with growth data from Ecology Letters paper\nalternativelly: allometry H-D + link Hlim / traits\n\ndata: Tapajos open data / Beleterra plantation (probably difficult) / P6 Paracou\n\nWorkshop traits\n\ntry to do everything in residencial in Belterra if we can work in Embrapa Belterra + have a “privatised” poussada\ndo some short apero bate-papo:\n\nJoannès: ecophy/traits\nGéraldine: use of traits in correlative growth models\nSylvain: use of traits in process-based models\n\n\nAdditional questions for Lucas\n\ninstall the lab in Empraba Belterra (&lt;10 people)?\naccess to lab on week-ends (first Sunday to prepare + last Saturday to finish up)?\npossible to find a poussada with a shared space?"
-  },
-  {
-    "objectID": "99_references.html",
-    "href": "99_references.html",
-    "title": "References",
-    "section": "",
-    "text": "Barrs, HD, and PE Weatherley. 1962. “A Re-Examination of the\nRelative Turgidity Technique for Estimating Water Deficits in\nLeaves.” Australian Journal of Biological Sciences 15\n(3): 413–28.\n\n\nSchneider, Julio V, Jörg Habersetzer, Renate Rabenstein, Jens Wesenberg,\nKarsten Wesche, and Georg Zizka. 2017. “Water Supply and Demand\nRemain Coordinated During Breakdown of the Global Scaling Relationship\nBetween Leaf Size and Major Vein Density.” New\nPhytologist 214 (1): 473–86."
   }
 ]
