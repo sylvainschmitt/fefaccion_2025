@@ -68,3 +68,13 @@ read_tsv("data/derived/la.tsv") %>%
         legend.position = "none") +
   scale_y_log10()
 ```
+
+```{r problems}
+#| message: false
+#| warning: false
+read_tsv("data/derived/la.tsv") %>% 
+  filter(area_included < 1) %>% 
+  knitr::kable()
+```
+
+> We have issues with ANGEL 5677 leaves 2 and 4 because scans are touching the border. I have no better solution than manually adding a black line in a photo editor to treat them beforehand.

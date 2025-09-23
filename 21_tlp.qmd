@@ -38,7 +38,7 @@ read_tsv("data/derived/tlp_raw.tsv") %>%
   geom_jitter(aes(col = as.factor(tree)),
               width = 0.2, size = 3) + 
   theme_bw() +
-  labs(x = "Vernacular name", y = "TLP [ Mha ]") +
+  labs(x = "Vernacular name", y = "TLP [ MPa ]") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         legend.position = "none")
 ```

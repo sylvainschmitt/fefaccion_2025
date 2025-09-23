@@ -1,3 +1,74 @@
 # Junction {.unnumbered}
 
+```{r set}
+#| include: false
+library(tidyverse)
+```
+
 Raw data junction and cross cleaning.
+
+```{r prep}
+#| eval: false
+plyr::join_all(
+  list(
+    read_tsv("data/derived/tlp_raw.tsv"),
+    read_tsv("data/derived/la.tsv"),
+    read_tsv("data/derived/hydrated_raw.tsv"),
+    read_tsv("data/derived/dry_raw.tsv")
+  ),
+  type = "full"
+) %>% select(-comment) %>% 
+  write_tsv("outputs/raw.tsv")
+read_tsv("outputs/raw.tsv") %>% 
+  mutate(
+    la = area_excluded,
+    ldmc = dw/sw,
+    sla = area_included/dw
+  ) %>% 
+  select(vernacular, tree, leaf, la, ldmc, lt, lt, sla, tlp) %>% 
+  write_tsv("outputs/traits.tsv")
+```
+
+```{r figure}
+#| message: false
+#| warning: false
+read_tsv("outputs/traits.tsv") %>% 
+  gather(trait, value, -vernacular, -tree, -leaf) %>% 
+  mutate(trait = recode(trait, 
+                        "la" = "LA [ cm2 ]",
+                        "ldmc" = "LDMC [ g / g ]",
+                        "lt" = "LT [ µm ]",
+                        "tlp" = "TLP [ MPa ]",
+                        "sla" = "SLA [ cm2 / g ]")) %>% 
+  ggplot(aes(vernacular,
+             value)) +
+  geom_boxplot() +
+  geom_jitter(aes(col = as.factor(tree)),
+              width = 0.2, size = 3) + 
+  theme_bw() +
+  coord_flip() +
+  facet_wrap(~ trait, scales = "free_x", ncol = 5) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none") +
+  xlab("") + ylab("")
+```
+
+> We have outliers LDMC and SLA probably due to an issue with dry weight DW. Other outliers have to be checked.
+
+```{r figure2}
+#| message: false
+#| warning: false
+read_tsv("outputs/traits.tsv") %>% 
+  filter(sla < 400) %>% 
+  ggplot(aes(sla, tlp)) +
+  geom_point() +
+  theme_bw() +
+  xlab(expression("SLA ["~cm^{2}~g^{-1}~"]")) +
+  ylab(expression("TLP ["~MPa~"]"))
+```
+
+> Ask back Joannès the link between SLA and TLP to check.
+
+However, based on that I have made an example of data junction in a consolidated table here: <https://docs.google.com/spreadsheets/d/1SSDmBBYNl_jP3GY5wUGkR-62cNiz63M46Ai6Z0CK1Cw/edit?usp=sharing>.
+
+> I also need the cleaned taxonomy I think.
