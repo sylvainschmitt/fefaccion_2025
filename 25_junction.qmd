@@ -58,13 +58,21 @@ read_tsv("outputs/traits.tsv") %>%
 ```{r figure2}
 #| message: false
 #| warning: false
+#| fig-width: 10
+#| fig-height: 10
 read_tsv("outputs/traits.tsv") %>% 
   filter(sla < 400) %>% 
-  ggplot(aes(sla, tlp)) +
+  select(sla, tlp, vernacular, tree, leaf) %>% 
+  na.omit() %>% 
+  ggplot(aes(sla, tlp, col = as.character(tree))) +
+  geom_smooth(aes(group = vernacular), method = "lm", 
+              col = "grey", alpha = .2) +
   geom_point() +
   theme_bw() +
   xlab(expression("SLA ["~cm^{2}~g^{-1}~"]")) +
-  ylab(expression("TLP ["~MPa~"]"))
+  ylab(expression("TLP ["~MPa~"]")) +
+  facet_wrap(~ vernacular, scales = "free") +
+  scale_color_discrete(guide = "none")
 ```
 
 > Ask back Joannès the link between SLA and TLP to check.
