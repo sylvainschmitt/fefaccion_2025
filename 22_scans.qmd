@@ -78,3 +78,37 @@ read_tsv("data/derived/la.tsv") %>%
 ```
 
 > We have issues with ANGEL 5677 leaves 2 and 4 because scans are touching the border. I have no better solution than manually adding a black line in a photo editor to treat them beforehand.
+
+## Manual check
+
+Masks generated with the option allowing holes to be filled were manually inspected for (*NA* when no existing mask):
+
+* *missing_part*: missing part in the leave due to herbivory or other damage: *0* no missing part, *1* moderate missing part, and *2* big missing part **=> code 1 can probably be included, but code 2 should probably be remove for LA**
+
+* *anomaly*: any anomaly in the generated masks: 
+
+    * *ok*: no problem
+    
+    * *abn_area*: abnormal area are masked, detected because they don't have the shape of a leaf. Looking at the corresponding scan, it is because these areas correspond to some spaces between the folioles that are fully surrounded by leaf part. So they are interpreted as holes and filled. **=> For these individuals (or maybe species), consider the unfilled area even for the LA**
+    
+    * *fol_touch*: this is the same problem than *abn_area*, except for the FAVA for which the foliolules are actually touching and form a compact area on the mask.**=> For these individuals (or maybe species), consider the unfilled area even for the LA**
+    
+    * *miss_petiolul*: for double-compound leaves, the petiolule is not included, when it should have been
+    
+    * *one_fol*: just one foliole when the species has compound leaves
+
+* *touching*: *0* no part touching, *1* leaf touching leading to part of the leaf not taken into account, *2* leaf touching leading to all the leaf not taken into account **=> to be corrected by adding a black line with a photo editor?**
+
+
+Raw leaf scans are manually checked for the following problems, but this is highly subjective:
+
+* *ok*: no problem (or very small area concerned)
+
+* *damaged*: part of the leaf or the whole leaf appears black/brown or yellowish on the scan or there are any other damages (except missing part of the leaf) suggesting that the leaf is decaying
+
+* *young*: the bright green colour of the leave compared to the other leaves from the individual and/or the species suggest non mature leaves
+ 
+
+
+
+
