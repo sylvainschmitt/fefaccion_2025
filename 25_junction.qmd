@@ -5,6 +5,136 @@
 library(tidyverse)
 ```
 
+Correcting typos in vernacular codes and tree ID (
+See the following issues to understand the rationale for these corrections: https://github.com/sylvainschmitt/fefaccion_2025/issues/3#issue-3474388377 and https://github.com/sylvainschmitt/fefaccion_2025/issues/2#issue-3470699745)
+
+```{r load_correct_func}
+load_correct <- function(my_file) {
+  data <- read_tsv(my_file)
+  data <- data %>% mutate(
+    vernacular = case_match(vernacular,
+                            "CUPUI" ~ "CUPIU",
+                            .default = vernacular),
+    tree = case_match(tree,
+                      8833 ~ 8883,
+                      8383 ~ 8883,
+                      6616 ~ 6617,
+                      7734 ~ 7334,
+                      .default = tree),
+    vernacular = if_else(tree %in% c(5685,6513), "FAVAO", vernacular)
+  ) 
+  if("comment" %in% colnames(data)) {
+    data <-  data %>% select(-comment)
+  }
+  data
+}
+```
+
+```{r}
+tlp <- load_correct("data/derived/tlp_raw.tsv")
+# la <- load_correct("data/derived/la.tsv") # wait for the file
+hydrated <- load_correct("data/derived/hydrated_raw.tsv")
+dry <- load_correct("data/derived/dry_raw.tsv")
+```
+
+
+Before joining, check for duplicated leaves in each table
+
+> ORGANISE AND WRITE THIS SECTION
+
+in tlp
+
+```{r}
+tlp %>% 
+  group_by(vernacular, tree, leaf) %>% 
+  count() %>% 
+  filter(n>1)
+```
+in la
+
+```{r}
+la %>% 
+  group_by(vernacular, tree, leaf) %>% 
+  count() %>% 
+  filter(n>1)
+```
+
+in hydrated
+
+```{r}
+hydrated %>% 
+  group_by(vernacular, tree, leaf) %>% 
+  count() %>% 
+  filter(n>1)
+```
+
+in dry
+
+```{r}
+dry %>% 
+  group_by(vernacular, tree, leaf) %>% 
+  count() %>% 
+  filter(n>1)
+```
+
+
+```{r}
+tlp %>% filter(tree == 6910 & leaf %in% c(1,2)) %>%
+  distinct() %>% 
+  count
+
+hydrated %>% filter(tree == 6910 & leaf %in% c(1,2)) %>%
+  distinct() %>% 
+  count
+
+dry %>% filter(tree == 6910 & leaf %in% c(1,2)) %>%
+  distinct() %>% 
+  count
+```
+> Leaves 1 and 2 of COPAI 6910 are duplicated in tlp, hydrated and dry, but they have just one scan each.
+
+```{r}
+tlp %>% filter(tree == 6896 & leaf %in% c(1,2)) %>%
+  distinct() %>% 
+  count
+```
+> Leaf 1 of COPAI 6896 is dupliated in tlp only, but there is no leaf 2.
+
+
+```{r}
+symdiff(hydrated$tree, dry$tree)
+symdiff(hydrated$tree, tlp$tree)
+symdiff(dry$tree, tlp$tree)
+#  OK there are the FAVA or FAVAO not possible to do with ptlp
+```
+
+```{r}
+temp <- plyr::join_all(
+  list(tlp, hydrated, dry), 
+  type = "full"
+)
+
+temp %>% 
+  group_by(vernacular, tree, leaf) %>% 
+  count() %>% 
+  filter(n>1) %>% 
+  print(n=Inf)
+
+temp %>% filter(tree == 6910, leaf == 2)
+temp %>% filter(tree == 6896, leaf == 1) %>% select(vernacular) %>% distinct
+
+colnames(tlp)
+colnames(hydrated)
+colnames(dry)
+
+```
+
+
+
+
+> TO CONTINUE FROM HERE
+
+
 Raw data junction and cross cleaning.
 
 ```{r prep}
