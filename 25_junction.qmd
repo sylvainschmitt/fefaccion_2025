@@ -3,6 +3,7 @@
 ```{r set}
 #| include: false
 library(tidyverse)
+library(kableExtra)
 ```
 
 ## Correcting typos in vernacular codes and tree ID
@@ -49,6 +50,7 @@ check <- load_correct("data/raw/manual_check.csv", type = "csv")
 ## Checking for duplicated leaves in each dataset
 
 ```{r}
+#| warning: false
 dupl <- tlp %>% 
   group_by(vernacular, tree, leaf) %>% 
   count() %>% 
@@ -57,18 +59,20 @@ if(nrow(dupl) == 0) {
   print("There are no duplicated leaves in tlp data.") 
 } else { 
   print("The following leaves are duplicated in tlp data.")
-  print(dupl)
+  dupl %>% kable()
 }
 ```
 
 Look at the values for the duplicated => nothing special...
 
 ```{r}
-tlp %>% filter(tree %in% c(6896, 6910))
+#| warning: false
+tlp %>% filter(tree %in% c(6896, 6910)) %>% kable()
 ```
 
 
 ```{r}
+#| warning: false
 dupl <- la %>% 
   group_by(vernacular, tree, leaf) %>% 
   count() %>% 
@@ -77,10 +81,11 @@ if(nrow(dupl) == 0) {
   print("There are no duplicated leaves in la data.") 
 } else { 
   print("The following leaves are duplicated in la data.")
-  print(dupl)
+  dupl %>% kable()
 }
 ```
 ```{r}
+#| warning: false
 dupl <- hydrated %>% 
   group_by(vernacular, tree, leaf) %>% 
   count() %>% 
@@ -89,17 +94,19 @@ if(nrow(dupl) == 0) {
   print("There are no duplicated leaves in hydrated data.") 
 } else { 
   print("The following leaves are duplicated in hydrated data.")
-  print(dupl)
+  dupl %>% kable()
 }
 ```
 
 Look at the values for the duplicated => 2 duplicated leaves have a very high weight
 
 ```{r}
-hydrated %>% filter(tree == 6910)
+#| warning: false
+hydrated %>% filter(tree == 6910) %>% kable()
 ```
 
 ```{r}
+#| warning: false
 dupl <- dry %>% 
   group_by(vernacular, tree, leaf) %>% 
   count() %>% 
@@ -108,17 +115,19 @@ if(nrow(dupl) == 0) {
   print("There are no duplicated leaves in dry data.") 
 } else { 
   print("The following leaves are duplicated in dry data.")
-  print(dupl)
+  dupl %>% kable()
 }
 ```
 
 Look at the values for the duplicated => 2 duplicated leaves have a very high weight
 
 ```{r}
-dry %>% filter(tree == 6910)
+#| warning: false
+dry %>% filter(tree == 6910) %>% kable()
 ```
 
 ```{r}
+#| warning: false
 dupl <- check %>% 
   group_by(vernacular, tree, leaf) %>% 
   count() %>% 
@@ -127,7 +136,7 @@ if(nrow(dupl) == 0) {
   print("There are no duplicated leaves in manual check data.") 
 } else { 
   print("The following leaves are duplicated in manual check data.")
-  print(dupl)
+  dupl %>% kable()
 }
 ```
 
@@ -156,9 +165,9 @@ tlp %>% filter(tree == 6896 & leaf %in% c(1,2)) %>%
 ```
 Leaf 1 of COPAI 6896 is dupliated in tlp only (each time with different values), but there is no leaf 2.
 
-> Decide what to do with duplicated leaves and update what's follow.
+> TO DO Decide what to do with duplicated leaves and update what's follow.
 I have seen later that these leaves are the ones with massive outliers in LDMC and SLA.
-So I propose to remove all duplication of the leaves 1 and 2 of COPAI 6910.
+So I propose to remove all measurments of the leaves 1 and 2 of COPAI 6910.
 This is what I do in the trait table generated below. 
 NEED TO CHANGE THIS if you disagree.
 
@@ -174,26 +183,29 @@ symdiff2 <- function(x, y, by) {
     print("There is a complete overlap between the two datasets")
   } else {
     print("The following tree/leaf are present in only one of the two datasets")
-    diff
+   diff %>% kable()
   }
 }
 ```
 
-Between tlp and hydrated (checking only differences in individuals, are less leaves have been measured for tlp):
+Between tlp and hydrated (checking only differences in individuals, as less leaves have been measured for tlp):
 
 ```{r}
+#| warning: false
 symdiff2(tlp, hydrated, c("vernacular", "tree"))
 ```
 
 Between tlp and la (checking only differences in individuals, are less leaves have been measured for tlp):
 
 ```{r}
+#| warning: false
 symdiff2(tlp, la, c("vernacular", "tree"))
 ```
 
 Between tlp and dry (checking only differences in individuals, are less leaves have been measured for tlp):
 
 ```{r}
+#| warning: false
 symdiff2(tlp, dry, c("vernacular", "tree"))
 ```
 
@@ -202,21 +214,25 @@ symdiff2(tlp, dry, c("vernacular", "tree"))
 Between hydrated and dry (checking down to the leaf level):
 
 ```{r}
+#| warning: false
 symdiff2(hydrated, dry, c("vernacular", "tree", "leaf"))
 ```
 Between hydrated and la (checking down to the leaf level):
 
 ```{r}
+#| warning: false
 symdiff2(hydrated, la, c("vernacular", "tree", "leaf"))
 ```
 Between dry and la (checking down to the leaf level):
 
 ```{r}
+#| warning: false
 symdiff2(dry, la, c("vernacular", "tree", "leaf"))
 ```
 Between la and manual check (checking down to the leaf level):
 
 ```{r}
+#| warning: false
 symdiff2(la, check, c("vernacular", "tree", "leaf"))
 ```
 
@@ -225,6 +241,7 @@ symdiff2(la, check, c("vernacular", "tree", "leaf"))
 Create the file *raw.tsv* with all raw measurements and the manual checks.
 
 ```{r}
+#| warning: false
 raw <- plyr::join_all(
   list(tlp, hydrated, la, dry, check), 
   type = "full"
@@ -238,7 +255,7 @@ if(nrow(dupl) == 0) {
   print("There are no duplicated leaves in the joined data.") 
 } else { 
   print("The following leaves are duplicated in joined data.")
-  print(dupl)
+  dupl %>% kable()
 }
 
 write_tsv(raw, "outputs/raw.tsv")
@@ -248,17 +265,21 @@ Create the file *traits_comments.tsv* with trait values and the manual checks.
 **NB** The leaves 1 and 2 of COPAI 6910 have been removed.
 
 ```{r}
+#| warning: false
+#| message: false
 read_tsv("outputs/raw.tsv", show_col_types = FALSE) %>% 
   filter(!(tree == 6910 & leaf %in% c(1, 2))) %>% 
   mutate(
-    la = area_excluded,
+    la = area_included,
     ldmc = dw/sw,
-    sla = area_included/dw
+    sla = area_excluded/dw
   ) %>% 
   select(vernacular, tree, leaf, la, ldmc, lt, sla, tlp, missing_part, anomaly, touching, raw_scan) %>% 
   write_tsv("outputs/traits_comments.tsv")
 ```
 
+> Sylvain, please check. In your code, you took area_excluded for la, but included to calculate sla.
+But I think it is the opposite (as area_excluded <= included, so area excluded is before filling the holes).
 
 ## Exploring the effects of leaf quality
 
@@ -337,7 +358,7 @@ Removing the very incomplete leaves has a big effect on the following species:
 * CASTA: only two leaves removed, but they were missing a very big part
 
 > I propose to remove the leaves with a big missing part for LA and SLA.
-To exclude from the rest if you agree.
+TO DO: exclude them from the rest if you agree.
 
 
 Now, let's look at the effect of anomalies seen on the masks (including the species with a big missing part for now)
@@ -375,50 +396,100 @@ traits_comments %>%
 
 > The other abnormality doesn't seem to affect the values, I suggest to keep these leaves.
 
-> BUT we may want to resample the PIQUI in the future.
+> BUT we may want to resample the PIQUI in the future...
 
-
-
-> CONTINUE AFTER THIS...
 
 Now, let's look at the effect of anomalies seen on the raw scans (including the species with a big missing part for now)
 **NB I removed here the leaves that are touching the edge of the scan that have not yet been corrected. This should not be done once the scans have been corrected.**
 
-TO DO
+```{r figure4}
+#| message: false
+#| warning: false
+traits_comments %>% 
+  filter(touching == 0) %>% 
+  ggplot(aes(vernacular, value)) +
+  geom_boxplot() +
+  geom_jitter(
+    data = subset(traits_comments,
+                  raw_scan =="ok" &
+                    touching == 0), 
+    aes(vernacular, value), 
+    width = 0.4, size = 2, alpha = 0.5) +
+  geom_jitter(
+    data = subset(traits_comments,
+                  raw_scan !="ok" &
+                    touching == 0) ,
+    aes(vernacular, value,
+        col = as.factor(raw_scan)) ,
+    width = 0.4, size = 2, alpha = 0.5) + 
+  theme_bw() +
+  coord_flip() +
+  facet_wrap(~ trait, scales = "free_x", ncol = 5) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "bottom") +
+  xlab("") + ylab("")
+```
 
+> The young leaves are clearly outliers. I propose to remove them. TO DO: exclude them from the rest if you agree.
 
+> The effect of damaged leaves is much less clear (remember that here damaged refer doens't refer to the fact that part of the leaf is missing, but rather to the quality of the leaf). I propose to keep them.
 
-> After this, this is the part from Sylvain TO CONTINUE FROM HERE
+## Filtering and exploring
 
+Based on the exploration above, the data are filtered as follow:
 
-Raw data junction and cross cleaning.
+* **the scans of leaves touching the page need to be redone, I remove them for the moment**
 
-```{r prep}
-#| eval: false
-plyr::join_all(
-  list(
-    read_tsv("data/derived/tlp_raw.tsv"),
-    read_tsv("data/derived/la.tsv"),
-    read_tsv("data/derived/hydrated_raw.tsv"),
-    read_tsv("data/derived/dry_raw.tsv")
-  ),
-  type = "full"
-) %>% select(-comment) %>% 
-  write_tsv("outputs/raw.tsv")
-read_tsv("outputs/raw.tsv") %>% 
+* the leaves 1 and 2 of COPAI 6910 are removed
+
+* all the leaves with a big missing part are excluded 
+
+* all the young leaves are excluded
+
+* for all the leaves with a problem with the mask (abn_area and fol_touch), we take the area measured with a mask for which the holes have not been filled (area_excluded). This represent all the FAVA, FAVO abd ANGEL, plus one leaf of PARAP
+
+* for tlp of COPAI 6896 leaf 1 and 2, we take the mean value between the duplicated measurement
+
+```{r}
+#| message: false
+#| warning: false
+read_tsv("outputs/raw.tsv", show_col_types = FALSE) %>% 
+  filter(touching == 0 & # to be removed once the scanned have been redone
+           !(tree == 6910 & leaf %in% c(1, 2)) &
+           missing_part != 2 &
+           raw_scan != "young") %>% 
   mutate(
-    la = area_excluded,
+    la = case_when(anomaly %in% c("abn_area" , "fol_touch") ~ area_excluded, 
+                   .default = area_included),
     ldmc = dw/sw,
-    sla = area_included/dw
+    sla = area_excluded/dw
   ) %>% 
-  select(vernacular, tree, leaf, la, ldmc, lt, lt, sla, tlp) %>% 
+  select(vernacular, tree, leaf, la, ldmc, lt, sla, tlp) %>% 
+  group_by(vernacular, tree, leaf) %>% 
+  mutate(across(la:tlp, mean)) %>% 
+  distinct() %>% 
   write_tsv("outputs/traits.tsv")
 ```
+
+The table below gives the number of tree per species and the mean number of leaves per tree.
+
+```{r}
+#| message: false
+#| warning: false
+read_tsv("outputs/traits.tsv") %>% 
+  group_by(vernacular, tree) %>% 
+  summarise(n_leaf = n_distinct(leaf)) %>% 
+  group_by(vernacular) %>% 
+  summarise(
+    n_tree = n_distinct(tree),
+    mean_n_leaf_per_ind = mean(n_leaf)) %>% 
+  kable()
+```
+
 
 ```{r figure}
 #| message: false
 #| warning: false
-#| eval: false
 read_tsv("outputs/traits.tsv") %>% 
   gather(trait, value, -vernacular, -tree, -leaf) %>% 
   mutate(trait = recode(trait, 
@@ -440,14 +511,23 @@ read_tsv("outputs/traits.tsv") %>%
   xlab("") + ylab("")
 ```
 
-> We have outliers LDMC and SLA probably due to an issue with dry weight DW. Other outliers have to be checked.
+> We have one outlier for LDMC, not sure what the problem is, if there is indeed a problem.
+
+```{r}
+#| message: false
+#| warning: false
+out1 <- read_tsv("outputs/traits.tsv") %>% 
+  filter(ldmc > 0.8) %>% select(vernacular, tree, leaf)
+raw %>% filter(tree == out1$tree & leaf == out1$leaf) %>% 
+  kable()
+```
+
 
 ```{r figure 2}
 #| message: false
 #| warning: false
 #| fig-width: 10
 #| fig-height: 10
-#| eval: false
 read_tsv("outputs/traits.tsv") %>% 
   filter(sla < 400) %>% 
   select(sla, tlp, vernacular, tree, leaf) %>% 
@@ -463,10 +543,13 @@ read_tsv("outputs/traits.tsv") %>%
   scale_color_discrete(guide = "none")
 ```
 
-> Ask back Joannès the link between SLA and TLP to check.
+> There are still a few negative relationship => Joannès?
+See also once the treatment of the scans for the touching leaves have been redone.
 
+<!--
 However, based on that I have made an example of data junction in a consolidated table here: <https://docs.google.com/spreadsheets/d/1SSDmBBYNl_jP3GY5wUGkR-62cNiz63M46Ai6Z0CK1Cw/edit?usp=sharing>.
-
-> I also need the cleaned taxonomy I think.
-
 -->
+
+> Sylvain: I also need the cleaned taxonomy I think.
+
+

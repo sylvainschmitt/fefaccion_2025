@@ -89,9 +89,9 @@ Masks generated with the option allowing holes to be filled were manually inspec
 
     -   *ok*: no problem
 
-    -   *abn_area*: abnormal area are masked, detected because they don't have the shape of a leaf. Looking at the corresponding scan, it is because these areas correspond to some spaces between the folioles that are fully surrounded by leaf part. So they are interpreted as holes and filled. **=\> For these individuals (or maybe species), consider the unfilled area even for the LA**
+    -   *abn_area*: abnormal area are masked, detected because they don't have the shape of a leaf. Looking at the corresponding scan, it is because these areas correspond to some spaces between the folioles that are fully surrounded by leaf part. So they are interpreted as holes and filled. **=\> For these individuals (or maybe species), consider the unfilled area even for the LA**. TO DO if you agree
 
-    -   *fol_touch*: this is the same problem than *abn_area*, except for the FAVA for which the foliolules are actually touching and form a compact area on the mask.**=\> For these individuals (or maybe species), consider the unfilled area even for the LA**
+    -   *fol_touch*: this is the same problem than *abn_area*, except for the FAVA for which the foliolules are actually touching and form a compact area on the mask.**=\> For these individuals (or maybe species), consider the unfilled area even for the LA** TO DO if you agree
 
     -   *miss_petiolul*: for double-compound leaves, the petiolule is not included, when it should have been
     
@@ -99,7 +99,7 @@ Masks generated with the option allowing holes to be filled were manually inspec
 
     -   *one_fol*: just one foliole when the species has compound leaves
 
--   *touching*: *0* no part touching, *1* leaf touching leading to part of the leaf not taken into account, *2* leaf touching leading to all the leaf not taken into account **=\> to be corrected by adding a black line with a photo editor?**
+-   *touching*: *0* no part touching, *1* leaf touching leading to part of the leaf not taken into account, *2* leaf touching leading to all the leaf not taken into account **=\> TO DO (Sylvain?) to be corrected by adding a black line with a photo editor?**
 
 Raw leaf scans are manually checked for the following problems, but this is highly subjective:
 
